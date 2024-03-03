@@ -23,8 +23,17 @@ The Fitness Tracker App is a web-based application designed to help individuals 
 1. **Clone the repo**
    git clone https://github.com/xxYETTERxx/fitness-tracker-app.git
 2. **Install NPM packages**
-3. **Set up environment variables**
-4. **Start the application**
+   - navigate to the frontend directory and install the necessary packages using: npm install
+   - navigate to the backend directory and install the necessary packages using: npm install
+4. **Set up environment variables**
+   - Create a .env file in the root of both backend and frontend directories.
+   - Add the necessary environment variables.
+     Backend:
+     DATABASE URL=mongodb://localhost/ (added later)
+     JWT SECRET= (will be added later)
+6. **Start the application**
+   To start backend navigate to /backend and run: npm start
+   To start frontend navigate to /frontend and run: npm start
 
 Usage:
 ** To be added **
