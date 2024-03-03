@@ -1,16 +1,33 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function SignUp(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [accountType, setAccountType] = useState('basic');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-    //handle form submission backend communication
-    console.log(email, password, accountType);
-    // POST request to backend using fetch/axios
+
+        try {
+            // construct user data
+            const userData = {
+                email,
+                password,
+                accountType
+            };
+
+            //Send backend request
+            await axios.post('http://localhost:3000/api/auth/register',userData);
+
+            alert('User registered successfully!');
+
+        } catch (error) {
+            console.error("Registration failed:", error.response.data);
+            alert("Registration failed");
+        }
     };
+
 
     return(
         <div>
