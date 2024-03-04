@@ -18,7 +18,7 @@ function SignUp(){
             };
 
             //Send backend request
-            await axios.post('http://localhost:3000/api/auth/register',userData);
+            await axios.post('http://localhost:5000/api/auth/register',userData);
 
             alert('User registered successfully!');
 
