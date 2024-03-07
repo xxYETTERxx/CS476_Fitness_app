@@ -2,7 +2,7 @@ import React from 'react';
 import SignUp from './components/SignUp';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import DailySummary from './components/DailySummary';
+import Dashboard from './components/Dashboard';
 
 function App(){
   return (
@@ -12,7 +12,7 @@ function App(){
         Hello world!
       </h1>
       {/* <Hero/> */}
-      <DailySummary/>
+      <Dashboard/>
       <SignUp />
     </div>
   );

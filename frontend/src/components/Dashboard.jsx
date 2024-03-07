@@ -2,7 +2,7 @@ import React from 'react'
 import blankUser from '../images/blankUser.png'
 import scale from '../images/scale.png'
 
-const DailySummary = () => {
+const Dashboard = () => {
     return (
         <div className='flex justify-center pt-5 pb-5'>
             <div className="card card-side shadow-xl flex flex-col
@@ -78,4 +78,4 @@ const DailySummary = () => {
     )
 }
 
-export default DailySummary
+export default Dashboard
