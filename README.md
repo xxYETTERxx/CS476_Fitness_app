@@ -18,6 +18,7 @@ The Fitness Tracker App is a web-based application designed to help individuals 
   ### Prerequisites
 - Ensure you have Node.js and npm installed on your machine.
 - A MongoDB instance for data storage.
+   - download MongoDB Community Server here: https://www.mongodb.com/try/download/community-kubernetes-operator
 
 ### Installation
 1. **Clone the repo**
