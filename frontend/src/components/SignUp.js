@@ -4,7 +4,7 @@ import axios from 'axios';
 function SignUp(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [accountType, setAccountType] = useState('basic');
+    const [userType, setUserType] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -14,24 +14,33 @@ function SignUp(){
             const userData = {
                 email,
                 password,
-                accountType
+                userType
             };
 
             //Send backend request
-            await axios.post('http://localhost:5000/api/auth/register',userData);
+            await axios.post('http://localhost:5000/api/auth/register',userData)
+               
 
             alert('User registered successfully!');
 
         } catch (error) {
-            console.error("Registration failed:", error.response.data);
-            alert("Registration failed");
+            if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
+                alert('Connection to server failed');
+            }else if (error.response){
+                console.error("Registration failed:", error.response.data);
+                alert("Registration failed: " + error.response.data);
+            }
+            else{
+                console.error("Registration failed:", error.message);
+                alert("Registration failed: ", error.message);
+            }
         }
     };
 
 
     return(
         <div>
-            <h2>Create Account</h2>
+            <h2><b>Create Account</b></h2>
             <form onSubmit = {handleSubmit}>
                 <div>
                     <label>Email:</label>
@@ -54,8 +63,8 @@ function SignUp(){
                 <div>
                     <label>Account Type:</label>
                     <select
-                        value={accountType}
-                        onChange={(e) => setAccountType(e.target.value)}
+                        value={userType}
+                        onChange={(e) => setUserType(e.target.value)}
                         required
                     > 
                         <option value = "basic">Basic</option>
