@@ -1,8 +1,11 @@
 import React from 'react';
 import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+
+
 
 function App(){
   return (
@@ -14,6 +17,7 @@ function App(){
       {/* <Hero/> */}
       <Dashboard/>
       <SignUp />
+      <SignIn />
     </div>
   );
 }
