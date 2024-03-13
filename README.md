@@ -18,6 +18,7 @@ The Fitness Tracker App is a web-based application designed to help individuals 
   ### Prerequisites
 - Ensure you have Node.js and npm installed on your machine.
 - A MongoDB instance for data storage.
+   - download MongoDB Community Server here: https://www.mongodb.com/try/download/community-kubernetes-operator
 
 ### Installation
 1. **Clone the repo**
@@ -26,7 +27,8 @@ The Fitness Tracker App is a web-based application designed to help individuals 
    - navigate to the frontend directory and install the necessary packages using: npm install
    - navigate to the backend directory and install the necessary packages using: npm install
 4. **Set up environment variables**
-   (Added later)
+   Create a .env file in the backend folder.
+   write: JWT_SECRET_KEY = (google JWT key generator and use the result here)
 6. **Start the application**
    To start backend navigate to /backend and run: npm start
    
