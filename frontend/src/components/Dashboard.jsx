@@ -1,8 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import blankUser from '../images/blankUser.png'
 import scale from '../images/scale.png'
 
 const Dashboard = () => {
+    const [username, setUsername] = useState('');
+    const [calorieIntake, setCalorieIntake] =useState(0);
+
+    useEffect(() =>{
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token){
+                    console.log("No token found");
+                    return;
+                }
+                const config = {
+                    headers: { Authorization: `Bearer ${token}`}
+                };
+                
+                const response = await axios.get('http://localhost:5000/api/auth/dashboard', config);
+
+                setUsername(response.data.userName);
+                
+                
+            }catch (error){
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchUserData(); 
+    },[])
+
     return (
         <div className='flex justify-center pt-5 pb-5'>
             <div className="card card-side shadow-xl flex flex-col
@@ -10,6 +38,7 @@ const Dashboard = () => {
                 <div className='flex justify-between text-2xl font-medium b h-1/6
                     items-center'>
                     <h2>Your Daily Summary :</h2>
+                    <div className='text-lg font semibold pt-2 pb-2'>{username}</div>
                     <div className='rightSummaryHeader'>
                         <p className='flex'>Streak: <span className='font-bold text-success text-3xl ml-1'>8</span></p>
                     </div>

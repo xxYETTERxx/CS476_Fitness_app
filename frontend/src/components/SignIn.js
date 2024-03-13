@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import axios from 'axios';
 
-function SignIn(){
+function SignIn({setIsAuthenticated}){
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,14 +12,13 @@ function SignIn(){
         try {
          
             //Send backend request
-            const userToken = await axios.post('http://localhost:5000/api/auth/login',{
+            const response = await axios.post('http://localhost:5000/api/auth/login',{
                 email: email,
                 password: password
             });
-
-            const { token, email: userEmail } = userToken.data;
-
-            alert("Welcome " + userEmail);
+            const token = response.data.token;
+            localStorage.setItem('token', token); //Store token locally
+            setIsAuthenticated(true);    
 
             } catch (error) {
                 if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
@@ -63,5 +62,6 @@ function SignIn(){
     
     );
 }
+
 
 export default SignIn;
