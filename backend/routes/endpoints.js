@@ -2,7 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require ('../models/User');
+const createModel = require('../factories/modelFactory');
 
 
 const router = express.Router();
@@ -12,15 +12,19 @@ const router = express.Router();
 // Registration endpoint
 router.post('/register', async (req, res) => {
     try {
-       const user = new User({
-        email: req.body.email,
-        password: req.body.password,
-        userType: req.body.userType 
-       });
-
+       
+   
+       const user = createModel('user', req.body);
+    
        //Save the user to database
        const newUser = await user.save();
 
+       //create Nutrition model linked to user
+       const nData = { userId: newUser._id };
+       const nModel = createModel('nutrition', nData);
+       await nModel.save();
+      
+       
        //Respond with created user
        res.status(201).json({ user: newUser.id, email: newUser.email, userType: newUser.userType });
     }  catch (error) {
@@ -36,6 +40,31 @@ router.post('/login', async (req, res) => {
 
     try {
       const user = await User.findOne({ email: email});
+      if (!user) {
+         return res.status(404).send('User not found');
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch){
+         return res.status(401).send('Invalid Password');
+      }
+
+      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '2h' });
+      
+      //return token
+      res.json({ token, email: user.email });
+
+    }  catch (error) {
+       res.status(400).json({ error: error.message});
+    }
+});
+
+//Nutrition EndPoint
+router.post('/nutrition', async (req, res) => {
+    const { userId, calIn, watIn } = req.body;
+
+    try {
+      const user = await _id.findOne({ userId: userId});
       if (!user) {
          return res.status(404).send('User not found');
       }

@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const activitySchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    activity: {type: "string"},
-    caloriesBurned: {type: int},
+    activity: {type: String},
+    caloriesBurned: {type: Number, default: 0}
 });
 
-const Nutrition = mongoose.model('Activity', nutritionSchema);
+const Activity = mongoose.model('Activity', activitySchema);
 
 module.exports = Activity;
