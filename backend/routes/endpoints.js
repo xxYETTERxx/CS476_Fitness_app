@@ -3,6 +3,8 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
+const Nutrition = require('../models/Nutrition');
+const { isAlphaLocales } = require('validator');
 
 
 const router = express.Router();
@@ -61,23 +63,19 @@ router.post('/login', async (req, res) => {
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
-    const { userId, calIn, watIn } = req.body;
+    
 
     try {
-      const user = await _id.findOne({ userId: userId});
-      if (!user) {
-         return res.status(404).send('User not found');
-      }
+      const { userId, addCal, addWat } = req.body;
+      const nutrition = await Nutrition.findOne({ userId: userId});
+   if (!nutrition){
+      return res.status(404).json({ error: 'Nutrition data not found'});
+   }
+   if (addCal) nutrition.calorieIntake += addCal;
+   if (addWat) nutrition.waterIntake += addWat;
 
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch){
-         return res.status(401).send('Invalid Password');
-      }
+   await nutrition.save();
 
-      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '2h' });
-      
-      //return token
-      res.json({ token, email: user.email });
 
     }  catch (error) {
        res.status(400).json({ error: error.message});
