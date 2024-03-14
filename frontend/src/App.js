@@ -4,6 +4,7 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+import NutritionalTracker from './components/nutritionTracker';
 
 
 
@@ -26,6 +27,7 @@ function App(){
       {/* <Hero/> */}
       {isAuthenticated && <Dashboard/>};
       <div style = {{marginLeft: 20}}>
+        <NutritionalTracker/>
         <SignUp />
         <br/>
         <SignIn setIsAuthenticated={setIsAuthenticated}/>
