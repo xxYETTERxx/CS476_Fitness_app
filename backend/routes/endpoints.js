@@ -65,17 +65,14 @@ router.post('/login', async (req, res) => {
     }
 });
 
-//Dashboard data endpoint
+//tokenRetrieval data endpoint
 router.get('/dashboard', async (req, res) => {
   try {
-    console.log("dashboard request");
+    console.log("toekn ret request");
     const token = req.headers.authorization.split(' ')[1];
-    console.log("Extrcted Token:", token);
     const decoded = jwt.verify(token, secretKey); 
    
-    console.log("Decoded UserID:", decoded.userId);
     const user = await User.findById(decoded.userId).select('-password');
-    console.log("User Found:", user);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
