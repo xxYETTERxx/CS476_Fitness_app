@@ -65,22 +65,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
-//Dashboard data endpoint
-router.get('/dashboard', async (req, res) => {
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
   try {
-    console.log("dashboard request");
     const token = req.headers.authorization.split(' ')[1];
-    console.log("Extrcted Token:", token);
     const decoded = jwt.verify(token, secretKey); 
-   
-    console.log("Decoded UserID:", decoded.userId);
     const user = await User.findById(decoded.userId).select('-password');
-    console.log("User Found:", user);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    console.log("userId = ", user._id);
     /*const nutrition = await Nutrition.findOne({ user: user._id });
     if(!nutrition) {
       return res.status(404).json(({ error: 'Nutrition data not found'}))
@@ -89,8 +83,8 @@ router.get('/dashboard', async (req, res) => {
     */
     // Send back the data needed for the dashboard
     res.json({
-      userName: user.userName,
-      //calorieIntake: nutrition.calorieIntake,
+      user: user
+      //calorieIntake: user.calorieIntake,
       // add waterIntake when dashboard has the field
     });
   } catch (error) {
@@ -105,18 +99,22 @@ router.get('/dashboard', async (req, res) => {
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
+  console.log("nutrition submission");
     
-
-    try {
-      const { userId, addCal, addWat } = req.body;
-      const nutrition = await Nutrition.findOne({ userId: userId});
+  try {
+      console.log(req.body);
+      const { user, calorieIntake, waterIntake } = req.body;
+      console.log("user",user);
+      const nutrition = await Nutrition.findOne({ user: user});
    if (!nutrition){
       return res.status(404).json({ error: 'Nutrition data not found'});
    }
-   if (addCal) nutrition.calorieIntake += addCal;
-   if (addWat) nutrition.waterIntake += addWat;
+   console.log(nutrition);
+   if (calorieIntake) nutrition.calorieIntake += parseInt(calorieIntake, 10);
+   if (waterIntake) nutrition.waterIntake += parseInt(waterIntake, 10);
 
-   await nutrition.save();
+  const savedNutrition = await nutrition.save();
+  console.log('Updated nutrition:', savedNutrition);
 
 
     }  catch (error) {

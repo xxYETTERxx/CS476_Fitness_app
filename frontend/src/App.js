@@ -4,6 +4,7 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+import NutritionalTracker from './components/nutritionTracker';
 
 
 
@@ -20,11 +21,9 @@ function App(){
   return (
     <div className="App bg-base-100">
       <Navbar/>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
       {/* <Hero/> */}
       {isAuthenticated && <Dashboard/>};
+      <NutritionalTracker/>
       <div style = {{marginLeft: 20}}>
         <SignUp />
         <br/>
