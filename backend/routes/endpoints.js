@@ -6,7 +6,6 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-const User = require('../models/User');
 
 
 const router = express.Router();
@@ -79,24 +78,9 @@ router.get('/userRetrieval', async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-
-
-//Nutrition EndPoint
-router.post('/nutrition', async (req, res) => {
-    
-
-
-    /*const nutrition = await Nutrition.findOne({ user: user._id });
-    if(!nutrition) {
-      return res.status(404).json(({ error: 'Nutrition data not found'}))
-    }
-    console.log("Nutrition found:", nutrition);
-    */
     // Send back the data needed for the dashboard
     res.json({
       user: user
-      //calorieIntake: user.calorieIntake,
-      // add waterIntake when dashboard has the field
     });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
