@@ -21,13 +21,12 @@ function App(){
   return (
     <div className="App bg-base-100">
       <Navbar/>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
       {/* <Hero/> */}
       {isAuthenticated && <Dashboard/>};
+
+      <NutritionalTracker/>
       <div style = {{marginLeft: 20}}>
-        <NutritionalTracker/>
+
         <SignUp />
         <br/>
         <SignIn setIsAuthenticated={setIsAuthenticated}/>

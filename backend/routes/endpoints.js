@@ -6,6 +6,7 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
+const User = require('../models/User');
 
 
 const router = express.Router();
@@ -23,9 +24,11 @@ router.post('/register', async (req, res) => {
        const newUser = await user.save();
 
        //create Nutrition model linked to user
-       const nData = { user: newUser._id };
-       const nModel = createModel('nutrition', nData);
-       await nModel.save();
+
+       //const nData = { user: newUser._id };
+       //const nModel = createModel('nutrition', nData);
+       //await nModel.save();
+
       
        
        //Respond with created user
@@ -65,22 +68,24 @@ router.post('/login', async (req, res) => {
     }
 });
 
-//Dashboard data endpoint
-router.get('/dashboard', async (req, res) => {
+
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
   try {
-    console.log("dashboard request");
     const token = req.headers.authorization.split(' ')[1];
-    console.log("Extrcted Token:", token);
     const decoded = jwt.verify(token, secretKey); 
-   
-    console.log("Decoded UserID:", decoded.userId);
     const user = await User.findById(decoded.userId).select('-password');
-    console.log("User Found:", user);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    console.log("userId = ", user._id);
+
+
+//Nutrition EndPoint
+router.post('/nutrition', async (req, res) => {
+    
+
+
     /*const nutrition = await Nutrition.findOne({ user: user._id });
     if(!nutrition) {
       return res.status(404).json(({ error: 'Nutrition data not found'}))
@@ -89,8 +94,8 @@ router.get('/dashboard', async (req, res) => {
     */
     // Send back the data needed for the dashboard
     res.json({
-      userName: user.userName,
-      //calorieIntake: nutrition.calorieIntake,
+      user: user
+      //calorieIntake: user.calorieIntake,
       // add waterIntake when dashboard has the field
     });
   } catch (error) {
@@ -105,23 +110,26 @@ router.get('/dashboard', async (req, res) => {
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
+  console.log("nutrition submission");
     
+  try {
+      const { user, calorieIntake, waterIntake } = req.body;
+      
+      const newNutritionEntry = new Nutrition({
+         user: user,
+         calorieIntake: parseInt(calorieIntake, 10),
+         waterIntake: parseInt(waterIntake, 10),
+         date: new Date()
+      });
+    
+      const savedEntry = await newNutritionEntry.save();
+      console.log('Saved nutrition entry:', savedEntry);
+      res.json(savedEntry);
+      
+      } catch(error){
+        res.status(400).json ({ error: error.message});
+      }
 
-    try {
-      const { userId, addCal, addWat } = req.body;
-      const nutrition = await Nutrition.findOne({ userId: userId});
-   if (!nutrition){
-      return res.status(404).json({ error: 'Nutrition data not found'});
-   }
-   if (addCal) nutrition.calorieIntake += addCal;
-   if (addWat) nutrition.waterIntake += addWat;
-
-   await nutrition.save();
-
-
-    }  catch (error) {
-       res.status(400).json({ error: error.message});
-    }
 });
 
 module.exports = router;

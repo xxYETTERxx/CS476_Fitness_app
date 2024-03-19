@@ -19,9 +19,11 @@ const Dashboard = () => {
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-                const response = await axios.get('http://localhost:5000/api/auth/dashboard', config);
 
-                setUsername(response.data.userName);
+                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+
+                setUsername(response.data.user.userName);
+
                 
                 
             }catch (error){
