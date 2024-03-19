@@ -23,9 +23,9 @@ router.post('/register', async (req, res) => {
        const newUser = await user.save();
 
        //create Nutrition model linked to user
-       const nData = { user: newUser._id };
-       const nModel = createModel('nutrition', nData);
-       await nModel.save();
+       //const nData = { user: newUser._id };
+       //const nModel = createModel('nutrition', nData);
+       //await nModel.save();
       
        
        //Respond with created user
@@ -102,24 +102,23 @@ router.post('/nutrition', async (req, res) => {
   console.log("nutrition submission");
     
   try {
-      console.log(req.body);
       const { user, calorieIntake, waterIntake } = req.body;
-      console.log("user",user);
-      const nutrition = await Nutrition.findOne({ user: user});
-   if (!nutrition){
-      return res.status(404).json({ error: 'Nutrition data not found'});
-   }
-   console.log(nutrition);
-   if (calorieIntake) nutrition.calorieIntake += parseInt(calorieIntake, 10);
-   if (waterIntake) nutrition.waterIntake += parseInt(waterIntake, 10);
+      
+      const newNutritionEntry = new Nutrition({
+         user: user,
+         calorieIntake: parseInt(calorieIntake, 10),
+         waterIntake: parseInt(waterIntake, 10),
+         date: new Date()
+      });
+    
+      const savedEntry = await newNutritionEntry.save();
+      console.log('Saved nutrition entry:', savedEntry);
+      res.json(savedEntry);
+      
+      } catch(error){
+        res.status(400).json ({ error: error.message});
+      }
 
-  const savedNutrition = await nutrition.save();
-  console.log('Updated nutrition:', savedNutrition);
-
-
-    }  catch (error) {
-       res.status(400).json({ error: error.message});
-    }
 });
 
 module.exports = router;

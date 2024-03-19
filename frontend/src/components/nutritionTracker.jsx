@@ -14,10 +14,10 @@ function NutritionalTracker(){
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-            setFoodType(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
+            if (name === "foodType"){
+                setFoodType(value);
+            
+            }
     };
 
     const handleSubmit = async (e) => {
@@ -45,10 +45,11 @@ function NutritionalTracker(){
                 calorieIntake,
                 waterIntake
             };
+            console.log("sending request");
+            const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
+            console.log("Response recieved: ", response1.status);
 
-            response = await axios.post('http://localhost:5000/api/auth/nutrition',userData)
-
-            if(response.status==200 || response.status ==201) {
+            if(response1.status===200 || response1.status ===201) {
                 alert('Submission Succesful!');
 
                 setCalories('');
@@ -61,16 +62,16 @@ function NutritionalTracker(){
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
                 alert('Connection to server failed');
             }else if (error.response){
-                console.error("Registration failed:", error.response.data);
-                alert("Registration failed: " + error.response.data);
+                console.error("Submission failed:", error.response.data);
+                alert("Submission failed: " + error.response.data);
             }
             else{
-                console.error("Registration failed:", error.message);
-                alert("Registration failed: ", error.message);
+                console.error("Submission failed:", error.message);
+                alert("Submission failed: ", error.message);
             }
         }
 
-        }
+    }
     
 
     const handleOptionSelect = (option) => {
