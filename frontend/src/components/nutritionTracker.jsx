@@ -3,7 +3,9 @@ import axios from 'axios';
 
 function NutritionalTracker(){
     const [selectedOption, setSelectedOption] = useState(null);
-    const [calories, setCalories] = useState('');
+
+    const [calorieIntake, setCalories] = useState('');
+
     const [waterIntake, setWaterIntake] = useState('');
     const [foodType, setFoodType] = useState('');
     /*const [foodInput, setFoodInput] = useState ({
@@ -14,26 +16,47 @@ function NutritionalTracker(){
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-            setFoodType(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
+
+            if (name === "foodType"){
+                setFoodType(value);
+            
+            }
+
+
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+
+            console.log("submitting");
+            const token = localStorage.getItem('token');
+                if (!token){
+                    console.log("No token found");
+                    return;
+                }
+                const config = {
+                    headers: { Authorization: `Bearer ${token}`}
+                };
+                
+                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+                console.log(response);
+                const user = response.data.user._id;
+                console.log("calorieIntake:", calorieIntake);
+                console.log("waterIntake:", waterIntake);
+            
             const userData = {
-                //userId,
+                user,
                 calorieIntake,
-                waterIntake,
-                foodType
+                waterIntake
             };
+            console.log("sending request");
+            const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
+            console.log("Response recieved: ", response1.status);
 
-            const response = await axios.post('http://localhost:5000/api/auth/nutrition',userData)
+            if(response1.status===200 || response1.status ===201) {
 
-            if(response.status==200 || response.status ==201) {
                 alert('Submission Succesful!');
 
                 setCalories('');
@@ -46,16 +69,18 @@ function NutritionalTracker(){
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
                 alert('Connection to server failed');
             }else if (error.response){
-                console.error("Registration failed:", error.response.data);
-                alert("Registration failed: " + error.response.data);
+
+                console.error("Submission failed:", error.response.data);
+                alert("Submission failed: " + error.response.data);
             }
             else{
-                console.error("Registration failed:", error.message);
-                alert("Registration failed: ", error.message);
+                console.error("Submission failed:", error.message);
+                alert("Submission failed: ", error.message);
             }
         }
 
-        }
+    }
+
     
 
     const handleOptionSelect = (option) => {
@@ -73,11 +98,13 @@ function NutritionalTracker(){
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
                                 <label className="input input-bordered flex items-center gap-2" for="waterIntake (in ml)">Water Intake (ml):
-                                <input type="number" id="waterIntake" name="waterIntake" required/>
+
+                                <input type="number" id="waterIntake" name="waterIntake" value={waterIntake} onChange={(e)=>setWaterIntake(e.target.value)} />
                                 </label>
                                 <br></br>
                                 <label className="input input-bordered flex items-center gap-2" for="caloriesConsumed">Calories Consumed:
-                                <input type="number" id="calories" name="calories" /*value={(calories)} onChange={handleChange} */ required/>
+                                <input type="number" id="calories" name="calories" value={calorieIntake} onChange={(e)=>setCalories(e.target.value)} />
+
                                 </label>
 
                                 <div>
