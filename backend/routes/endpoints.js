@@ -78,7 +78,12 @@ router.get('/userRetrieval', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    } catch (error) {
+
+    // Send back user data
+    res.json({
+      user: user
+    });
+  } catch (error) {
     if (error.name === 'TokenExpiredError') {
       res.status(401).json({ error: 'Session has expired, please log in again' });
     } else {
