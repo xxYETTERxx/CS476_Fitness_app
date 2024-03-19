@@ -66,17 +66,16 @@ function SignUp() {
 
 
     return (
-        <div className=''>
+        <div className='h-screen flex items-center'>
 
-            <form onSubmit={handleSubmit} className='w-full flex justify-center'>
+            <form onSubmit={handleSubmit} className='w-full flex justify-center mb-12'>
 
             {/* <div className='w-full flex justify-center'> */}
                
                 
-                <div class="w-5/6 max-w-2xl mt-5 md:mt-16">
+                <div class="w-5/6 max-w-2xl ">
                 <div>
                     <h2 class="text-base font-semibold leading-7 text-base-content">Create Account</h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-600">Create an account to manage meals and workouts</p>
                 </div>
                 <div className='flex flex-col md:flex-row items-center justify-between'>
                     <div class="m-3">
@@ -89,7 +88,7 @@ function SignUp() {
                                 </svg>
                             }
                             <div>
-                                <label htmlFor="avatar" className="btn">Upload Picture</label>
+                                <label htmlFor="avatar" className="btn input-bordered bg-base-100">Upload Picture</label>
                                 <input id="avatar" type="file" accept="image/*" onChange={handleAvatarChange} style={{ display: 'none' }} />
                             </div>
                         </div>
@@ -108,21 +107,6 @@ function SignUp() {
                         </div>
                     </div>
                     
-                {/* <input type="text" placeholder="Type here" className="input input-bordered w-full" /> */}
-                    <div className='flex pl-3 pr-3'>
-                        <div class="sm:col-span-4 w-full mr-3">
-                            <label for="username" class="block text-sm font-medium leading-6 text-base-content">First Name:</label>
-                            <div class="mt-2">
-                                <input type="text" placeholder="Type here" className="input input-bordered w-full" />
-                            </div>
-                        </div>
-                        <div class="sm:col-span-4 w-full">
-                            <label for="username" class="block text-sm font-medium leading-6 text-base-content">Last Name:</label>
-                            <div class="mt-2">
-                                <input type="text" placeholder="Type here" className="input input-bordered w-full" />
-                            </div>
-                        </div>
-                    </div>
 
 
                     <div class="m-3">
@@ -170,7 +154,7 @@ function SignUp() {
 
                     <div className='divider mt-10 mb-3 pr-3 pl-3'></div>
                     <div class="mt- mr-3 flex items-center justify-end gap-x-6">
-                        <button type="button" class="text-sm font-semibold leading-6 text-base-content">Cancel</button>
+                        <a href='/' type="button" class="text-sm font-semibold leading-6 text-base-content">Cancel</a>
                         <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create Account</button>
                     </div>
 
