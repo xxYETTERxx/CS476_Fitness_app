@@ -8,19 +8,35 @@ function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userType, setUserType] = useState('basic');
+    const [avatar, setAvatar] = useState(null); 
+    const [avatarURL, setAvatarURL] = useState(null);
 
+    const handleAvatarChange = (event) => {
+        const file = event.target.files[0];
+        if (file){
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                setAvatar(e.target.result);
+                setAvatarURL(e.target.result);
+            };
+        reader.readAsDataURL(file);
+        }
+    }
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
+        
             // construct user data
             const userData = {
                 userName,
                 email,
                 password,
-                userType
-            };
+                userType,
+                avatar
+            }; 
 
+            try {
             //Send backend request
             const response = await axios.post('http://localhost:5000/api/auth/register', userData)
 
@@ -30,10 +46,9 @@ function SignUp() {
                 setUserName('');
                 setEmail('');
                 setPassword('');
+                setUserType('basic');
+                setAvatar(null);
             }
-
-
-
 
         } catch (error) {
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
@@ -66,10 +81,17 @@ function SignUp() {
                 <div className='flex flex-col md:flex-row items-center justify-between'>
                     <div class="m-3">
                         <div class="mt-5 flex justify-center items-center gap-x-3">
-                            <svg class="h-32 w-32  text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
-                            </svg>
-                            <button type="button" class="rounded-md bg-base px-2.5 py-1.5 text-sm font-semibold text-base-content shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Change</button>
+                            {
+                                avatarURL ?
+                                <img src ={avatarURL} alt = "Avatar" className="h-32 w-32 rounded-full" /> :
+                                <svg class="h-32 w-32  text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                                </svg>
+                            }
+                            <div>
+                                <label htmlFor="avatar" className="btn">Upload Picture</label>
+                                <input id="avatar" type="file" accept="image/*" onChange={handleAvatarChange} style={{ display: 'none' }} />
+                            </div>
                         </div>
                         </div>
 
@@ -158,53 +180,8 @@ function SignUp() {
 
 
 
-
-
-
-
-            {/* <h2><b>Create Account</b></h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>UserName:</label>
-                    <input
-                        type="username"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Account Type:</label>
-                    <select
-                        value={userType}
-                        onChange={(e) => setUserType(e.target.value)}
-                        required
-                    >
-                        <option value='basic'>Basic</option>
-                        <option value='pro'>Pro</option>
-                    </select>
-                </div>
-                <button type="sumbit">Create Account</button>
-            </form> */}
         </div>
+
 
     );
 }

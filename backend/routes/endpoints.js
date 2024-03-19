@@ -9,7 +9,6 @@ const User = require('../models/User');
 const router = express.Router();
 
 
-
 // Registration endpoint
 router.post('/register', async (req, res) => {
     try {
@@ -20,10 +19,10 @@ router.post('/register', async (req, res) => {
        //Save the user to database
        const newUser = await user.save();
 
-       //create Nutrition model linked to user
-       const nData = { user: newUser._id };
-       const nModel = createModel('nutrition', nData);
-       await nModel.save();
+      /*  //create Nutrition model linked to user
+        const nData = { user: newUser._id };
+        const nModel = createModel('nutrition', nData);
+        await nModel.save(); */
       
        
        //Respond with created user
