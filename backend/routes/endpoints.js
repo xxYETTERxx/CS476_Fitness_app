@@ -3,6 +3,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
+const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
 const User = require('../models/User');
@@ -23,9 +24,11 @@ router.post('/register', async (req, res) => {
        const newUser = await user.save();
 
        //create Nutrition model linked to user
+
        //const nData = { user: newUser._id };
        //const nModel = createModel('nutrition', nData);
        //await nModel.save();
+
       
        
        //Respond with created user
@@ -65,6 +68,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
 //User retrieval endpoint
 router.get('/userRetrieval', async (req, res) => {
   try {
@@ -74,6 +78,13 @@ router.get('/userRetrieval', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
+
+
+
+//Nutrition EndPoint
+router.post('/nutrition', async (req, res) => {
+    
+
 
     /*const nutrition = await Nutrition.findOne({ user: user._id });
     if(!nutrition) {

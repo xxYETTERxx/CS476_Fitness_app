@@ -23,8 +23,10 @@ function App(){
       <Navbar/>
       {/* <Hero/> */}
       {isAuthenticated && <Dashboard/>};
+
       <NutritionalTracker/>
       <div style = {{marginLeft: 20}}>
+
         <SignUp />
         <br/>
         <SignIn setIsAuthenticated={setIsAuthenticated}/>
