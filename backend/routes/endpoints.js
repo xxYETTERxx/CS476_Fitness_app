@@ -65,30 +65,19 @@ router.post('/login', async (req, res) => {
 //Dashboard data endpoint
 router.get('/dashboard', async (req, res) => {
   try {
-    console.log("dashboard request");
     const token = req.headers.authorization.split(' ')[1];
-    console.log("Extrcted Token:", token);
     const decoded = jwt.verify(token, secretKey); 
    
-    console.log("Decoded UserID:", decoded.userId);
     const user = await User.findById(decoded.userId).select('-password');
-    console.log("User Found:", user);
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
-    console.log("userId = ", user._id);
-    /*const nutrition = await Nutrition.findOne({ user: user._id });
-    if(!nutrition) {
-      return res.status(404).json(({ error: 'Nutrition data not found'}))
-    }
-    console.log("Nutrition found:", nutrition);
-    */
-    // Send back the data needed for the dashboard
+    console.log('usertype',user.userType);
     res.json({
       userName: user.userName,
-      //calorieIntake: nutrition.calorieIntake,
-      // add waterIntake when dashboard has the field
+      avatar: user.avatar,
+      userType: user.userType
+
     });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
