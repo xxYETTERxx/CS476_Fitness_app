@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NutritionalTracker from './components/NutritionalTracker';
 
 
 
@@ -48,6 +49,8 @@ function App() {
 
         {/* <Hero/> */}
         {isAuthenticated && <Dashboard />}
+        <NutritionalTracker />
+
         <div>
           <SignUp />
           <br />

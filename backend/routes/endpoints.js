@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
+const Nutrition = require('../models/Nutrition');
 
 
 const router = express.Router();
@@ -88,30 +89,52 @@ router.get('/dashboard', async (req, res) => {
   }
 });
 
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, secretKey); 
+    const user = await User.findById(decoded.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Send back user data
+    res.json({
+      user: user
+    });
+
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      res.status(401).json({ error: 'Session has expired, please log in again' });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
+  }
+});
+
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
-    const { userId, calIn, watIn } = req.body;
-
-    try {
-      const user = await _id.findOne({ userId: userId});
-      if (!user) {
-         return res.status(404).send('User not found');
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch){
-         return res.status(401).send('Invalid Password');
-      }
-
-      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '2h' });
+    
+  try {
+      const { user, calorieIntake, waterIntake } = req.body;
       
-      //return token
-      res.json({ token, email: user.email });
+      const newNutritionEntry = new Nutrition({
+         user: user,
+         calorieIntake: parseInt(calorieIntake, 10),
+         waterIntake: parseInt(waterIntake, 10),
+         date: new Date()
+      });
+    
+      const savedEntry = await newNutritionEntry.save();
+      console.log('Saved nutrition entry:', savedEntry);
+      res.json(savedEntry);
+      
+      } catch(error){
+        res.status(400).json ({ error: error.message});
+      }
 
-    }  catch (error) {
-       res.status(400).json({ error: error.message});
-    }
 });
 
 module.exports = router;
