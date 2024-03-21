@@ -11,7 +11,6 @@ const { isAlphaLocales } = require('validator');
 const router = express.Router();
 
 
-
 // Registration endpoint
 router.post('/register', async (req, res) => {
     try {
@@ -22,12 +21,10 @@ router.post('/register', async (req, res) => {
        //Save the user to database
        const newUser = await user.save();
 
-       //create Nutrition model linked to user
-
-       //const nData = { user: newUser._id };
-       //const nModel = createModel('nutrition', nData);
-       //await nModel.save();
-
+      /*  //create Nutrition model linked to user
+        const nData = { user: newUser._id };
+        const nModel = createModel('nutrition', nData);
+        await nModel.save(); */
       
        
        //Respond with created user
@@ -73,14 +70,17 @@ router.get('/userRetrieval', async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, secretKey); 
+   
     const user = await User.findById(decoded.userId).select('-password');
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
-    // Send back the data needed for the dashboard
+    console.log('usertype',user.userType);
     res.json({
-      user: user
+      userName: user.userName,
+      avatar: user.avatar,
+      userType: user.userType
+
     });
   } catch (error) {
     if (error.name === 'TokenExpiredError') {

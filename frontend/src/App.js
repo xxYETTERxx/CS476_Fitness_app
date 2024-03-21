@@ -5,33 +5,62 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
 import NutritionalTracker from './components/nutritionTracker';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
 
-function App(){
+function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  useEffect (() => {
+
+  useEffect(() => {
     const token = localStorage.getItem('token');
     console.log('Token from storage: ', token);
-    if (token){
+    if (token) {
       setIsAuthenticated(true);
     }
   }, [])
   return (
-    <div className="App bg-base-100">
-      <Navbar/>
-      {/* <Hero/> */}
-      {isAuthenticated && <Dashboard/>};
 
-      <NutritionalTracker/>
-      <div style = {{marginLeft: 20}}>
 
-        <SignUp />
-        <br/>
-        <SignIn setIsAuthenticated={setIsAuthenticated}/>
+    // <Routes>
+    //   <Route
+    //     path="/"
+    //     element={
+    //       <>
+    //         <Hero />
+    //   />
+    // </Routes>
+
+    <Router>
+      <div className="App bg-base-200">
+        <Navbar />
+
+        <Routes>
+          <Route
+            path='/tester'
+            element={
+              <>
+                <Hero/>
+              </>
+            }
+          
+          />
+        </Routes>
+
+        {/* <Hero/> */}
+        {isAuthenticated && <Dashboard />}
+        <div>
+          <NutritionalTracker/>
+          <div style = {{marginLeft: 20}}></div>
+          
+          <SignUp />
+          <br />
+          <SignIn setIsAuthenticated={setIsAuthenticated} />
+        </div>
       </div>
-    </div>
+    </Router>
+
+
   );
 }
 
