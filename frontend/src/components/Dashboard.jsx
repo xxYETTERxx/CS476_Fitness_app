@@ -6,9 +6,6 @@ import CalorieTracker from './observer.js'
 
 const calorieTracker = new CalorieTracker();
 
-/* setInterval(()=> {
-    calorieTracker.fetchAndUpdateCalories();
-}, 60000); */
 
 const user =null;
 
@@ -66,7 +63,7 @@ const Dashboard = () => {
                 };
                 
 
-                const response = await axios.get('http://localhost:5000/api/auth/dashboard', config);
+                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
                 
                 //update dashboard variables
                 setUsername(response.data.userName);

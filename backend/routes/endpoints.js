@@ -6,7 +6,7 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-const User = require('../models/User');
+
 
 
 const router = express.Router();
