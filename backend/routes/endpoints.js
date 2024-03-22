@@ -6,11 +6,6 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-<<<<<<< HEAD
-=======
-
->>>>>>> 4496bf11ca93dab4a1a307f90df8cbc35d660c9d
-
 
 const router = express.Router();
 
