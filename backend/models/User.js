@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['basic', 'pro'],
         default: 'basic'
-        }
+        },
+    avatar: {
+        type: String,
+    }
+    
     });
 
 
