@@ -26,30 +26,48 @@ function App() {
 
 
     <Router>
-      <div className="App bg-base-200">
+      <div className="App bg-base-100">
+        
         <Navbar />
 
         <Routes>
           <Route
-            path='/tester'
+            path='/'
             element={
               <>
                 <Hero/>
               </>
             }
-          
+          />
+          <Route
+            path='/login'
+            element={
+              <>
+                <SignIn setIsAuthenticated={setIsAuthenticated} />
+              </>
+            }
+          />
+          <Route
+            path='/signup'
+            element={
+              <>
+                <SignUp/>
+                <a href='/dashboard'>temp dashboard link</a>
+              </>
+            }
+          />
+          <Route
+            path='/dashboard'
+            element={
+              <>
+                <Dashboard/>
+              </>
+            }
           />
         </Routes>
 
         {/* add your component in here*/}
         {isAuthenticated && <Dashboard />}
-        <NutritionalTracker />    
-        <div>
-          <SignUp />
-          <br />
-          <SignIn setIsAuthenticated={setIsAuthenticated} />
-        </div>
-
       </div>
     </Router>
 
