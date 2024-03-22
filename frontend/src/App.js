@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
 import NutritionalTracker from './components/nutritionTracker';
-
+import CalorieCalculator from './components/CalorieCalculator';
 
 
 function App(){
@@ -22,8 +22,8 @@ function App(){
     <div className="App bg-base-100">
       <Navbar/>
       {/* <Hero/> */}
+      <CalorieCalculator/>
       {isAuthenticated && <Dashboard/>};
-
       <NutritionalTracker/>
       <div style = {{marginLeft: 20}}>
 
