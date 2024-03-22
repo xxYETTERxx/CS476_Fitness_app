@@ -4,9 +4,11 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NutritionalTracker from './components/NutritionalTracker';
 //add your import here
+
 
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
     }
   }, [])
   return (
+
 
 
     <Router>
@@ -46,6 +49,7 @@ function App() {
           <br />
           <SignIn setIsAuthenticated={setIsAuthenticated} />
         </div>
+
       </div>
     </Router>
 

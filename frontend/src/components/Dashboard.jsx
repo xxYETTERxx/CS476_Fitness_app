@@ -65,6 +65,7 @@ const Dashboard = () => {
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
+
                 const response = await axios.get('http://localhost:5000/api/auth/dashboard', config);
                 
                 //update dashboard variables
@@ -72,6 +73,7 @@ const Dashboard = () => {
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
                 console.log("usertype", userType);
+
                 
                 
             }catch (error){
