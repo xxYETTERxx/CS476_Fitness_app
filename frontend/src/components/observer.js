@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 class Subject {
     constructor() {
@@ -25,17 +26,44 @@ class CalorieTracker extends Subject {
     }
 
     async fetchAndUpdateCalories(){
-        
-        try {
-            const intakeResponse = await fetch('http://localhost:5000/api/auth/nutritionIntake');
-            const burnResponse = await fetch('http://localhost:5000/api/auth/calorieBurn');
-            const intakeData = await intakeResponse.json();
-            const burnData = await burnResponse.json();
-        
 
-        this.calorieIntake = intakeData.calorieIntake;
-        this.calorieBurn = burnData.calorieBurn;
-        this.waterIntake = intakeData.waterIntake;
+        try {
+            const token = localStorage.getItem('token');
+                if (!token){
+                    console.log("No token found");
+                    return;
+                }
+                const config = {
+                    headers: { Authorization: `Bearer ${token}`}
+                };
+                
+            const userResponse = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+            const user = userResponse.data.user._id;
+
+            const endDate = moment().format('YYYY-MM-DD');
+            const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+
+            console.log('startDate',startDate);
+            console.log('user:', user);
+            
+
+            const intakeResponse = await axios.get('http://localhost:5000/api/auth/nutritionIntake', {
+            params: {
+                user,
+                startDate,
+                endDate
+            }
+        });
+
+            const intakeData = await intakeResponse.data;
+        
+        //console.log('Nutritional Data', intakeData);
+
+        for (const calories in intakeData){
+            this.calorieIntake += calories;
+        }
+        //this.calorieBurn = burnData.calorieBurn;
+        //this.waterIntake = intakeData.waterIntake;
         this.notifyObservers();
         } catch (error) {
             console.error('Failed to fetch data', error);
@@ -44,7 +72,7 @@ class CalorieTracker extends Subject {
 
     notifyObservers() {
         for (const observer of this.observers) {
-            observer.update(this.calories);
+            observer.update(this.calorieIntake/*,this.calorieBurn,this.waterIntake*/);
         }
     }
 }

@@ -6,7 +6,7 @@ import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NutritionalTracker from './components/NutritionalTracker';
-
+//add your import here
 
 
 function App() {
@@ -21,15 +21,6 @@ function App() {
   }, [])
   return (
 
-
-    // <Routes>
-    //   <Route
-    //     path="/"
-    //     element={
-    //       <>
-    //         <Hero />
-    //   />
-    // </Routes>
 
     <Router>
       <div className="App bg-base-200">
@@ -47,10 +38,9 @@ function App() {
           />
         </Routes>
 
-        {/* <Hero/> */}
+        {/* add your component in here*/}
         {isAuthenticated && <Dashboard />}
-        <NutritionalTracker />
-
+        <NutritionalTracker />    
         <div>
           <SignUp />
           <br />

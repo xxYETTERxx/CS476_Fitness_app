@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import CalorieTracker from './observer';
 
 function NutritionalTracker(){
     const [selectedOption, setSelectedOption] = useState(null);
@@ -8,6 +9,9 @@ function NutritionalTracker(){
 
     const [waterIntake, setWaterIntake] = useState('');
     const [foodType, setFoodType] = useState('');
+
+    const calorieTracker = new CalorieTracker();
+
     /*const [foodInput, setFoodInput] = useState ({
         calories: '',
         waterIntake:'',
@@ -41,7 +45,6 @@ function NutritionalTracker(){
                 };
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                console.log(response.data.user._id);
                 const user = response.data.user;
                 console.log("calorieIntake:", calorieIntake);
                 console.log("waterIntake:", waterIntake);
@@ -57,11 +60,13 @@ function NutritionalTracker(){
 
             if(response1.status===200 || response1.status ===201) {
 
+                calorieTracker.fetchAndUpdateCalories();
                 alert('Submission Succesful!');
 
                 setCalories('');
                 setWaterIntake('');
                 setFoodType('');
+
 
             }
 

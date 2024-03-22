@@ -128,7 +128,6 @@ router.post('/nutrition', async (req, res) => {
       });
     
       const savedEntry = await newNutritionEntry.save();
-      console.log('Saved nutrition entry:', savedEntry);
       res.json(savedEntry);
       
       } catch(error){
@@ -136,5 +135,31 @@ router.post('/nutrition', async (req, res) => {
       }
 
 });
+
+//NutritionRetrieve Endpoint
+
+router.get('/nutritionIntake', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    const entries = await Nutrition.find({
+      user: user,
+      date: {
+        $gte: startDate,
+        $lt: endDate
+      }
+    });
+    console.log(entries);
+    entries.forEach(entry => {
+      console.log(entry);
+    });
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Nutrition Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
 
 module.exports = router;
