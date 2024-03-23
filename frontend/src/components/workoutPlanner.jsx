@@ -33,7 +33,7 @@ function WorkoutPlanner() {
                 description
             };
             console.log("sending request");
-            const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
+            const response1 = await axios.post('http://localhost:5000/api/auth/workoutPlanner',userData);
             console.log("Response recieved: ", response1.status);
 
             if(response1.status===200 || response1.status ===201) {

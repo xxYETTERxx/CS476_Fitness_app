@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import WorkoutPlanner from './components/WorkoutPlanner';
 
 
 
@@ -47,11 +48,12 @@ function App() {
         </Routes>
 
         {/* <Hero/> */}
-        {isAuthenticated && <Dashboard />}
+        {/*isAuthenticated && <Dashboard />*/}
         <div>
-          <SignUp />
+          {/*<SignUp />*/}
           <br />
           <SignIn setIsAuthenticated={setIsAuthenticated} />
+          <WorkoutPlanner />
         </div>
       </div>
     </Router>
