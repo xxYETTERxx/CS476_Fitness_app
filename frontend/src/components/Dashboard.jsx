@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import blankUser from '../images/blankUser.png'
-import scale from '../images/scale.png'
+//import scale from '../images/scale.png'
 import CalorieTracker from './observer.js'
 
 const calorieTracker = new CalorieTracker();
@@ -106,7 +106,7 @@ const Dashboard = () => {
                             <button className="btn btn-square scaleButton">
                                 <div className="indicator">
                                     <span className="indicator-item indicator-bottom badge badge-success scaleBadge">+</span>
-                                    <img src={scale} alt="scale" />
+                                    {/*<img src={scale} alt="scale" />*/}
                                 </div>
                             </button>
                         </div>
