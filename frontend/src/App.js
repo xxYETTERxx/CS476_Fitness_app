@@ -42,10 +42,10 @@ function App() {
         </Routes>
 
         {/* add your component in here*/}
-        {isAuthenticated && <Dashboard />}
-        <NutritionalTracker />    
+        {<Dashboard />}
+        {/* <NutritionalTracker />   */}  
         <div>
-          <SignUp />
+       {/*    <SignUp /> */}
           <br />
           <SignIn setIsAuthenticated={setIsAuthenticated} />
         </div>
