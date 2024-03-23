@@ -10,8 +10,9 @@ const calorieTracker = new CalorieTracker();
 const user =null;
 
 const Dashboard = () => {
+    
     const [username, setUsername] = useState('Bob Build');
-    const [avatar, setAvatar] = useState('blankUser');
+    const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
 
     const CalorieIntakeComponent = () => {
