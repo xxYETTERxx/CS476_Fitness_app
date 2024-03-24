@@ -45,14 +45,18 @@ function NutritionalTracker(){
                 };
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+                console.log(response.data.user);
                 const user = response.data.user;
+                const date = Date.now();
+                console.log(user); 
                 console.log("calorieIntake:", calorieIntake);
                 console.log("waterIntake:", waterIntake);
             
             const userData = {
                 user,
                 calorieIntake,
-                waterIntake
+                waterIntake,
+                date
             };
             console.log("sending request");
             const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);

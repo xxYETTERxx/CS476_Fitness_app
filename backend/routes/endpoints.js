@@ -7,8 +7,6 @@ const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
 
-
-
 const router = express.Router();
 
 
@@ -70,39 +68,13 @@ router.get('/userRetrieval', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    console.log('usertype',user.userType);
     res.json({
+      user: user._id,
       userName: user.userName,
       avatar: user.avatar,
       userType: user.userType
-
-
     });
     
-  } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      res.status(401).json({ error: 'Session has expired, please log in again' });
-    } else {
-      res.status(400).json({ error: error.message });
-    }
-  }
-});
-
-//User retrieval endpoint
-router.get('/userRetrieval', async (req, res) => {
-  try {
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, secretKey); 
-    const user = await User.findById(decoded.userId).select('-password');
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Send back user data
-    res.json({
-      user: user
-    });
-
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       res.status(401).json({ error: 'Session has expired, please log in again' });
@@ -144,14 +116,20 @@ router.get('/nutritionIntake', async (req, res) =>{
   try{
     const {user, startDate, endDate} = req.query;
 
+    console.log("user", user);
+    console.log("StartDate:",startDate);
+    console.log("enddate:",endDate);
+
     const entries = await Nutrition.find({
       user: user,
       date: {
-        $gte: startDate,
-        $lt: endDate
+        $gte: new Date(startDate),
+        $lt: new Date(new Date(endDate).setUTCHours(232, 59, 59, 999))
       }
     });
+
     console.log(entries);
+
     entries.forEach(entry => {
       console.log(entry);
     });

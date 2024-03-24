@@ -7,7 +7,6 @@ import Dashboard from './components/Dashboard';
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NutritionalTracker from './components/NutritionalTracker';
-//add your import here
 
 
 
@@ -41,17 +40,17 @@ function App() {
           />
         </Routes>
 
-        {/* add your component in here*/}
+        {/* add your component in here*/}girt 
         {<Dashboard />}
-        {/* <NutritionalTracker />   */}  
+        {<NutritionalTracker />}  
         <div>
-       {/*    <SignUp /> */}
+       {    <SignUp /> }
           <br />
           <SignIn setIsAuthenticated={setIsAuthenticated} />
         </div>
 
       </div>
-    </Router>
+    //</Router>
 
 
   );

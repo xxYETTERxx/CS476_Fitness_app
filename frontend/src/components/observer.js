@@ -25,8 +25,12 @@ class CalorieTracker extends Subject {
         
     }
 
-    async fetchAndUpdateCalories(){
+    async fetchAndUpdateCalories(/*timePeriod*/){
 
+        /* const startDate;
+        switch(timePeriod)
+            case 'day' */
+        
         try {
             const token = localStorage.getItem('token');
                 if (!token){
@@ -38,12 +42,14 @@ class CalorieTracker extends Subject {
                 };
                 
             const userResponse = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-            const user = userResponse.data.user._id;
+            const user = userResponse.data.user;
+            console.log(user);
 
             const endDate = moment().format('YYYY-MM-DD');
             const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
 
             console.log('startDate',startDate);
+            console.log('endDate',endDate);
             console.log('user:', user);
             
 
@@ -57,13 +63,13 @@ class CalorieTracker extends Subject {
 
             const intakeData = await intakeResponse.data;
         
-        //console.log('Nutritional Data', intakeData);
-
-        for (const calories in intakeData){
-            this.calorieIntake += calories;
+        for (const entry in intakeData)
+        {
+            console.log('Nutritional Data', entry);
         }
-        //this.calorieBurn = burnData.calorieBurn;
-        //this.waterIntake = intakeData.waterIntake;
+        
+        console.log('Nutritional Data', intakeData);
+
         this.notifyObservers();
         } catch (error) {
             console.error('Failed to fetch data', error);

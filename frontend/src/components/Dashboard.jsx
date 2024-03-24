@@ -20,7 +20,7 @@ const Dashboard = () => {
 
         useEffect(() => {
             const observer = {
-                update: (intake, burn) => {
+                update: (intake, water, burn) => {
                     setCalorieIntake(intake);
                 },
             };
@@ -37,7 +37,7 @@ const Dashboard = () => {
     
             useEffect(() => {
                 const observer = {
-                    update: (intake, burn) => {
+                    update: (intake, water, burn) => {
                         setCalorieBurn(burn);
                     },
                 };
@@ -70,7 +70,6 @@ const Dashboard = () => {
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
-                console.log("usertype", userType);
 
                 
                 
