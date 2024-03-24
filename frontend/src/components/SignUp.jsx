@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import logo from '../images/gg11.png'
+import resizeImage from '../functions/resizeImage'
 
 
 function SignUp() {
@@ -13,6 +14,22 @@ function SignUp() {
 
     const handleAvatarChange = (event) => {
         const file = event.target.files[0];
+    if (file) {
+        const maxWidth = 256; 
+        const maxHeight = 256; 
+        const quality = 0.7; // Between 0-1
+
+        resizeImage(file, maxWidth, maxHeight, quality, (resizedBlob) => {
+            const resizedURL = URL.createObjectURL(resizedBlob);
+
+            // Use the resized image for the avatar
+            setAvatar(resizedURL);
+            setAvatarURL(resizedURL);
+        });
+    }
+};
+
+/* const file = event.target.files[0];
         if (file){
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -21,7 +38,7 @@ function SignUp() {
             };
         reader.readAsDataURL(file);
         }
-    }
+    } */
     
     const handleSubmit = async (event) => {
         event.preventDefault();
