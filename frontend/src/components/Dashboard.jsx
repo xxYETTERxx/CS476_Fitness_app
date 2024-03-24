@@ -2,29 +2,28 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import blankUser from '../images/blankUser.png'
 import scale from '../images/scale.png'
-import CalorieTracker from './observer.js'
-
-const calorieTracker = new CalorieTracker();
-
+import calorieTracker from './observer.js'
 
 const user =null;
 
 const Dashboard = () => {
     
+    calorieTracker.fetchAndUpdateCalories();
+
     const [username, setUsername] = useState('Bob Build');
     const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
 
     const CalorieIntakeComponent = () => {
-        const [calorieIntake, setCalorieIntake] = useState(2000);
+        const [calorieIntake, setCalorieIntake] = useState(0);
 
         useEffect(() => {
             const observer = {
-                update: (intake, water, burn) => {
-                    setCalorieIntake(intake);
+                update: (totalCalories, water, burn) => {
+                    setCalorieIntake(totalCalories);
                 },
             };
-
+            
             calorieTracker.subscribe(observer);
             return () => calorieTracker.unsubscribe(observer);
             },[]);
@@ -33,12 +32,12 @@ const Dashboard = () => {
         };
 
         const CalorieBurnComponent = () => {
-            const [calorieBurn, setCalorieBurn] = useState(1300);
+            const [totalBurn, setTotalBurn] = useState(200);
     
             useEffect(() => {
                 const observer = {
-                    update: (intake, water, burn) => {
-                        setCalorieBurn(burn);
+                    update: (intake, water, totalBurn) => {
+                        setTotalBurn(200);
                     },
                 };
     
@@ -46,9 +45,27 @@ const Dashboard = () => {
                 return () => calorieTracker.unsubscribe(observer);
                 },[]);
                 
-                return <div> {calorieBurn} </div>;
+                return <div> {totalBurn} </div>;
             };
+
+        const WaterIntakeComponent = () => {
+            const [waterIntake, setWaterIntake] = useState(0);
     
+            useEffect(() => {
+                const observer = {
+                    update: (intake, totalWater, burn) => {
+                        setWaterIntake(totalWater);
+                    },
+                };
+    
+                calorieTracker.subscribe(observer);
+                return () => calorieTracker.unsubscribe(observer);
+                },[]);
+                
+                return <div> {waterIntake} </div>;
+            };
+
+      
     
     useEffect(() =>{
         //retrieve user data
@@ -129,7 +146,7 @@ const Dashboard = () => {
                     <div className='flex justify-between pb-3'>
                         <div className='flex flex-col w-full pl-2'>
                             <div>
-                                <text className='text-xl font-semibold'>2000</text>
+                                <text className='text-xl font-semibold'><WaterIntakeComponent /></text>
                             </div>
                             <caption className='text-sm flex'>WATER INTAKE</caption>
                         </div>
@@ -143,7 +160,7 @@ const Dashboard = () => {
                         </div>
                         <div className='flex flex-col w-full pl-2'>
                         <div className='flex'>
-                        <text className='w-2/3 text-xl font-semibold'>1200</text>
+                        <text className='w-2/3 text-xl font-semibold'><CalorieBurnComponent /></text>
                                 <text className='text-xl font-semibold'>=</text>
                             </div>
                             <caption className='text-sm flex'>CAL BURN</caption>

@@ -124,15 +124,10 @@ router.get('/nutritionIntake', async (req, res) =>{
       user: user,
       date: {
         $gte: new Date(startDate),
-        $lt: new Date(new Date(endDate).setUTCHours(232, 59, 59, 999))
+        $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
       }
     });
 
-    console.log(entries);
-
-    entries.forEach(entry => {
-      console.log(entry);
-    });
 
     res.json(entries);
 

@@ -20,7 +20,7 @@ class CalorieTracker extends Subject {
     constructor() {
         super();
         this.waterIntake = 0;
-        this.calorieIntake = 0;
+        this.totalCalories = 0;
         this.calorieBurn = 0;
         
     }
@@ -43,7 +43,7 @@ class CalorieTracker extends Subject {
                 
             const userResponse = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
             const user = userResponse.data.user;
-            console.log(user);
+            
 
             const endDate = moment().format('YYYY-MM-DD');
             const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
@@ -62,15 +62,21 @@ class CalorieTracker extends Subject {
         });
 
             const intakeData = await intakeResponse.data;
+            let totalCalories = 0;
+            let totalWater = 0;
         
-        for (const entry in intakeData)
+        for (const entry of intakeData)
         {
-            console.log('Nutritional Data', entry);
+            totalCalories += entry.calorieIntake;
+            totalWater += entry.waterIntake;
+            
         }
         
-        console.log('Nutritional Data', intakeData);
+        this.totalCalories = totalCalories;
+        this.totalWater = totalWater;
 
         this.notifyObservers();
+
         } catch (error) {
             console.error('Failed to fetch data', error);
         }
@@ -78,7 +84,7 @@ class CalorieTracker extends Subject {
 
     notifyObservers() {
         for (const observer of this.observers) {
-            observer.update(this.calorieIntake/*,this.calorieBurn,this.waterIntake*/);
+            observer.update(this.totalCalories,this.totalWater);/*,this.calorieBurn,this.waterIntake*/
         }
     }
 }
@@ -86,4 +92,5 @@ class CalorieTracker extends Subject {
 //Observer interface expects an update function
 // function update(calories){}
 
-export default CalorieTracker;
+const calorieTrackerInstance = new CalorieTracker();
+export default calorieTrackerInstance;

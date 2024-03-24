@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import CalorieTracker from './observer';
+import calorieTracker from './observer';
 
 function NutritionalTracker(){
     const [selectedOption, setSelectedOption] = useState(null);
@@ -10,7 +10,6 @@ function NutritionalTracker(){
     const [waterIntake, setWaterIntake] = useState('');
     const [foodType, setFoodType] = useState('');
 
-    const calorieTracker = new CalorieTracker();
 
     /*const [foodInput, setFoodInput] = useState ({
         calories: '',
