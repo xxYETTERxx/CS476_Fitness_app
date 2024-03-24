@@ -45,7 +45,7 @@ function NutritionalTracker(){
 
                 setCalories('');
                 setWaterIntake('');
-                setFoodType('');
+                //setFoodType('');
 
             }
 

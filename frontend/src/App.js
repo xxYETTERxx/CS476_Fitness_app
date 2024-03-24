@@ -48,12 +48,12 @@ function App() {
         </Routes>
 
         {/* <Hero/> */}
-        {isAuthenticated && <Dashboard />}
+        {/* {isAuthenticated && <Dashboard />} */}
         <div>
           <NutritionalTracker/>
           <div style = {{marginLeft: 20}}></div>
           
-          <SignUp />
+         {/*  <SignUp /> */}
           <br />
           <SignIn setIsAuthenticated={setIsAuthenticated} />
         </div>
