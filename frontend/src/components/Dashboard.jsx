@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import blankUser from '../images/blankUser.png'
 import scale from '../images/scale.png'
-import calorieTracker from './observer.js'
+import calorieTracker from '../functions/observer.js'
 
 const user =null;
 
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
         useEffect(() => {
             const observer = {
-                update: (totalCalories, water, burn) => {
+                update: (totalCalories, water, burn, net) => {
                     setCalorieIntake(totalCalories);
                 },
             };
@@ -32,12 +32,12 @@ const Dashboard = () => {
         };
 
         const CalorieBurnComponent = () => {
-            const [totalBurn, setTotalBurn] = useState(200);
+            const [totalBurn, setTotalBurn] = useState(0);
     
             useEffect(() => {
                 const observer = {
-                    update: (intake, water, totalBurn) => {
-                        setTotalBurn(200);
+                    update: (intake, water, totalBurn, net) => {
+                        setTotalBurn(totalBurn);
                     },
                 };
     
@@ -53,7 +53,7 @@ const Dashboard = () => {
     
             useEffect(() => {
                 const observer = {
-                    update: (intake, totalWater, burn) => {
+                    update: (intake, totalWater, burn, net) => {
                         setWaterIntake(totalWater);
                     },
                 };
@@ -64,6 +64,24 @@ const Dashboard = () => {
                 
                 return <div> {waterIntake} </div>;
             };
+        
+        const NetCalorieComponent = () => {
+            const [netCalorie, setNetCalorie] = useState(0);
+    
+            useEffect(() => {
+                const observer = {
+                    update: (intake, totalWater, burn, totalNet) => {
+                        setNetCalorie(totalNet);
+                    },
+                };
+    
+                calorieTracker.subscribe(observer);
+                return () => calorieTracker.unsubscribe(observer);
+                },[]);
+                
+                return <div> {netCalorie} </div>;
+            };    
+        
 
       
     
@@ -167,9 +185,9 @@ const Dashboard = () => {
                         </div>
                         <div className='flex flex-col w-full pl-2'>
                             <div>
-
+                            <text className='text-xl font-semibold'><NetCalorieComponent /></text>
                             </div>
-                            <text className='text-xl font-semibold'>2300</text>
+                            
                         </div>
                     </div>
                     {/* <progress className="progress progress-primary w-full h-3 mb-1" value="70" max="100"></progress>

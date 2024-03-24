@@ -19,9 +19,10 @@ class Subject {
 class CalorieTracker extends Subject {
     constructor() {
         super();
-        this.waterIntake = 0;
+        this.totaWater = 0;
         this.totalCalories = 0;
-        this.calorieBurn = 0;
+        this.totalBurn = 0;
+        this.totalNet = 0;
         
     }
 
@@ -64,6 +65,7 @@ class CalorieTracker extends Subject {
             const intakeData = await intakeResponse.data;
             let totalCalories = 0;
             let totalWater = 0;
+            let totalBurn = 1000;
         
         for (const entry of intakeData)
         {
@@ -74,6 +76,9 @@ class CalorieTracker extends Subject {
         
         this.totalCalories = totalCalories;
         this.totalWater = totalWater;
+        this.totalBurn = totalBurn;
+        this.totalNet = totalCalories - totalBurn;
+        
 
         this.notifyObservers();
 
@@ -84,7 +89,7 @@ class CalorieTracker extends Subject {
 
     notifyObservers() {
         for (const observer of this.observers) {
-            observer.update(this.totalCalories,this.totalWater);/*,this.calorieBurn,this.waterIntake*/
+            observer.update(this.totalCalories,this.totalWater,this.totalBurn,this.totalNet);/*,this.calorieBurn,this.waterIntake*/
         }
     }
 }
