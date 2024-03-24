@@ -4,7 +4,10 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NutritionalTracker from './components/NutritionalTracker';
+//add your import here
 
 
 
@@ -21,14 +24,6 @@ function App() {
   return (
 
 
-    // <Routes>
-    //   <Route
-    //     path="/"
-    //     element={
-    //       <>
-    //         <Hero />
-    //   />
-    // </Routes>
 
     <Router>
       <div className="App bg-base-100">
@@ -71,7 +66,7 @@ function App() {
           />
         </Routes>
 
-        {/* <Hero/> */}
+        {/* add your component in here*/}
         {isAuthenticated && <Dashboard />}
       </div>
     </Router>

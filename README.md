@@ -22,7 +22,7 @@ The Fitness Tracker App is a web-based application designed to help individuals 
 
 ### Installation
 1. **Clone the repo**
-   git clone https://github.com/xxYETTERxx/fitness-tracker-app.git
+   git clone https://github.com/xxYETTERxx/CS476_Fitness_app.git
 2. **Install NPM packages**
    - navigate to the frontend directory and install the necessary packages using: npm install
    - navigate to the backend directory and install the necessary packages using: npm install

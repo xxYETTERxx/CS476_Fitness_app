@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const activitySchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     activity: {type: String},
-    caloriesBurned: {type: Number, default: 0}
+    caloriesBurned: {type: Number, default: 0},
+     date: { type: Date, default: Date.now }
 });
 
 const Activity = mongoose.model('Activity', activitySchema);

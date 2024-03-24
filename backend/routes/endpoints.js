@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
-
+const Nutrition = require('../models/Nutrition');
+const { isAlphaLocales } = require('validator');
 
 const router = express.Router();
 
@@ -19,12 +20,6 @@ router.post('/register', async (req, res) => {
        //Save the user to database
        const newUser = await user.save();
 
-      /*  //create Nutrition model linked to user
-        const nData = { user: newUser._id };
-        const nModel = createModel('nutrition', nData);
-        await nModel.save(); */
-      
-       
        //Respond with created user
        res.status(201).json({ user: newUser.id, email: newUser.email, userType: newUser.userType });
     }  catch (error) {
@@ -62,34 +57,50 @@ router.post('/login', async (req, res) => {
     }
 });
 
-//Dashboard data endpoint
-router.get('/dashboard', async (req, res) => {
+
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
   try {
-    console.log("dashboard request");
     const token = req.headers.authorization.split(' ')[1];
-    console.log("Extrcted Token:", token);
     const decoded = jwt.verify(token, secretKey); 
-   
-    console.log("Decoded UserID:", decoded.userId);
+
     const user = await User.findById(decoded.userId).select('-password');
-    console.log("User Found:", user);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    console.log('usertype',user.userType);
+    res.json({
+      userName: user.userName,
+      avatar: user.avatar,
+      userType: user.userType
+
+
+    });
+    
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      res.status(401).json({ error: 'Session has expired, please log in again' });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
+  }
+});
+
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, secretKey); 
+    const user = await User.findById(decoded.userId).select('-password');
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    console.log("userId = ", user._id);
-    /*const nutrition = await Nutrition.findOne({ user: user._id });
-    if(!nutrition) {
-      return res.status(404).json(({ error: 'Nutrition data not found'}))
-    }
-    console.log("Nutrition found:", nutrition);
-    */
-    // Send back the data needed for the dashboard
+    // Send back user data
     res.json({
-      userName: user.userName,
-      //calorieIntake: nutrition.calorieIntake,
-      // add waterIntake when dashboard has the field
+      user: user
     });
+
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       res.status(401).json({ error: 'Session has expired, please log in again' });
@@ -102,27 +113,53 @@ router.get('/dashboard', async (req, res) => {
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
-    const { userId, calIn, watIn } = req.body;
-
-    try {
-      const user = await _id.findOne({ userId: userId});
-      if (!user) {
-         return res.status(404).send('User not found');
-      }
-
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch){
-         return res.status(401).send('Invalid Password');
-      }
-
-      const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '2h' });
+    
+  try {
+      const { user, calorieIntake, waterIntake } = req.body;
       
-      //return token
-      res.json({ token, email: user.email });
+      const newNutritionEntry = new Nutrition({
+         user: user,
+         calorieIntake: parseInt(calorieIntake, 10),
+         waterIntake: parseInt(waterIntake, 10),
+         date: new Date()
+      });
+    
+      const savedEntry = await newNutritionEntry.save();
 
-    }  catch (error) {
-       res.status(400).json({ error: error.message});
-    }
+      res.json(savedEntry);
+      
+      } catch(error){
+        res.status(400).json ({ error: error.message});
+      }
+
+
 });
+
+//NutritionRetrieve Endpoint
+
+router.get('/nutritionIntake', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    const entries = await Nutrition.find({
+      user: user,
+      date: {
+        $gte: startDate,
+        $lt: endDate
+      }
+    });
+    console.log(entries);
+    entries.forEach(entry => {
+      console.log(entry);
+    });
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Nutrition Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
+
 
 module.exports = router;
