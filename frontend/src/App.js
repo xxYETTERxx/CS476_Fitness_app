@@ -4,7 +4,7 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
-import NutritionalTracker from './components/nutritionTracker';
+import NutritionalTracker from './components/NutritionTracker';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 

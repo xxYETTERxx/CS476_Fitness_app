@@ -7,23 +7,7 @@ function NutritionalTracker(){
     const [calorieIntake, setCalories] = useState('');
 
     const [waterIntake, setWaterIntake] = useState('');
-    const [foodType, setFoodType] = useState('');
-    /*const [foodInput, setFoodInput] = useState ({
-        calories: '',
-        waterIntake:'',
-        foodType:''
-});*/
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
-
-            if (name === "foodType"){
-                setFoodType(value);
-            
-            }
-
-
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -111,12 +95,30 @@ function NutritionalTracker(){
                                         <label for="typeConsumed">Food Type:</label>
                                             <select className="select select-primary w-full max-w-xs" value={selectedOption} onChange={(e) => handleOptionSelect(e.target.value)}>
                                                 <option value="">Select...</option>
-                                                <option value="option1">Chicken</option>
-                                                <option value="option2">Beef</option>
-                                                <option value="option3">Duck</option>
-                                                <option value="option4">Pork</option>
-                                                <option value="option5">Tuna</option>
-                                                <option value="option6">Sheep</option>
+                                                <optgroup lable = "Meat">
+                                                    <option value="Chicken">Chicken</option>
+                                                    <option value="Beef">Beef</option>
+                                                    <option value="Pork">Pork</option>
+                                                    <option value="Tuna">Tuna</option>
+                                                </optgroup>
+                                                <optgroup lable = "Vegtables">
+                                                    <option value="Broccoli">Broccoli</option>
+                                                    <option value="Cabbage">Cabbage</option>
+                                                    <option value="Carrots">Carrots</option>
+                                                    <option value="Green Beans">Green Beans</option>
+                                                    <option value="Onions">Onions</option>
+                                                    <option value="Spinach">Spinach</option>
+                                                </optgroup>
+                                                <optgroup lable = "Fruit">
+                                                    <option value="Apple">Apple</option>
+                                                    <option value="Orange">Orange</option>
+                                                    <option value="Banana">Banana</option>
+                                                    <option value="Pineapple">Pineapple</option>
+                                                    <option value="Kiwi">Kiwi</option>
+                                                    <option value="Grapefruit">Grapefruit</option>
+                                                </optgroup>
+                                     
+                                                                                         
                                             </select>
                                 
                                             {selectedOption && (
