@@ -13,6 +13,9 @@ import NutritionalTracker from './components/NutritionalTracker';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [nutritionActive, setNutritionActive] = useState(false);
+  const [workoutActive, setWorkoutActive] = useState(false);
+  const [activityActive, setActivityActive] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -31,14 +34,28 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route
+          {
+            isAuthenticated ?
+            <Route
+            path='/dashboard'
+            element={
+              <>
+                <Dashboard setNutritionActive = {setNutritionActive}/>
+                {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+              </>
+            }
+          />:
+            <Route
             path='/'
             element={
               <>
                 <Hero/>
               </>
             }
-          />
+          />   
+        }
+          
+          
           <Route
             path='/login'
             element={
@@ -52,22 +69,22 @@ function App() {
             element={
               <>
                 <SignUp/>
-                <a href='/dashboard'>temp dashboard link</a>
               </>
             }
           />
+         
           <Route
-            path='/dashboard'
+            path='/nutrition'
             element={
               <>
                 <Dashboard/>
+                <NutritionalTracker/>
               </>
             }
-          />
+            />
         </Routes>
 
-        {/* add your component in here*/}
-        {isAuthenticated && <Dashboard />}
+        {/*isAuthenticated && <Dashboard />*/}
       </div>
     </Router>
 

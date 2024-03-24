@@ -18,7 +18,9 @@ function SignIn({ setIsAuthenticated }) {
             });
             const token = response.data.token;
             localStorage.setItem('token', token); //Store token locally
+            
             setIsAuthenticated(true);
+            window.location.href = '/dashboard';
 
         } catch (error) {
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import CalorieTracker from './observer';
+import CalorieTracker from '../functions/observer';
 
-function NutritionalTracker(){
+function NutritionalTracker({setNutritionActive}){
     const [selectedOption, setSelectedOption] = useState(null);
 
     const [calorieIntake, setCalories] = useState('');
@@ -67,7 +67,8 @@ function NutritionalTracker(){
                 setWaterIntake('');
                 setFoodType('');
 
-
+                setNutritionActive(false);
+                //window.location.href = '/dashboard';
             }
 
         } catch (error) {

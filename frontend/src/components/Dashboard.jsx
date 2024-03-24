@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import blankUser from '../images/blankUser.png'
 //import scale from '../images/scale.png'
-import CalorieTracker from './observer.js'
+import CalorieTracker from '../functions/observer.js'
 
 const calorieTracker = new CalorieTracker();
 
 
 const user =null;
 
-const Dashboard = () => {
+const Dashboard = ({setNutritionActive}) => {
+    
+    const [workoutActive, setWorkoutActive] = useState(false);
+    const [activityActive, setActivityActive] = useState(false);
+
     const [username, setUsername] = useState('Bob Build');
     const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
@@ -80,6 +84,9 @@ const Dashboard = () => {
         fetchUserData(); 
     },[])
 
+    function nActive(){
+        setNutritionActive(true);
+    }
 
     return (
         <div className='flex justify-center pt-5 pb-5'>
@@ -115,7 +122,7 @@ const Dashboard = () => {
                         {/* <h1 className='text-sm'>Calories Remaining:</h1>
                         <text className='text-5xl font-bold text-primary pb-4'>300</text> */}
                         <button className="btn btn-outline btn-neutral w-full mb-4">Exercise</button>
-                        <button className="btn btn-outline btn-neutral w-full mb-4">Food</button>
+                        <button onClick = {nActive} className="btn btn-outline btn-neutral w-full mb-4">Food</button>
                         {
                             userType === 'pro' &&(
                             <button className="btn btn-outline btn-neutral w-full">Workout Planner</button>
@@ -125,7 +132,7 @@ const Dashboard = () => {
 
 
                 </div>
-                <div className='flex flex-col  h-2/6 pt-5'>
+                <div className='flex flex-col  h-2/6 pt-8'>
                     <div className='flex justify-between pb-3'>
                         <div className='flex flex-col w-full pl-2'>
                             <div>
@@ -155,8 +162,6 @@ const Dashboard = () => {
                             <text className='text-xl font-semibold'>2300</text>
                         </div>
                     </div>
-                    {/* <progress className="progress progress-primary w-full h-3 mb-1" value="70" max="100"></progress>
-                    <caption className='text-sm'>70%</caption> */}
                 </div>
 
             </div>
