@@ -13,7 +13,7 @@ function SignUp() {
     const [avatarURL, setAvatarURL] = useState(null);
 
     const handleAvatarChange = (event) => {
-        const file = event.target.files[0];
+        /* const file = event.target.files[0];
     if (file) {
         const maxWidth = 256; 
         const maxHeight = 256; 
@@ -27,9 +27,9 @@ function SignUp() {
             setAvatarURL(resizedURL);
         });
     }
-};
+}; */
 
-/* const file = event.target.files[0];
+const file = event.target.files[0];
         if (file){
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -38,12 +38,11 @@ function SignUp() {
             };
         reader.readAsDataURL(file);
         }
-    } */
+    }
     
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        
             // construct user data
             const userData = {
                 userName,

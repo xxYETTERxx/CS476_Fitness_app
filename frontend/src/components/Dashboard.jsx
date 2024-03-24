@@ -11,7 +11,7 @@ const user =null;
 
 const Dashboard = () => {
     const [username, setUsername] = useState('Bob Build');
-    const [avatar, setAvatar] = useState('blankUser');
+    const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
 
     const CalorieIntakeComponent = () => {
@@ -66,10 +66,10 @@ const Dashboard = () => {
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
                 
                 //update dashboard variables
+                //console.log('avatar',response.date.avatar);
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
-                console.log("usertype", userType);
 
                 
                 
