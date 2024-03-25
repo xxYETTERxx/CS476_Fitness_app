@@ -6,11 +6,6 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-<<<<<<< HEAD
-
-=======
->>>>>>> main
-
 const router = express.Router();
 
 
@@ -24,15 +19,6 @@ router.post('/register', async (req, res) => {
        //Save the user to database
        const newUser = await user.save();
 
-<<<<<<< HEAD
-      /*  //create Nutrition model linked to user
-        const nData = { user: newUser._id };
-        const nModel = createModel('nutrition', nData);
-        await nModel.save(); */
-      
-       
-=======
->>>>>>> main
        //Respond with created user
        res.status(201).json({ user: newUser.id, email: newUser.email, userType: newUser.userType });
     }  catch (error) {
@@ -76,11 +62,7 @@ router.get('/userRetrieval', async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, secretKey); 
-<<<<<<< HEAD
-   
-=======
 
->>>>>>> main
     const user = await User.findById(decoded.userId).select('-password');
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -91,10 +73,7 @@ router.get('/userRetrieval', async (req, res) => {
       avatar: user.avatar,
       userType: user.userType
 
-<<<<<<< HEAD
-=======
 
->>>>>>> main
     });
     
   } catch (error) {
@@ -137,6 +116,7 @@ router.post('/nutrition', async (req, res) => {
   try {
       const { user, calorieIntake, waterIntake } = req.body;
       
+      //createModel('nutrition')
       const newNutritionEntry = new Nutrition({
          user: user,
          calorieIntake: parseInt(calorieIntake, 10),
