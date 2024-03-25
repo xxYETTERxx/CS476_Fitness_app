@@ -12,6 +12,9 @@ import NutritionalTracker from './components/NutritionalTracker';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [nutritionActive, setNutritionActive] = useState(false);
+  const [workoutActive, setWorkoutActive] = useState(false);
+  const [activityActive, setActivityActive] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -22,25 +25,61 @@ function App() {
   }, [])
   return (
 
-
-
     <Router>
-      <div className="App bg-base-200">
+      <div className="App bg-base-100">
+        
         <Navbar />
 
         <Routes>
+          {
+            isAuthenticated ?
+            <Route
+            path='/'
+            element={
+              <>
+                <Dashboard setNutritionActive = {setNutritionActive}/>
+                {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+              </>
+            }
+          />:
           <Route
-            path='/tester'
+            path='/'
             element={
               <>
                 <Hero/>
               </>
             }
+          />
+          }
           
+          <Route
+            path='/login'
+            element={
+              <>
+                <SignIn setIsAuthenticated={setIsAuthenticated} />
+              </>
+            }
+          />
+          <Route
+            path='/signup'
+            element={
+              <>
+                <SignUp/>
+              </>
+            }
+          />
+
+          <Route
+            path='/nutrition'
+            element={
+              <>
+                <Dashboard/>
+                <NutritionalTracker/>
+              </>
+            }
           />
         </Routes>
 
-        {/* add your component in here*/}girt 
         {<Dashboard />}
         {<NutritionalTracker />}  
         <div>
@@ -49,8 +88,11 @@ function App() {
           <SignIn setIsAuthenticated={setIsAuthenticated} />
         </div>
 
+
+        
+        {/*isAuthenticated && <Dashboard setNutritionActive = {setNutritionActive} />*/}
       </div>
-    //</Router>
+    </Router>
 
 
   );

@@ -6,7 +6,6 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-
 const router = express.Router();
 
 
@@ -84,6 +83,30 @@ router.get('/userRetrieval', async (req, res) => {
   }
 });
 
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, secretKey); 
+    const user = await User.findById(decoded.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Send back user data
+    res.json({
+      user: user
+    });
+
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      res.status(401).json({ error: 'Session has expired, please log in again' });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
+  }
+});
+
 
 
 //Nutrition EndPoint
@@ -92,6 +115,7 @@ router.post('/nutrition', async (req, res) => {
   try {
       const { user, calorieIntake, waterIntake } = req.body;
       
+      //createModel('nutrition')
       const newNutritionEntry = new Nutrition({
          user: user,
          calorieIntake: parseInt(calorieIntake, 10),
