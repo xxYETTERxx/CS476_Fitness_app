@@ -3,12 +3,16 @@ import axios from 'axios';
 
 function NutritionalTracker(){
     const [selectedOption, setSelectedOption] = useState(null);
-
     const [calorieIntake, setCalories] = useState('');
-
     const [waterIntake, setWaterIntake] = useState('');
+    const [foodItem, setFoodItem] = useState('');    
+    const [foodList, setFoodList] = useState([]);
 
-
+    const addFood = () => {
+        setFoodList();
+    }    
+    
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -95,13 +99,13 @@ function NutritionalTracker(){
                                         <label for="typeConsumed">Food Type:</label>
                                             <select className="select select-primary w-full max-w-xs" value={selectedOption} onChange={(e) => handleOptionSelect(e.target.value)}>
                                                 <option value="">Select...</option>
-                                                <optgroup lable = "Meat">
+                                                <optgroup label = "Meat">
                                                     <option value="Chicken">Chicken</option>
                                                     <option value="Beef">Beef</option>
                                                     <option value="Pork">Pork</option>
                                                     <option value="Tuna">Tuna</option>
                                                 </optgroup>
-                                                <optgroup lable = "Vegtables">
+                                                <optgroup label = "Vegtables">
                                                     <option value="Broccoli">Broccoli</option>
                                                     <option value="Cabbage">Cabbage</option>
                                                     <option value="Carrots">Carrots</option>
@@ -109,7 +113,7 @@ function NutritionalTracker(){
                                                     <option value="Onions">Onions</option>
                                                     <option value="Spinach">Spinach</option>
                                                 </optgroup>
-                                                <optgroup lable = "Fruit">
+                                                <optgroup label = "Fruit">
                                                     <option value="Apple">Apple</option>
                                                     <option value="Orange">Orange</option>
                                                     <option value="Banana">Banana</option>
@@ -124,7 +128,20 @@ function NutritionalTracker(){
                                             {selectedOption && (
                                                 <p>You selected: {selectedOption}</p>
                                             )}
+
+                                           {/*  <div className="exercise-list">
+                                            <h3>Food List</h3>
+                                            <ul>
+                                            {exerciseList.map((item, index) => (
+                                                <li key={index} className="exercise-item">
+                                                {item.exercise} - {item.duration} minutes
+                                                <button onClick={() => removeExercise(index)}>Remove</button>
+                                                </li>
+                                            ))}
+                                            </ul>
+                                        </div> */}
                                 
+                                <button className="btn btn-neutral" style={{marginRight: 10}}>Add</button> 
                                 <button className="btn btn-neutral" type="submit">Submit</button>  
                                 
                             </div>
