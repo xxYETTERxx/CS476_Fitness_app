@@ -66,7 +66,6 @@ function App() {
             element={
               <>
                 <SignUp/>
-                <a href='/dashboard'>temp dashboard link</a>
               </>
             }
           />

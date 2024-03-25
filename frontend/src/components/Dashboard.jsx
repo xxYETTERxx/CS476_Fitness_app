@@ -84,7 +84,7 @@ const Dashboard = ({setNutritionActive}) => {
     },[])
 
     function nActive(){
-        setNutritionActive(true);
+        setNutritionActive(prevNutritionActive => !prevNutritionActive);
     }
 
     return (

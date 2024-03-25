@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './NutritionTracker.css'
+import '../styles/NutritionTracker.css'
 //import CalorieTracker from './observer';
 
 function NutritionalTracker({setNutritionActive}){
@@ -129,7 +129,7 @@ function NutritionalTracker({setNutritionActive}){
                     <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
                     <div className='flex-container justify-between text-2xl font-medium b h-1/6
                         items-center'>
-                        <h2>Food and Water Consumption</h2> 
+                        <h2 className = "mb-10">Food and Water Consumption</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
                                 <label className="input input-bordered flex items-center gap-2 mb-4" for="waterIntake (in ml)">Water Intake (ml):
