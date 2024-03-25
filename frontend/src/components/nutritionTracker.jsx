@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './NutritionTracker.css'
 
 function NutritionalTracker(){
     const [selectedOption, setSelectedOption] = useState(null);
@@ -8,9 +9,10 @@ function NutritionalTracker(){
     const [foodItem, setFoodItem] = useState('');    
     const [foodList, setFoodList] = useState([]);
 
-    const addFood = () => {
+    const addFoodtoList = () => {
         if(foodItem) {
             setFoodList([...foodList, foodItem]);
+            calculateCalories();
         }
         else
         {
@@ -24,7 +26,11 @@ function NutritionalTracker(){
         foodList.forEach((item) => {
             totalCalories += getCALValues(item);
         });
-        console.log(totalCalories);
+        return totalCalories;
+    }
+
+    const removeAll = () => {
+        setFoodList([]);
     }
 
     const getCALValues = (foodItem) => {
@@ -46,7 +52,14 @@ function NutritionalTracker(){
             Kiwi: 61,
             Grapefruit: 97 
         };
-        return calorieValues; // Default to 1 if MET value is not found
+        return calorieValues[foodItem] || 0; // Default to 1 if MET value is not found
+  };
+
+  // Function to remove an exercise from the list
+  const removeFood = (index) => {
+    const newFoodList = [...foodList];
+    newFoodList.splice(index, 1);
+    setFoodList(newFoodList);
   };
     
     const handleSubmit = async (e) => {
@@ -65,19 +78,21 @@ function NutritionalTracker(){
                 };
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                console.log(response);
-                const user = response.data.user._id;
-                console.log("calorieIntake:", calorieIntake);
-                console.log("waterIntake:", waterIntake);
-            
+                const user = response.data.user;
+               
+                const waterIntakeValue = waterIntake ? parseInt(waterIntake, 10) : 0;
+                const calorieIntakeValue = calorieIntake ? parseInt(calorieIntake, 10) : 0;
+
+                const totalCalories = foodList.length > 0 ? calculateCalories() : 0;
+                console.log("totalCal:",totalCalories);    
+
             const userData = {
                 user,
-                calorieIntake,
-                waterIntake
+                calorieIntake: totalCalories || calorieIntakeValue,
+                waterIntake: waterIntakeValue
             };
             console.log("sending request");
             const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
-            console.log("Response recieved: ", response1.status);
 
             if(response1.status===200 || response1.status ===201) {
 
@@ -85,8 +100,8 @@ function NutritionalTracker(){
 
                 setCalories('');
                 setWaterIntake('');
-                //setFoodType('');
-
+                setFoodItem('');
+                removeAll();
             }
 
         } catch (error) {
@@ -109,8 +124,8 @@ function NutritionalTracker(){
         <div className='flex justify-center pt-20 pb-5'>
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
                 <div className="flex flex-col w-full lg:flex-row">
-                    <div className="grid flex-grow h-35 card bg-base-300 rounded-box place-items-center">
-                    <div className='flex justify-between text-2xl font-medium b h-1/6
+                    <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
+                    <div className='flex-container justify-between text-2xl font-medium b h-1/6
                         items-center'>
                         <h2>Food and Water Consumption</h2> 
                         </div>
@@ -126,7 +141,7 @@ function NutritionalTracker(){
                                 </label>
 
                                 <div>
-                                        <label for="typeConsumed">Food Type:</label>
+                                        <label className ="typeConsumed mr-2">Food Type:</label>
                                             <select className="select select-primary w-full max-w-xs" value={foodItem} onChange={(e) => setFoodItem(e.target.value)}>
                                                 <option value="">Select...</option>
                                                 <optgroup label = "Meat">
@@ -159,22 +174,23 @@ function NutritionalTracker(){
                                                 <p>You selected: {selectedOption}</p>
                                             )} */}
 
-                                           {/*  <div className="exercise-list">
-                                            <h3>Food List</h3>
+                                            
+                                        </div>
+                                
+                                <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button> 
+                                <div className="food-list">
                                             <ul>
-                                            {exerciseList.map((item, index) => (
-                                                <li key={index} className="exercise-item">
-                                                {item.exercise} - {item.duration} minutes
-                                                <button onClick={() => removeExercise(index)}>Remove</button>
+                                            {foodList.map((item, index) => (
+                                                <li key={index} className="flex-containter food-item">
+                                                <span className = "food-name-and-calories">{item} - {getCALValues(item)}</span>
+                                                <button onClick={() => removeFood(index)} className ="btn btn-neutral ml-20 mt-1 " type='button'>Remove</button>
                                                 </li>
                                             ))}
                                             </ul>
-                                        </div> */}
+                                </div>
+                                <button className="btn btn-neutral mr-100 mt-1" type="submit">Submit Calories</button> 
                                 
-                                <button onClick={addFood} className="btn btn-neutral mr-1 mt-1">Add</button> 
-                                <button className="btn btn-neutral" type="submit">Submit</button>  
                                 
-                            </div>
                         
                             </form>
 
