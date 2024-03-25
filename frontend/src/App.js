@@ -4,15 +4,10 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
-<<<<<<< HEAD
-import NutritionalTracker from './components/NutritionTracker';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-=======
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NutritionalTracker from './components/NutritionalTracker';
-//add your import here
->>>>>>> main
+
 
 
 
