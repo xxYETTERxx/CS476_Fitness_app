@@ -40,6 +40,11 @@ function NutritionalTracker({setNutritionActive}){
             Beef: 250,
             Pork: 211,
             Tuna: 203,
+            Salmon: 208,
+            Cod: 82,
+            Lamb: 294,
+            Turkey: 189,
+            Duck: 337,
             Broccoli: 34,
             Cabbage: 25,
             Carrots: 41,
@@ -51,7 +56,21 @@ function NutritionalTracker({setNutritionActive}){
             Banana: 45,
             Pineapple: 50,
             Kiwi: 61,
-            Grapefruit: 97 
+            Grapefruit: 97, 
+            Grapes: 67,
+            Pear: 100,
+            Watermelon: 30,
+            Mango: 60,
+            Blueberries: 57,
+            Strawberry: 33,
+            Tomato: 22,
+            Potato: 77,
+            Celery: 15,
+            Rice: 130,
+            Oats: 389,
+            Corn: 96,
+            Quinoa: 222,
+            Chia: 486
         };
         return calorieValues[foodItem] || 0; // Default to 1 if MET value is not found
   };
@@ -154,6 +173,11 @@ function NutritionalTracker({setNutritionActive}){
                                                     <option value="Beef">Beef</option>
                                                     <option value="Pork">Pork</option>
                                                     <option value="Tuna">Tuna</option>
+                                                    <option value="Salmon">Salmon</option>
+                                                    <option value="Cod">Salmon</option>
+                                                    <option value="Lamb">Lamb</option>
+                                                    <option value="Turkey">Turkey</option>
+                                                    <option value="Duck">Duck</option>
                                                 </optgroup>
                                                 <optgroup label = "Vegtables">
                                                     <option value="Broccoli">Broccoli</option>
@@ -162,6 +186,9 @@ function NutritionalTracker({setNutritionActive}){
                                                     <option value="GreenBeans">Green Beans</option>
                                                     <option value="Onions">Onions</option>
                                                     <option value="Spinach">Spinach</option>
+                                                    <option value="Tomato">Tomato</option>
+                                                    <option value="Celery">Celery</option>
+                                                    <option value="Potato">Potato</option>
                                                 </optgroup>
                                                 <optgroup label = "Fruit">
                                                     <option value="Apple">Apple</option>
@@ -170,6 +197,19 @@ function NutritionalTracker({setNutritionActive}){
                                                     <option value="Pineapple">Pineapple</option>
                                                     <option value="Kiwi">Kiwi</option>
                                                     <option value="Grapefruit">Grapefruit</option>
+                                                    <option value="Grapes">Grapes</option>
+                                                    <option value="Pear">Pear</option>
+                                                    <option value="Mango">Mango</option>
+                                                    <option value="Watermelon">Watermelon</option>
+                                                    <option value="Blueberries">Blueberries</option>
+                                                    <option value="Strawberry">Strawberry</option>
+                                                </optgroup>
+                                                <optgroup label = "Grains">
+                                                    <option value="Rice">Rice</option>
+                                                    <option value="Oats">Oats</option>
+                                                    <option value="Corn">Corn</option>
+                                                    <option value="Quinoa">Quinoa</option>
+                                                    <option value="Chia">Chia</option>
                                                 </optgroup>
                                      
                                                                                          
