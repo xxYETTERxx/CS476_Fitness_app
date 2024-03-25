@@ -17,6 +17,7 @@ const Dashboard = ({setNutritionActive}) => {
     const [username, setUsername] = useState('Bob Build');
     const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
+    
 
     const CalorieIntakeComponent = () => {
         const [calorieIntake, setCalorieIntake] = useState(2000);
@@ -69,8 +70,7 @@ const Dashboard = ({setNutritionActive}) => {
 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
                 
-                //update dashboard variables
-                //console.log('avatar',response.date.avatar);
+            
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
@@ -95,10 +95,7 @@ const Dashboard = ({setNutritionActive}) => {
                 <div className='flex justify-between text-2xl font-medium b h-1/6
                     items-center'>
                     <h2>{username}</h2>
-                    {/*<div className='text-lg font semibold pt-2 pb-2'>{username}</div>
-                    {/* <div className='rightSummaryHeader'>
-                        <p className='flex'>Streak: <span className='font-bold text-success text-3xl ml-1'>8</span></p>
-                    </div> */}
+               
                 </div>
                 <div className='flex h-3/6  w-full'>
                     <div className='flex flex-col w-2/6 items-center justify-center '>
@@ -119,8 +116,7 @@ const Dashboard = ({setNutritionActive}) => {
                         </div>
                     </div>
                     <div className='flex flex-col w-4/6 pl-3 pr-3'>
-                        {/* <h1 className='text-sm'>Calories Remaining:</h1>
-                        <text className='text-5xl font-bold text-primary pb-4'>300</text> */}
+                      
                         <button className="btn btn-outline btn-neutral w-full mb-4">Exercise</button>
                         <button onClick = {nActive} className="btn btn-outline btn-neutral w-full mb-4">Food</button>
                         {

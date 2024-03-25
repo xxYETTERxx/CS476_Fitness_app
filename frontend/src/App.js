@@ -26,8 +26,6 @@ function App() {
   }, [])
   return (
 
-
-
     <Router>
       <div className="App bg-base-100">
         
@@ -37,7 +35,7 @@ function App() {
           {
             isAuthenticated ?
             <Route
-            path='/dashboard'
+            path='/'
             element={
               <>
                 <Dashboard setNutritionActive = {setNutritionActive}/>
@@ -45,16 +43,15 @@ function App() {
               </>
             }
           />:
-            <Route
+          <Route
             path='/'
             element={
               <>
                 <Hero/>
               </>
             }
-          />   
-        }
-          
+          />
+          }
           
           <Route
             path='/login'
@@ -69,10 +66,11 @@ function App() {
             element={
               <>
                 <SignUp/>
+                <a href='/dashboard'>temp dashboard link</a>
               </>
             }
           />
-         
+
           <Route
             path='/nutrition'
             element={
@@ -81,10 +79,10 @@ function App() {
                 <NutritionalTracker/>
               </>
             }
-            />
+          />
         </Routes>
-
-        {/*isAuthenticated && <Dashboard />*/}
+        
+        {/*isAuthenticated && <Dashboard setNutritionActive = {setNutritionActive} />*/}
       </div>
     </Router>
 
