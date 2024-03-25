@@ -79,16 +79,6 @@ function App() {
             }
           />
         </Routes>
-
-        {<Dashboard />}
-        {<NutritionalTracker />}  
-        <div>
-       {    <SignUp /> }
-          <br />
-          <SignIn setIsAuthenticated={setIsAuthenticated} />
-        </div>
-
-
         
         {/*isAuthenticated && <Dashboard setNutritionActive = {setNutritionActive} />*/}
       </div>

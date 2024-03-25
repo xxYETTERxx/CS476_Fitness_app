@@ -86,7 +86,6 @@ function NutritionalTracker({setNutritionActive}){
                 const calorieIntakeValue = calorieIntake ? parseInt(calorieIntake, 10) : 0;
 
                 const totalCalories = foodList.length > 0 ? calculateCalories() : 0;
-                console.log("totalCal:",totalCalories);
                 const date = Date.now();    
 
             const userData = {
@@ -101,7 +100,7 @@ function NutritionalTracker({setNutritionActive}){
 
             if(response1.status===200 || response1.status ===201) {
 
-                //calorieTracker.fetchAndUpdateCalories();
+                calorieTracker.fetchAndUpdateCalories();
                 alert('Submission Succesful!');
 
                 setCalories('');

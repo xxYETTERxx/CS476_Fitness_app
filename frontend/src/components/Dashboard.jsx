@@ -4,15 +4,11 @@ import blankUser from '../images/blankUser.png'
 //import scale from '../images/scale.png'
 import calorieTracker from '../functions/observer.js'
 
-const user =null;
-
-const Dashboard = () => {
-    
-calorieTracker.fetchAndUpdateCalories();
-const user =null;
 
 const Dashboard = ({setNutritionActive}) => {
     
+    calorieTracker.fetchAndUpdateCalories();
+    const user = null;
     const [workoutActive, setWorkoutActive] = useState(false);
     const [activityActive, setActivityActive] = useState(false);
 
@@ -208,5 +204,5 @@ const Dashboard = ({setNutritionActive}) => {
 
     )
   }
-}
+
 export default Dashboard

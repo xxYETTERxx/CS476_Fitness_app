@@ -89,7 +89,7 @@ class CalorieTracker extends Subject {
 
     notifyObservers() {
         for (const observer of this.observers) {
-            observer.update(this.totalCalories,this.totalWater,this.totalBurn,this.totalNet);/*,this.calorieBurn,this.waterIntake*/
+            observer.update(this.totalCalories,this.totalWater,this.totalBurn,this.totalNet);
         }
     }
 }
