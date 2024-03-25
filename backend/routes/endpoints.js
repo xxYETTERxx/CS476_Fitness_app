@@ -6,7 +6,6 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-
 const router = express.Router();
 
 
@@ -117,6 +116,7 @@ router.post('/nutrition', async (req, res) => {
   try {
       const { user, calorieIntake, waterIntake } = req.body;
       
+      //createModel('nutrition')
       const newNutritionEntry = new Nutrition({
          user: user,
          calorieIntake: parseInt(calorieIntake, 10),

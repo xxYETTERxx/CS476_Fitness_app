@@ -74,7 +74,6 @@ const Dashboard = ({setNutritionActive}) => {
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
-
                 
                 
             }catch (error){

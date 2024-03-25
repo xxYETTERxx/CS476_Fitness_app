@@ -1,34 +1,68 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import CalorieTracker from '../functions/observer';
+import './NutritionTracker.css'
+//import CalorieTracker from './observer';
 
 function NutritionalTracker({setNutritionActive}){
     const [selectedOption, setSelectedOption] = useState(null);
-
     const [calorieIntake, setCalories] = useState('');
-
     const [waterIntake, setWaterIntake] = useState('');
-    const [foodType, setFoodType] = useState('');
+    const [foodItem, setFoodItem] = useState('');    
+    const [foodList, setFoodList] = useState([]);
 
-    const calorieTracker = new CalorieTracker();
+    const addFoodtoList = () => {
+        if(foodItem) {
+            setFoodList([...foodList, foodItem]);
+            calculateCalories();
+        }
+        else
+        {
+            console.error("No Food Selected");
+        }     
+    }    
+    
+    const calculateCalories = () => {
+        let totalCalories = 0;
+        
+        foodList.forEach((item) => {
+            totalCalories += getCALValues(item);
+        });
+        return totalCalories;
+    }
 
-    /*const [foodInput, setFoodInput] = useState ({
-        calories: '',
-        waterIntake:'',
-        foodType:''
-});*/
+    const removeAll = () => {
+        setFoodList([]);
+    }
 
-    const handleChange = (e) => {
-        const {name, value} = e.target;
+    const getCALValues = (foodItem) => {
+        const calorieValues = {
+            Chicken: 239,
+            Beef: 250,
+            Pork: 211,
+            Tuna: 203,
+            Broccoli: 34,
+            Cabbage: 25,
+            Carrots: 41,
+            GreenBeans: 31,
+            Onions: 40,
+            Spinach: 23,
+            Apple: 52,
+            Orange: 47,
+            Banana: 45,
+            Pineapple: 50,
+            Kiwi: 61,
+            Grapefruit: 97 
+        };
+        return calorieValues[foodItem] || 0; // Default to 1 if MET value is not found
+  };
 
-            if (name === "foodType"){
-                setFoodType(value);
-            
-            }
-
-
-    };
-
+  // Function to remove an exercise from the list
+  const removeFood = (index) => {
+    const newFoodList = [...foodList];
+    newFoodList.splice(index, 1);
+    setFoodList(newFoodList);
+  };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -46,29 +80,30 @@ function NutritionalTracker({setNutritionActive}){
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
                 const user = response.data.user;
-                console.log("calorieIntake:", calorieIntake);
-                console.log("waterIntake:", waterIntake);
-            
+               
+                const waterIntakeValue = waterIntake ? parseInt(waterIntake, 10) : 0;
+                const calorieIntakeValue = calorieIntake ? parseInt(calorieIntake, 10) : 0;
+
+                const totalCalories = foodList.length > 0 ? calculateCalories() : 0;
+                console.log("totalCal:",totalCalories);    
+
             const userData = {
                 user,
-                calorieIntake,
-                waterIntake
+                calorieIntake: totalCalories || calorieIntakeValue,
+                waterIntake: waterIntakeValue
             };
             console.log("sending request");
             const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
-            console.log("Response recieved: ", response1.status);
 
             if(response1.status===200 || response1.status ===201) {
 
-                calorieTracker.fetchAndUpdateCalories();
+                //calorieTracker.fetchAndUpdateCalories();
                 alert('Submission Succesful!');
 
                 setCalories('');
                 setWaterIntake('');
-                setFoodType('');
-
-                setNutritionActive(false);
-                //window.location.href = '/dashboard';
+                setFoodItem('');
+                removeAll();
             }
 
         } catch (error) {
@@ -87,51 +122,77 @@ function NutritionalTracker({setNutritionActive}){
 
     }
 
-    
-
-    const handleOptionSelect = (option) => {
-      setSelectedOption(option);
-    };
-
     return (
         <div className='flex justify-center pt-20 pb-5'>
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
                 <div className="flex flex-col w-full lg:flex-row">
-                    <div className="grid flex-grow h-35 card bg-base-300 rounded-box place-items-center">
-                    <div className='flex justify-between text-2xl font-medium b h-1/6
+                    <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
+                    <div className='flex-container justify-between text-2xl font-medium b h-1/6
                         items-center'>
                         <h2>Food and Water Consumption</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
-                                <label className="input input-bordered flex items-center gap-2" for="waterIntake (in ml)">Water Intake (ml):
+                                <label className="input input-bordered flex items-center gap-2 mb-4" for="waterIntake (in ml)">Water Intake (ml):
 
                                 <input type="number" id="waterIntake" name="waterIntake" value={waterIntake} onChange={(e)=>setWaterIntake(e.target.value)} />
                                 </label>
                                 <br></br>
-                                <label className="input input-bordered flex items-center gap-2" for="caloriesConsumed">Calories Consumed:
+                                <label className="input input-bordered flex items-center gap-2 mb-4" for="caloriesConsumed">Calories Consumed:
                                 <input type="number" id="calories" name="calories" value={calorieIntake} onChange={(e)=>setCalories(e.target.value)} />
 
                                 </label>
 
                                 <div>
-                                        <label for="typeConsumed">Food Type:</label>
-                                            <select className="select select-primary w-full max-w-xs" value={selectedOption} onChange={(e) => handleOptionSelect(e.target.value)}>
+                                        <label className ="typeConsumed mr-2">Food Type:</label>
+                                            <select className="select select-primary w-full max-w-xs" value={foodItem} onChange={(e) => setFoodItem(e.target.value)}>
                                                 <option value="">Select...</option>
-                                                <option value="option1">Chicken</option>
-                                                <option value="option2">Beef</option>
-                                                <option value="option3">Duck</option>
-                                                <option value="option4">Pork</option>
-                                                <option value="option5">Tuna</option>
-                                                <option value="option6">Sheep</option>
+                                                <optgroup label = "Meat">
+                                                    <option value="Chicken">Chicken</option>
+                                                    <option value="Beef">Beef</option>
+                                                    <option value="Pork">Pork</option>
+                                                    <option value="Tuna">Tuna</option>
+                                                </optgroup>
+                                                <optgroup label = "Vegtables">
+                                                    <option value="Broccoli">Broccoli</option>
+                                                    <option value="Cabbage">Cabbage</option>
+                                                    <option value="Carrots">Carrots</option>
+                                                    <option value="GreenBeans">Green Beans</option>
+                                                    <option value="Onions">Onions</option>
+                                                    <option value="Spinach">Spinach</option>
+                                                </optgroup>
+                                                <optgroup label = "Fruit">
+                                                    <option value="Apple">Apple</option>
+                                                    <option value="Orange">Orange</option>
+                                                    <option value="Banana">Banana</option>
+                                                    <option value="Pineapple">Pineapple</option>
+                                                    <option value="Kiwi">Kiwi</option>
+                                                    <option value="Grapefruit">Grapefruit</option>
+                                                </optgroup>
+                                     
+                                                                                         
                                             </select>
                                 
-                                            {selectedOption && (
+                                            {/* {selectedOption && (
                                                 <p>You selected: {selectedOption}</p>
-                                            )}
+                                            )} */}
+
+                                            
+                                        </div>
                                 
-                                <button className="btn btn-neutral" type="submit">Submit</button>  
+                                <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button> 
+                                <div className="food-list">
+                                            <ul>
+                                            {foodList.map((item, index) => (
+                                                <li key={index} className="flex-containter food-item">
+                                                <span className = "food-name-and-calories">{item} - {getCALValues(item)}</span>
+                                                <button onClick={() => removeFood(index)} className ="btn btn-neutral ml-20 mt-1 " type='button'>Remove</button>
+                                                </li>
+                                            ))}
+                                            </ul>
+                                </div>
+                                <button className="btn btn-neutral mr-100 mt-1" type="submit">Submit Calories</button> 
                                 
-                            </div>
+                                
                         
                             </form>
 
