@@ -9,9 +9,45 @@ function NutritionalTracker(){
     const [foodList, setFoodList] = useState([]);
 
     const addFood = () => {
-        setFoodList();
+        if(foodItem) {
+            setFoodList([...foodList, foodItem]);
+        }
+        else
+        {
+            console.error("No Food Selected");
+        }     
     }    
     
+    const calculateCalories = () => {
+        let totalCalories = 0;
+        
+        foodList.forEach((item) => {
+            totalCalories += getCALValues(item);
+        });
+        console.log(totalCalories);
+    }
+
+    const getCALValues = (foodItem) => {
+        const calorieValues = {
+            Chicken: 239,
+            Beef: 250,
+            Pork: 211,
+            Tuna: 203,
+            Broccoli: 34,
+            Cabbage: 25,
+            Carrots: 41,
+            GreenBeans: 31,
+            Onions: 40,
+            Spinach: 23,
+            Apple: 52,
+            Orange: 47,
+            Banana: 45,
+            Pineapple: 50,
+            Kiwi: 61,
+            Grapefruit: 97 
+        };
+        return calorieValues; // Default to 1 if MET value is not found
+  };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,12 +105,6 @@ function NutritionalTracker(){
 
     }
 
-    
-
-    const handleOptionSelect = (option) => {
-      setSelectedOption(option);
-    };
-
     return (
         <div className='flex justify-center pt-20 pb-5'>
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
@@ -85,19 +115,19 @@ function NutritionalTracker(){
                         <h2>Food and Water Consumption</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
-                                <label className="input input-bordered flex items-center gap-2" for="waterIntake (in ml)">Water Intake (ml):
+                                <label className="input input-bordered flex items-center gap-2 mb-4" for="waterIntake (in ml)">Water Intake (ml):
 
                                 <input type="number" id="waterIntake" name="waterIntake" value={waterIntake} onChange={(e)=>setWaterIntake(e.target.value)} />
                                 </label>
                                 <br></br>
-                                <label className="input input-bordered flex items-center gap-2" for="caloriesConsumed">Calories Consumed:
+                                <label className="input input-bordered flex items-center gap-2 mb-4" for="caloriesConsumed">Calories Consumed:
                                 <input type="number" id="calories" name="calories" value={calorieIntake} onChange={(e)=>setCalories(e.target.value)} />
 
                                 </label>
 
                                 <div>
                                         <label for="typeConsumed">Food Type:</label>
-                                            <select className="select select-primary w-full max-w-xs" value={selectedOption} onChange={(e) => handleOptionSelect(e.target.value)}>
+                                            <select className="select select-primary w-full max-w-xs" value={foodItem} onChange={(e) => setFoodItem(e.target.value)}>
                                                 <option value="">Select...</option>
                                                 <optgroup label = "Meat">
                                                     <option value="Chicken">Chicken</option>
@@ -109,7 +139,7 @@ function NutritionalTracker(){
                                                     <option value="Broccoli">Broccoli</option>
                                                     <option value="Cabbage">Cabbage</option>
                                                     <option value="Carrots">Carrots</option>
-                                                    <option value="Green Beans">Green Beans</option>
+                                                    <option value="GreenBeans">Green Beans</option>
                                                     <option value="Onions">Onions</option>
                                                     <option value="Spinach">Spinach</option>
                                                 </optgroup>
@@ -125,9 +155,9 @@ function NutritionalTracker(){
                                                                                          
                                             </select>
                                 
-                                            {selectedOption && (
+                                            {/* {selectedOption && (
                                                 <p>You selected: {selectedOption}</p>
-                                            )}
+                                            )} */}
 
                                            {/*  <div className="exercise-list">
                                             <h3>Food List</h3>
@@ -141,7 +171,7 @@ function NutritionalTracker(){
                                             </ul>
                                         </div> */}
                                 
-                                <button className="btn btn-neutral" style={{marginRight: 10}}>Add</button> 
+                                <button onClick={addFood} className="btn btn-neutral mr-1 mt-1">Add</button> 
                                 <button className="btn btn-neutral" type="submit">Submit</button>  
                                 
                             </div>
