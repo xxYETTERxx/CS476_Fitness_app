@@ -4,8 +4,15 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+<<<<<<< HEAD
 import NutritionalTracker from './components/NutritionTracker';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+=======
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NutritionalTracker from './components/NutritionalTracker';
+//add your import here
+>>>>>>> main
 
 
 
@@ -22,41 +29,50 @@ function App() {
   return (
 
 
-    // <Routes>
-    //   <Route
-    //     path="/"
-    //     element={
-    //       <>
-    //         <Hero />
-    //   />
-    // </Routes>
 
     <Router>
-      <div className="App bg-base-200">
+      <div className="App bg-base-100">
+        
         <Navbar />
 
         <Routes>
           <Route
-            path='/tester'
+            path='/'
             element={
               <>
                 <Hero/>
               </>
             }
-          
+          />
+          <Route
+            path='/login'
+            element={
+              <>
+                <SignIn setIsAuthenticated={setIsAuthenticated} />
+              </>
+            }
+          />
+          <Route
+            path='/signup'
+            element={
+              <>
+                <SignUp/>
+                <a href='/dashboard'>temp dashboard link</a>
+              </>
+            }
+          />
+          <Route
+            path='/dashboard'
+            element={
+              <>
+                <Dashboard/>
+              </>
+            }
           />
         </Routes>
 
-        {/* <Hero/> */}
-        {/* {isAuthenticated && <Dashboard />} */}
-        <div>
-          <NutritionalTracker/>
-          <div style = {{marginLeft: 20}}></div>
-          
-         {/*  <SignUp /> */}
-          <br />
-          <SignIn setIsAuthenticated={setIsAuthenticated} />
-        </div>
+        {/* add your component in here*/}
+        {isAuthenticated && <Dashboard />}
       </div>
     </Router>
 

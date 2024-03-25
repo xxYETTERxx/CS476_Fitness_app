@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './NutritionTracker.css'
+import CalorieTracker from './observer';
 
 function NutritionalTracker(){
     const [selectedOption, setSelectedOption] = useState(null);
@@ -96,6 +97,7 @@ function NutritionalTracker(){
 
             if(response1.status===200 || response1.status ===201) {
 
+                calorieTracker.fetchAndUpdateCalories();
                 alert('Submission Succesful!');
 
                 setCalories('');

@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import blankUser from '../images/blankUser.png'
-import scale from '../images/scale.png'
+//import scale from '../images/scale.png'
 import CalorieTracker from './observer.js'
 
 const calorieTracker = new CalorieTracker();
 
-setInterval(()=> {
-    calorieTracker.fetchAndUpdateCalories();
-}, 60000);
 
 const user =null;
 
 const Dashboard = () => {
     const [username, setUsername] = useState('Bob Build');
-    const [avatar, setAvatar] = useState('blankUser');
+    const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
 
     const CalorieIntakeComponent = () => {
@@ -30,6 +27,8 @@ const Dashboard = () => {
             calorieTracker.subscribe(observer);
             return () => calorieTracker.unsubscribe(observer);
             },[]);
+            
+            return <div> {calorieIntake} </div>;
         };
 
         const CalorieBurnComponent = () => {
@@ -38,13 +37,15 @@ const Dashboard = () => {
             useEffect(() => {
                 const observer = {
                     update: (intake, burn) => {
-                        setCalorieBurn(intake);
+                        setCalorieBurn(burn);
                     },
                 };
     
                 calorieTracker.subscribe(observer);
                 return () => calorieTracker.unsubscribe(observer);
                 },[]);
+                
+                return <div> {calorieBurn} </div>;
             };
     
     
@@ -61,13 +62,14 @@ const Dashboard = () => {
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-                const response = await axios.get('http://localhost:5000/api/auth/dashboard', config);
+
+                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
                 
                 //update dashboard variables
+                //console.log('avatar',response.date.avatar);
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
-                console.log("usertype", userType);
                 
                 
             }catch (error){
@@ -103,7 +105,7 @@ const Dashboard = () => {
                             <button className="btn btn-square scaleButton">
                                 <div className="indicator">
                                     <span className="indicator-item indicator-bottom badge badge-success scaleBadge">+</span>
-                                    <img src={scale} alt="scale" />
+                                    {/*<img src={scale} alt="scale" />*/}
                                 </div>
                             </button>
                         </div>
@@ -133,7 +135,7 @@ const Dashboard = () => {
                         <div className='divider'>|</div>
                         <div className='flex flex-col w-full pl-2'>
                             <div className='flex'>
-                                <text className='w-2/3 text-xl font-semibold'>3500</text>
+                                <text className='w-2/3 text-xl font-semibold'><CalorieIntakeComponent /></text>
                                 <text className='text-xl font-semibold'>-</text>
                             </div>
                             <caption className='text-sm flex'>CAL IN</caption>
@@ -158,6 +160,11 @@ const Dashboard = () => {
 
             </div>
         </div>
+
+
+
+
+           
 
     )
 }
