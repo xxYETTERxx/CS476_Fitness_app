@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
+const Activity = require('../models/Activity');
 const { isAlphaLocales } = require('validator');
 
 
