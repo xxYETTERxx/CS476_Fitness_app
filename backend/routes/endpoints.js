@@ -7,10 +7,7 @@ const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const Activity = require('../models/Activity');
 const { isAlphaLocales } = require('validator');
-<<<<<<< HEAD
 
-=======
->>>>>>> 50555c64bb01d4fb2c1eda3fe48794f9183936c5
 
 
 const router = express.Router();

@@ -44,10 +44,10 @@ const CalorieCalculator = () => {
       totalCalories += calories;
     });
     setTotalCaloriesBurned(totalCalories.toFixed(2));
-    handleSubmit();
+    handleSubmit(totalCalories);
   };
 
-  const handleSubmit = async (totalCaloriesBurned) => {
+  const handleSubmit = async (caloriesBurned) => {
     try {
 
       console.log("submitting");
@@ -63,8 +63,6 @@ const CalorieCalculator = () => {
           const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
           console.log(response);
           const user = response.data.user;
-          const caloriesBurned = totalCaloriesBurned;
-          console.log("totalCaloriesBurned:", totalCaloriesBurned);
       
         const userData = {
             user,
