@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CalorieCalculator.css'; 
+import axios from 'axios';
 
 const CalorieCalculator = () => {
   // State variables
@@ -43,7 +44,56 @@ const CalorieCalculator = () => {
       totalCalories += calories;
     });
     setTotalCaloriesBurned(totalCalories.toFixed(2));
+    handleSubmit();
   };
+
+  const handleSubmit = async (totalCaloriesBurned) => {
+    try {
+
+      console.log("submitting");
+      const token = localStorage.getItem('token');
+          if (!token){
+              console.log("No token found");
+              return;
+          }
+          const config = {
+              headers: { Authorization: `Bearer ${token}`}
+          };
+          
+          const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+          console.log(response);
+          const user = response.data.user;
+          const caloriesBurned = totalCaloriesBurned;
+          console.log("totalCaloriesBurned:", totalCaloriesBurned);
+      
+        const userData = {
+            user,
+            caloriesBurned
+        };
+        console.log("sending request");
+        const response1 = await axios.post('http://localhost:5000/api/auth/activity',userData);
+        console.log("Response recieved: ", response1.status);
+
+        if(response1.status===200 || response1.status ===201) {
+
+            alert('Submission Succesful!');
+
+        }
+
+    } catch (error) {
+        if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
+            alert('Connection to server failed');
+        }else if (error.response){
+
+            console.error("Submission failed:", error.response.data);
+            alert("Submission failed: " + error.response.data);
+        }
+        else{
+            console.error("Submission failed:", error.message);
+            alert("Submission failed: ", error.message);
+        }
+    }
+}
 
   // Function to retrieve MET value for a given exercise
   const getMETValue = (exercise) => {
