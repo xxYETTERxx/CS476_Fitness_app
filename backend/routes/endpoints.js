@@ -6,11 +6,9 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-const User = require('../models/User');
 
 
 const router = express.Router();
-
 
 
 // Registration endpoint
@@ -93,7 +91,6 @@ router.get('/userRetrieval', async (req, res) => {
 });
 
 
-
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
   console.log("nutrition submission");
@@ -110,6 +107,30 @@ router.post('/nutrition', async (req, res) => {
     
       const savedEntry = await newNutritionEntry.save();
       console.log('Saved nutrition entry:', savedEntry);
+      res.json(savedEntry);
+      
+      } catch(error){
+        res.status(400).json ({ error: error.message});
+      }
+
+});
+
+
+//Activity EndPoint
+router.post('/activity', async (req, res) => {
+  console.log("activity submission");
+    
+  try {
+      const { user, caloriesBurned } = req.body;
+      
+      const newActivityEntry = new Activity({
+         user: user,
+         caloriesBurned: parseInt(caloriesBurned, 10),
+         date: new Date()
+      });
+    
+      const savedEntry = await newActivityEntry.save();
+      console.log('Saved activity entry:', savedEntry);
       res.json(savedEntry);
       
       } catch(error){
