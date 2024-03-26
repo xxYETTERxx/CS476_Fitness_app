@@ -36,7 +36,7 @@ const CalorieCalculator = () => {
   };
 
   // Function to calculate the total calories burned
-  const calculateTotalCalories = async (e) => {
+  const calculateTotalCalories = () => {
     let totalCalories = 0;
     exerciseList.forEach((item) => {
       const met = getMETValue(item.exercise);
@@ -44,7 +44,10 @@ const CalorieCalculator = () => {
       totalCalories += calories;
     });
     setTotalCaloriesBurned(totalCalories.toFixed(2));
+    handleSubmit();
+  };
 
+  const handleSubmit = async (totalCaloriesBurned) => {
     try {
 
       console.log("submitting");
@@ -61,6 +64,7 @@ const CalorieCalculator = () => {
           console.log(response);
           const user = response.data.user;
           const caloriesBurned = totalCaloriesBurned;
+          console.log("totalCaloriesBurned:", totalCaloriesBurned);
       
         const userData = {
             user,
@@ -89,7 +93,7 @@ const CalorieCalculator = () => {
             alert("Submission failed: ", error.message);
         }
     }
-  };
+}
 
   // Function to retrieve MET value for a given exercise
   const getMETValue = (exercise) => {
