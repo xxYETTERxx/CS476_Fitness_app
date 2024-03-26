@@ -91,7 +91,7 @@ const file = event.target.files[0];
                 
                 <div class="w-5/6 max-w-2xl ">
                 <div>
-                    <h2 class="text-base font-semibold leading-7 text-base-content">Create Account</h2>
+                    <h2 class="text-base font-semibold leading-7 text-base-content mt-20 md:mt-0">Create Account</h2>
                 </div>
                 <div className='flex flex-col md:flex-row items-center justify-between'>
                     <div class="m-3">

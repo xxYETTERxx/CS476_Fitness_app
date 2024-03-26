@@ -4,7 +4,7 @@ import logo from '../images/gg11.png'
 const Navbar = () => {
     return (
 
-        <div className="navbar fixed flex justify-between">
+        <div className="navbar fixed flex justify-between z-10">
             <a href='/' className="btn glass text-xl"><img className='h-8' src={logo} alt="logo" /></a>
               
               <label className="swap swap-rotate pl-5 pr-5">
