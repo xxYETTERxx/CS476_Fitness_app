@@ -140,10 +140,6 @@ router.get('/nutritionIntake', async (req, res) =>{
   try{
     const {user, startDate, endDate} = req.query;
 
-    console.log("user", user);
-    console.log("StartDate:",startDate);
-    console.log("enddate:",endDate);
-
     const entries = await Nutrition.find({
       user: user,
       date: {
