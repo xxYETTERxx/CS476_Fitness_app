@@ -21,11 +21,6 @@ code {
   background-image: url('images/workout.jpeg');
 }
 
-.card{
-  height: 25rem;
-  width: 90%;
-  justify-self: center;
-}
 
 .scaleButton{
   min-height: 2rem;

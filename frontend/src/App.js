@@ -4,13 +4,18 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import WorkoutPlanner from './components/WorkoutPlanner';
+import NutritionalTracker from './components/NutritionalTracker';
 
 
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [nutritionActive, setNutritionActive] = useState(false);
+  const [workoutActive, setWorkoutActive] = useState(false);
+  const [activityActive, setActivityActive] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -21,40 +26,62 @@ function App() {
   }, [])
   return (
 
-
-    // <Routes>
-    //   <Route
-    //     path="/"
-    //     element={
-    //       <>
-    //         <Hero />
-    //   />
-    // </Routes>
-
     <Router>
-      <div className="App bg-base-200">
+      <div className="App bg-base-100">
+        
         <Navbar />
 
         <Routes>
+          {
+            isAuthenticated ?
+            <Route
+            path='/'
+            element={
+              <>
+                <Dashboard setNutritionActive = {setNutritionActive}/>
+                {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+              </>
+            }
+          />:
           <Route
-            path='/tester'
+            path='/'
             element={
               <>
                 <Hero/>
               </>
             }
+          />
+          }
           
+          <Route
+            path='/login'
+            element={
+              <>
+                <SignIn setIsAuthenticated={setIsAuthenticated} />
+              </>
+            }
+          />
+          <Route
+            path='/signup'
+            element={
+              <>
+                <SignUp/>
+              </>
+            }
+          />
+
+          <Route
+            path='/nutrition'
+            element={
+              <>
+                <Dashboard/>
+                <NutritionalTracker/>
+              </>
+            }
           />
         </Routes>
-
-        {/* <Hero/> */}
-        {/*isAuthenticated && <Dashboard />*/}
-        <div>
-          {/*<SignUp />*/}
-          <br />
-          <SignIn setIsAuthenticated={setIsAuthenticated} />
-          <WorkoutPlanner />
-        </div>
+        
+        {/*isAuthenticated && <Dashboard setNutritionActive = {setNutritionActive} />*/}
       </div>
     </Router>
 

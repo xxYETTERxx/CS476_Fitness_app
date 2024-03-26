@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Workout = require('../models/Workout');
-
-
+const Nutrition = require('../models/Nutrition');
+const { isAlphaLocales } = require('validator');
 const router = express.Router();
 
 
@@ -57,6 +57,33 @@ router.post('/login', async (req, res) => {
     }
 });
 
+
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, secretKey); 
+
+    const user = await User.findById(decoded.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({
+      user: user._id,
+      userName: user.userName,
+      avatar: user.avatar,
+      userType: user.userType
+    });
+    
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      res.status(401).json({ error: 'Session has expired, please log in again' });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
+  }
+});
+
 //User retrieval endpoint
 router.get('/userRetrieval', async (req, res) => {
   try {
@@ -80,6 +107,8 @@ router.get('/userRetrieval', async (req, res) => {
     }
   }
 });
+
+
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
@@ -183,5 +212,29 @@ router.delete('/workoutRemove/:id', async (req, res) => {
     res.status(500).json({ message: 'Error deleting workout' });
   }
 });
+
+//NutritionRetrieve Endpoint
+
+router.get('/nutritionIntake', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    const entries = await Nutrition.find({
+      user: user,
+      date: {
+        $gte: new Date(startDate),
+        $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
+      }
+    });
+
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Nutrition Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
+
 
 module.exports = router;
