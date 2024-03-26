@@ -160,7 +160,7 @@ router.get('/getWorkout', async (req, res) => {
 
     const entries = await Workout.find({
       user: user,
-      date: day
+      day: day
     });
    
     res.json(entries);
@@ -170,4 +170,18 @@ router.get('/getWorkout', async (req, res) => {
       res.status(500).send('Server Error');
     }
   });
+
+//WorkoutRemove endpoint
+
+router.delete('/workoutRemove/:id', async (req, res) => {
+  try {
+    const workoutId = req.params.id;
+    // Use the ID to delete the workout from the database
+    await Workout.findByIdAndDelete(workoutId);
+    res.status(200).json({ message: 'Workout deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting workout' });
+  }
+});
+
 module.exports = router;

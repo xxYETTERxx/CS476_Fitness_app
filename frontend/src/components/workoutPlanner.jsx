@@ -6,6 +6,13 @@ function WorkoutPlanner() {
     const [description, setDescription] = useState('');
     const [daySelected, setDaySelected] = useState('');
     const [workoutList, setWorkoutList] = useState([]);
+
+    
+    const workout = {
+        title : title,
+        description : description,
+        day : daySelected
+    };
     
 
     const handleSubmit = async (e) => {
@@ -41,7 +48,7 @@ function WorkoutPlanner() {
             console.log("Response recieved: ", response1.status);
 
             if(response1.status===200 || response1.status ===201) {
-                alert('Submission Succesful!');
+                fetchWorkouts(daySelected);
 
                 setTitle('');
                 setDescription('');
@@ -65,7 +72,7 @@ function WorkoutPlanner() {
 
     const handleOptionSelect = (option) => {
         setDaySelected(option);
-        fetchWorkouts();
+        fetchWorkouts(option);
       };
 
     const fetchWorkouts = async (selectedDay) => {
@@ -83,7 +90,7 @@ function WorkoutPlanner() {
                 const userResponse = await axios.get(`http://localhost:5000/api/auth/userRetrieval`, config);
                 const user = userResponse.data.user._id;
                 const day = selectedDay;
-
+                console.log(selectedDay);
                 const workoutResponse = await axios.get('http://localhost:5000/api/auth/getWorkout', {
             params: {
                 user,
@@ -94,14 +101,32 @@ function WorkoutPlanner() {
 
             
             } catch (error) {
-                console.error("Error fetching workouts:", error.message);
-             
+                console.error("Error fetching workouts:", error.message);  
             }
         }
 
-        const removeWorkout = () => {
-            console.log('soon');
-        } 
+        const removeWorkout = async (workoutId) => {
+                try {
+                  const token = localStorage.getItem('token');
+                  if (!token) {
+                    console.log("No token found");
+                    return;
+                  }
+                  const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                  };
+                  
+                  await axios.delete(`http://localhost:5000/api/auth/workoutRemove/${workoutId}`, config);
+              
+                  // Filter out the workout from the local state to update the UI
+                  setWorkoutList(prevWorkouts => prevWorkouts.filter(workout => workout._id !== workoutId));
+                  
+                } catch (error) {
+                  console.error("Error deleting workout:", error.message);
+                  alert('Failed to delete workout');
+                }
+              }
+        
 
  
 
@@ -155,7 +180,7 @@ function WorkoutPlanner() {
                                         <p className='font-bold'>{workout.title}</p>
                                         <p>{workout.description}</p>
                                     </div>
-                                    <button className='ml-4 btn btn-error btn-sm' onClick={() => removeWorkout(index)}>Remove</button> {/* Remove button */}
+                                    <button className='ml-4 btn btn-error btn-sm' onClick={() => removeWorkout(workout._id)}>Remove</button> {/* Remove button */}
                                     </li>
                                 ))}
                                 </ul>
