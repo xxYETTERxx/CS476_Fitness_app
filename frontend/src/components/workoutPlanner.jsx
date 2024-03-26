@@ -58,6 +58,10 @@ function WorkoutPlanner() {
         }
 
     }
+
+    const handleOptionSelect = (option) => {
+        setSelectedOption(option);
+      };
     
 
     return (
@@ -79,6 +83,22 @@ function WorkoutPlanner() {
                                
 
                                 <div>
+
+                                <label for="dayOfTheWeek">Weekday:</label>
+                                            <select className="select select-primary w-full max-w-xs" value={selectedOption} onChange={(e) => handleOptionSelect(e.target.value)}>
+                                                <option value="">Select...</option>
+                                                <option value="option1">Sunday</option>
+                                                <option value="option2">Monday</option>
+                                                <option value="option3">Tuesday</option>
+                                                <option value="option4">Wednesday</option>
+                                                <option value="option5">Thursday</option>
+                                                <option value="option6">Friday</option>
+                                                <option value="option6">Saturday</option>
+                                            </select>
+                                
+                                            {selectedOption && (
+                                                <p>You selected: {selectedOption}</p>
+                                            )}
                                         
                                 <button className="btn btn-neutral" type="submit">Submit</button>  
                                 
