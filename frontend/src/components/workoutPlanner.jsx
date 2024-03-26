@@ -4,6 +4,7 @@ import axios from 'axios';
 function WorkoutPlanner() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [daySelected, setDaySelected] = useState('');
     
     
 
@@ -23,17 +24,20 @@ function WorkoutPlanner() {
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
                 console.log(response);
-                const user = response.data.user._id;
-                console.log("Title:", title);
-                console.log("Description:", description);
+                const user = response.data.user;
+                const day = daySelected;
+                
             
             const userData = {
                 user,
+                day,
                 title,
                 description
             };
+
+            console.log(userData);
             console.log("sending request");
-            const response1 = await axios.post('http://localhost:5000/api/auth/workoutPlanner',userData);
+            const response1 = await axios.post('http://localhost:5000/api/auth/workout',userData);
             console.log("Response recieved: ", response1.status);
 
             if(response1.status===200 || response1.status ===201) {
@@ -60,8 +64,12 @@ function WorkoutPlanner() {
     }
 
     const handleOptionSelect = (option) => {
-        setSelectedOption(option);
+        setDaySelected(option);
       };
+      
+    const fetchWorkout = () => 
+    }
+
     
 
     return (
@@ -84,21 +92,18 @@ function WorkoutPlanner() {
 
                                 <div>
 
-                                <label for="dayOfTheWeek">Weekday:</label>
-                                            <select className="select select-primary w-full max-w-xs" value={selectedOption} onChange={(e) => handleOptionSelect(e.target.value)}>
+                                <label for="dayOfTheWeek">Day of Week:</label>
+                                            <select className="select select-primary w-full max-w-xs" value={daySelected} onChange={(e) => handleOptionSelect(e.target.value)}>
                                                 <option value="">Select...</option>
-                                                <option value="option1">Sunday</option>
-                                                <option value="option2">Monday</option>
-                                                <option value="option3">Tuesday</option>
-                                                <option value="option4">Wednesday</option>
-                                                <option value="option5">Thursday</option>
-                                                <option value="option6">Friday</option>
-                                                <option value="option6">Saturday</option>
+                                                <option value="Sunday">Sunday</option>
+                                                <option value="Monday">Monday</option>
+                                                <option value="Tuesday">Tuesday</option>
+                                                <option value="Wednesday">Wednesday</option>
+                                                <option value="Thursday">Thursday</option>
+                                                <option value="Friday">Friday</option>
+                                                <option value="Saturday">Saturday</option>
                                             </select>
-                                
-                                            {selectedOption && (
-                                                <p>You selected: {selectedOption}</p>
-                                            )}
+                            
                                         
                                 <button className="btn btn-neutral" type="submit">Submit</button>  
                                 
