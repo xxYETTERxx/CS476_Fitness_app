@@ -113,25 +113,16 @@ router.get('/userRetrieval', async (req, res) => {
 router.post('/nutrition', async (req, res) => {
     
   try {
-      const { user, calorieIntake, waterIntake } = req.body;
       
-      //createModel('nutrition')
-      const newNutritionEntry = new Nutrition({
-         user: user,
-         calorieIntake: parseInt(calorieIntake, 10),
-         waterIntake: parseInt(waterIntake, 10),
-         date: new Date()
-      });
-    
-      const savedEntry = await newNutritionEntry.save();
+      const newEntry = createModel('nutrition', req.body);
+      
+      const savedEntry = await newEntry.save();
 
-      res.json(savedEntry);
+      res.status(201).json({savedEntry});
       
       } catch(error){
         res.status(400).json ({ error: error.message});
       }
-
-
 });
 
 //NutritionRetrieve Endpoint
