@@ -112,46 +112,38 @@ router.get('/userRetrieval', async (req, res) => {
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
     
-  try {
-      const { user, calorieIntake, waterIntake } = req.body;
+   try {
       
-      const newNutritionEntry = new Nutrition({
-         user: user,
-         calorieIntake: parseInt(calorieIntake, 10),
-         waterIntake: parseInt(waterIntake, 10),
-         date: new Date()
-      });
+      const newEntry = createModel('nutrition', req.body)
     
-      const savedEntry = await newNutritionEntry.save();
+      const savedEntry = await newEntry.save();
 
-      res.json(savedEntry);
+      res.status(201).json({savedEntry});
       
       } catch(error){
         res.status(400).json ({ error: error.message});
       }
 
-
 });
-
 
 //Activity EndPoint
 router.post('/activity', async (req, res) => {
   console.log("activity submission");
     
   try {
-      const { user, caloriesBurned } = req.body;
       
-      const newActivityEntry = new Activity({
-         user: user,
-         caloriesBurned: parseInt(caloriesBurned, 10),
-         date: new Date()
-      });
-    
-      const savedEntry = await newActivityEntry.save();
-      console.log('Saved activity entry:', savedEntry);
-      res.json(savedEntry);
-//NutritionRetrieve Endpoint
+   const newEntry = createModel('activity', req.body)
+ 
+   const savedEntry = await newEntry.save();
 
+   res.status(201).json({savedEntry});
+   
+   } catch(error){
+     res.status(400).json ({ error: error.message});
+   }
+});
+
+//NutritionRetrieve Endpoint
 router.get('/nutritionIntake', async (req, res) =>{
   try{
     const {user, startDate, endDate} = req.query;
@@ -167,7 +159,6 @@ router.get('/nutritionIntake', async (req, res) =>{
         $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
       }
     });
-
 
     res.json(entries);
 
