@@ -4,12 +4,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
+const Workout = require('../models/Workout');
 const Nutrition = require('../models/Nutrition');
 const Activity = require('../models/Activity');
 const { isAlphaLocales } = require('validator');
-
-
-
 const router = express.Router();
 
 
@@ -21,14 +19,6 @@ router.post('/register', async (req, res) => {
     
        //Save the user to database
        const newUser = await user.save();
-
-       //create Nutrition model linked to user
-
-       //const nData = { user: newUser._id };
-       //const nModel = createModel('nutrition', nData);
-       //await nModel.save();
-
-      
        
        //Respond with created user
        res.status(201).json({ user: newUser.id, email: newUser.email, userType: newUser.userType });
@@ -73,6 +63,32 @@ router.get('/userRetrieval', async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, secretKey); 
+
+    const user = await User.findById(decoded.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({
+      user: user._id,
+      userName: user.userName,
+      avatar: user.avatar,
+      userType: user.userType
+    });
+    
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      res.status(401).json({ error: 'Session has expired, please log in again' });
+    } else {
+      res.status(400).json({ error: error.message });
+    }
+  }
+});
+
+//User retrieval endpoint
+router.get('/userRetrieval', async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, secretKey); 
     const user = await User.findById(decoded.userId).select('-password');
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -82,6 +98,7 @@ router.get('/userRetrieval', async (req, res) => {
     res.json({
       user: user
     });
+
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       res.status(401).json({ error: 'Session has expired, please log in again' });
@@ -94,7 +111,6 @@ router.get('/userRetrieval', async (req, res) => {
 
 //Nutrition EndPoint
 router.post('/nutrition', async (req, res) => {
-  console.log("nutrition submission");
     
   try {
       const { user, calorieIntake, waterIntake } = req.body;
@@ -107,12 +123,13 @@ router.post('/nutrition', async (req, res) => {
       });
     
       const savedEntry = await newNutritionEntry.save();
-      console.log('Saved nutrition entry:', savedEntry);
+
       res.json(savedEntry);
       
       } catch(error){
         res.status(400).json ({ error: error.message});
       }
+
 
 });
 
@@ -133,11 +150,107 @@ router.post('/activity', async (req, res) => {
       const savedEntry = await newActivityEntry.save();
       console.log('Saved activity entry:', savedEntry);
       res.json(savedEntry);
+//NutritionRetrieve Endpoint
+
+router.get('/nutritionIntake', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    console.log("user", user);
+    console.log("StartDate:",startDate);
+    console.log("enddate:",endDate);
+
+    const entries = await Nutrition.find({
+      user: user,
+      date: {
+        $gte: new Date(startDate),
+        $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
+      }
+    });
+
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Nutrition Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
+
+//WorkoutPlanner EndPoint
+router.post('/workout', async (req, res) => {
+    
+  try {
+      
+      const newEntry = createModel('workout', req.body)
+    
+      const savedEntry = await newEntry.save();
+
+      res.status(201).json({savedEntry});
       
       } catch(error){
         res.status(400).json ({ error: error.message});
       }
 
+
 });
+
+//WorkoutRetrieval EndPoint
+router.get('/getWorkout', async (req, res) => {
+
+   try{
+    const {user, day} = req.query;
+
+    console.log("user", user);
+
+    const entries = await Workout.find({
+      user: user,
+      day: day
+    });
+   
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Workout Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
+
+//WorkoutRemove endpoint
+
+router.delete('/workoutRemove/:id', async (req, res) => {
+  try {
+    const workoutId = req.params.id;
+    // Use the ID to delete the workout from the database
+    await Workout.findByIdAndDelete(workoutId);
+    res.status(200).json({ message: 'Workout deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting workout' });
+  }
+});
+
+//NutritionRetrieve Endpoint
+
+router.get('/nutritionIntake', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    const entries = await Nutrition.find({
+      user: user,
+      date: {
+        $gte: new Date(startDate),
+        $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
+      }
+    });
+
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Nutrition Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
+
 
 module.exports = router;
