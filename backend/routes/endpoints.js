@@ -243,5 +243,27 @@ router.get('/nutritionIntake', async (req, res) =>{
     }
   });
 
+//Calorie Burn endpoint
+
+router.get('/calorieBurn', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    const entries = await Activity.find({
+      user: user,
+      date: {
+        $gte: new Date(startDate),
+        $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
+      }
+    });
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Activity Data",error);
+      res.status(500).send('Server Error');
+    }
+  }); 
+
 
 module.exports = router;

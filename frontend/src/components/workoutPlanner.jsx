@@ -88,7 +88,7 @@ function WorkoutPlanner() {
                 }
 
                 const userResponse = await axios.get(`http://localhost:5000/api/auth/userRetrieval`, config);
-                const user = userResponse.data.user._id;
+                const user = userResponse.data.user;
                 const day = selectedDay;
                 console.log(selectedDay);
                 const workoutResponse = await axios.get('http://localhost:5000/api/auth/getWorkout', {
@@ -199,4 +199,4 @@ function WorkoutPlanner() {
     )
 
 }
-export default WorkoutPlanner
+export default WorkoutPlanner;

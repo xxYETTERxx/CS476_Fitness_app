@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CalorieCalculator.css'; 
 import axios from 'axios';
+import calorieTracker from '../functions/observer';
 
 const CalorieCalculator = () => {
   // State variables
@@ -10,6 +11,7 @@ const CalorieCalculator = () => {
   const [exercise, setExercise] = useState('');
   const [exerciseList, setExerciseList] = useState([]);
   const [totalCaloriesBurned, setTotalCaloriesBurned] = useState(0);
+  
 
   // Function to add an exercise to the list
   const addExercise = () => {
@@ -47,7 +49,7 @@ const CalorieCalculator = () => {
     handleSubmit(totalCalories);
   };
 
-  const handleSubmit = async (caloriesBurned) => {
+  const handleSubmit = async (calories) => {
     try {
 
       console.log("submitting");
@@ -63,6 +65,7 @@ const CalorieCalculator = () => {
           const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
           console.log(response);
           const user = response.data.user;
+          const caloriesBurned = Math.floor(calories);
       
         const userData = {
             user,
@@ -75,6 +78,8 @@ const CalorieCalculator = () => {
         if(response1.status===200 || response1.status ===201) {
 
             alert('Submission Succesful!');
+            calorieTracker.fetchAndUpdateCalories();
+            setExerciseList([]);
 
         }
 

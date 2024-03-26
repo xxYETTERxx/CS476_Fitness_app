@@ -43,6 +43,7 @@ function App() {
                 <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
                 {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
                 {workoutActive &&  <WorkoutPlanner />}
+                {activityActive && <CalorieCalculator />}
               </>
             }
           />:
