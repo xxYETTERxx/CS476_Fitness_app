@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
+const Workout = require('../models/Workout');
 
 
 const router = express.Router();
@@ -86,7 +87,6 @@ router.post('/nutrition', async (req, res) => {
   try {
       const { user, calorieIntake, waterIntake } = req.body;
       
-      //createModel('nutrition')
       const newNutritionEntry = new Nutrition({
          user: user,
          calorieIntake: parseInt(calorieIntake, 10),
@@ -104,6 +104,33 @@ router.post('/nutrition', async (req, res) => {
 
 
 });
+
+//NutritionRetrieve Endpoint
+
+router.get('/nutritionIntake', async (req, res) =>{
+  try{
+    const {user, startDate, endDate} = req.query;
+
+    console.log("user", user);
+    console.log("StartDate:",startDate);
+    console.log("enddate:",endDate);
+
+    const entries = await Nutrition.find({
+      user: user,
+      date: {
+        $gte: new Date(startDate),
+        $lt: new Date(new Date(endDate).setUTCHours(23, 59, 59, 999))
+      }
+    });
+
+
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Nutrition Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
 
 //WorkoutPlanner EndPoint
 router.post('/workout', async (req, res) => {
@@ -123,4 +150,24 @@ router.post('/workout', async (req, res) => {
 
 });
 
+//WorkoutRetrieval EndPoint
+router.get('/getWorkout', async (req, res) => {
+
+   try{
+    const {user, day} = req.query;
+
+    console.log("user", user);
+
+    const entries = await Workout.find({
+      user: user,
+      date: day
+    });
+   
+    res.json(entries);
+
+    } catch (error){
+      console.error("Error fetching Workout Data",error);
+      res.status(500).send('Server Error');
+    }
+  });
 module.exports = router;

@@ -5,7 +5,7 @@ function WorkoutPlanner() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [daySelected, setDaySelected] = useState('');
-    
+    const [workoutList, setWorkoutList] = useState([]);
     
 
     const handleSubmit = async (e) => {
@@ -65,10 +65,45 @@ function WorkoutPlanner() {
 
     const handleOptionSelect = (option) => {
         setDaySelected(option);
+        fetchWorkouts();
       };
-      
-    const fetchWorkout = () => 
-    }
+
+    const fetchWorkouts = async (selectedDay) => {
+            setWorkoutList([]);
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.log("No token found");
+                    return;
+                }
+                const config = {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+
+                const userResponse = await axios.get(`http://localhost:5000/api/auth/userRetrieval`, config);
+                const user = userResponse.data.user._id;
+                const day = selectedDay;
+
+                const workoutResponse = await axios.get('http://localhost:5000/api/auth/getWorkout', {
+            params: {
+                user,
+                day
+            }
+        });
+            setWorkoutList(workoutResponse.data);
+
+            
+            } catch (error) {
+                console.error("Error fetching workouts:", error.message);
+             
+            }
+        }
+
+        const removeWorkout = () => {
+            console.log('soon');
+        } 
+
+ 
 
     
 
@@ -82,7 +117,7 @@ function WorkoutPlanner() {
                         <h2>Workout Planner</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
-                                <label className="input input-bordered flex items-center gap-2" for="Workout Title">Workout Title:
+                                <label className="input input-bordered flex items-center gap-2" value="Workout Title">Workout Title:
                                 <input type="text" id="workoutTitle" name="workoutTitle" value={title} onChange={(e)=>setTitle(e.target.value)} />
                                 </label>
                                 <br></br>
@@ -108,9 +143,24 @@ function WorkoutPlanner() {
                                 <button className="btn btn-neutral" type="submit">Submit</button>  
                                 
                             </div>
-                        
-                            </form>
 
+                            </form>
+                            <div className='mt-8'>
+                            <div className='bg-gray-200 p-4 rounded-md shadow-lg'> {/* Box styling */}
+                                <h3 className='font-bold text-lg mb-4 text-center'>{daySelected} Workouts</h3>
+                                <ul>
+                                {workoutList.map((workout, index) => (
+                                    <li key={index} className='bg-white p-2 rounded-md mb-2 shadow border flex justify-between items-center'>
+                                    <div>
+                                        <p className='font-bold'>{workout.title}</p>
+                                        <p>{workout.description}</p>
+                                    </div>
+                                    <button className='ml-4 btn btn-error btn-sm' onClick={() => removeWorkout(index)}>Remove</button> {/* Remove button */}
+                                    </li>
+                                ))}
+                                </ul>
+                            </div>
+                            </div>
                     
                     </div> 
                    
