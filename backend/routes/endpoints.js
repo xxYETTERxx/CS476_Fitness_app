@@ -6,7 +6,7 @@ const createModel = require('../factories/modelFactory');
 const User = require('../models/User');
 const Nutrition = require('../models/Nutrition');
 const { isAlphaLocales } = require('validator');
-const User = require('../models/User');
+
 
 
 const router = express.Router();
@@ -16,8 +16,7 @@ const router = express.Router();
 // Registration endpoint
 router.post('/register', async (req, res) => {
     try {
-       
-   
+          
        const user = createModel('user', req.body);
     
        //Save the user to database

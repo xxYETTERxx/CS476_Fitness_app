@@ -8,11 +8,6 @@ function NutritionalTracker(){
 
     const [waterIntake, setWaterIntake] = useState('');
     const [foodType, setFoodType] = useState('');
-    /*const [foodInput, setFoodInput] = useState ({
-        calories: '',
-        waterIntake:'',
-        foodType:''
-});*/
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -27,7 +22,6 @@ function NutritionalTracker(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
 
             console.log("submitting");
