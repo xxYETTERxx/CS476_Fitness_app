@@ -4,10 +4,11 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import WorkoutPlanner from './components/WorkoutPlanner';
 import NutritionalTracker from './components/NutritionalTracker';
+import WorkoutPlanner from './components/WorkoutPlanner';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+
 
 
 
@@ -38,8 +39,9 @@ function App() {
             path='/'
             element={
               <>
-                <Dashboard setNutritionActive = {setNutritionActive}/>
+                <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
                 {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+                {workoutActive &&  <WorkoutPlanner />}
               </>
             }
           />:
@@ -70,18 +72,8 @@ function App() {
             }
           />
 
-          <Route
-            path='/nutrition'
-            element={
-              <>
-                <Dashboard/>
-                <NutritionalTracker/>
-              </>
-            }
-          />
         </Routes>
         
-        {/*isAuthenticated && <Dashboard setNutritionActive = {setNutritionActive} />*/}
       </div>
     </Router>
 

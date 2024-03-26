@@ -5,12 +5,11 @@ import blankUser from '../images/blankUser.png'
 import calorieTracker from '../functions/observer.js'
 
 
-const Dashboard = ({setNutritionActive}) => {
+const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) => {
     
     calorieTracker.fetchAndUpdateCalories();
     const user = null;
-    const [workoutActive, setWorkoutActive] = useState(false);
-    const [activityActive, setActivityActive] = useState(false);
+    
 
     const [username, setUsername] = useState('Bob Build');
     const [avatar, setAvatar] = useState(blankUser);
@@ -84,9 +83,6 @@ const Dashboard = ({setNutritionActive}) => {
                 
                 return <div> {netCalorie} </div>;
             };    
-        
-
-      
     
     useEffect(() =>{
         //retrieve user data
@@ -101,16 +97,12 @@ const Dashboard = ({setNutritionActive}) => {
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                
-            
+                            
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);
                 setUserType(response.data.userType);
-
-                
-                
+        
             }catch (error){
                 console.error('Error fetching data:', error);
             }
@@ -120,6 +112,18 @@ const Dashboard = ({setNutritionActive}) => {
 
     function nActive(){
         setNutritionActive(prevNutritionActive => !prevNutritionActive);
+        setActivityActive(false);
+        setWorkoutActive(false);
+    }
+    function aActive(){
+        setActivityActive(prevActivityActive => !prevActivityActive);
+        setNutritionActive(false);
+        setWorkoutActive(false);
+    }
+    function wActive(){
+        setWorkoutActive(prevWorkoutActive => !prevWorkoutActive);
+        setNutritionActive(false);
+        setActivityActive(false);
     }
 
     return (
@@ -151,11 +155,11 @@ const Dashboard = ({setNutritionActive}) => {
                     </div>
                     <div className='flex flex-col w-4/6 pl-3 pr-3'>
                       
-                        <button className="btn btn-outline btn-neutral w-full mb-4">Exercise</button>
+                        <button onClick ={aActive} className="btn btn-outline btn-neutral w-full mb-4">Exercise</button>
                         <button onClick = {nActive} className="btn btn-outline btn-neutral w-full mb-4">Food</button>
                         {
                             userType === 'pro' &&(
-                            <button className="btn btn-outline btn-neutral w-full">Workout Planner</button>
+                            <button onClick = {wActive} className="btn btn-outline btn-neutral w-full mb-4">Workout Planner</button>
                         )}
 
                     </div>
