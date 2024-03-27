@@ -4,16 +4,21 @@ import calorieTracker from '../functions/observer';
 import '../styles/NutritionTracker.css'
 
 function NutritionalTracker({setNutritionActive}){
-    const [selectedOption, setSelectedOption] = useState(null);
     const [calorieIntake, setCalories] = useState('');
     const [waterIntake, setWaterIntake] = useState('');
     const [foodItem, setFoodItem] = useState('');    
     const [foodList, setFoodList] = useState([]);
+    const [grams, setGrams] = useState('100');
 
     const addFoodtoList = () => {
         if(foodItem) {
-            setFoodList([...foodList, foodItem]);
-            calculateCalories();
+            const newFoodItem = {
+                food: foodItem,
+                cal: getCALValues(foodItem),
+            };
+            
+            setFoodList([...foodList, newFoodItem]);
+            //calculateCalories();
         }
         else
         {
@@ -72,7 +77,8 @@ function NutritionalTracker({setNutritionActive}){
             Quinoa: 222,
             Chia: 486
         };
-        return calorieValues[foodItem] || 0; // Default to 1 if MET value is not found
+        
+        return Math.floor(calorieValues[foodItem] / 100 * grams) || 0; // Default to 1 if MET value is not found
   };
 
   // Function to remove an exercise from the list
@@ -125,6 +131,7 @@ function NutritionalTracker({setNutritionActive}){
                 setCalories('');
                 setWaterIntake('');
                 setFoodItem('');
+                setGrams('100');
                 removeAll();
             }
 
@@ -214,20 +221,22 @@ function NutritionalTracker({setNutritionActive}){
                                      
                                                                                          
                                             </select>
-                                
-                                            {/* {selectedOption && (
-                                                <p>You selected: {selectedOption}</p>
-                                            )} */}
-
-                                            
+                                                                  
                                         </div>
                                 
-                                <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button> 
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px', width: '100%' }}>
+                                    <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button>
+                                    <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                                    <span style={{ marginRight: '10px', fontSize: '0.8rem' }}>Grams:</span>
+                                    <input type="number" id="calories" name="calories" value={grams} onChange={(e)=>setGrams(e.target.value)} style={{ width: '100px' }} />
+                                </div>
+                                </div>
+                                                
                                 <div className="food-list">
                                             <ul>
                                             {foodList.map((item, index) => (
                                                 <li key={index} className="flex-containter food-item">
-                                                <span className = "food-name-and-calories">{item} - {getCALValues(item)}</span>
+                                                <span className = "food-name-and-calories">{item.food} - {item.cal}</span>
                                                 <button onClick={() => removeFood(index)} className ="btn btn-neutral ml-20 mt-1 " type='button'>Remove</button>
                                                 </li>
                                             ))}
