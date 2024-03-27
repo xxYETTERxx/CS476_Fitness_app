@@ -12,13 +12,13 @@ const Hero = () => {
 
                     <p className="m-5">Where every step you take and every bite you track brings you closer to your healthiest self.</p>
                     <div className='flex justify-center'>
-                    <a href="/login" className="btn btn-lg m-3 btn-primary">Login</a>
-                    <a href="/signup" className="btn btn-lg m-3 btn-primary">Signup</a>
+                        <a href="/login" className="btn btn-lg m-3 btn-primary">Login</a>
+                        <a href="/signup" className="btn btn-lg m-3 btn-primary">Signup</a>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Hero
+export default Hero;

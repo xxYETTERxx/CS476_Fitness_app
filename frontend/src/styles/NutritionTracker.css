@@ -1,29 +1,28 @@
 .food-list {
-    max-height: 40vh;
-    overflow-y: auto;
-  }
-  
-  .food-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-  }
-  
-  .food-name-and-calories {
-    flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .btn-neutral {
-    margin-left: auto;
-    margin-right: 1rem;
-  }
-  
-  .card {
-    padding: 1rem;
-    /*overflow: hidden; /* This may not be necessary if the padding is sufficient */
-  }
-  
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.food-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}
+
+.food-name-and-calories {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-neutral {
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.card {
+  padding: 1rem;
+  /*overflow: hidden; /* This may not be necessary if the padding is sufficient */
+}

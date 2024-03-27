@@ -4,7 +4,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
-
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -17,14 +16,12 @@ code {
     monospace;
 }
 
-.mainHero{
+.mainHero {
   background-image: url('images/workout.jpeg');
 }
 
-
-.scaleButton{
+.scaleButton {
   min-height: 2rem;
   height: 2rem;
   width: 2rem;
 }
-

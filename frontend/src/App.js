@@ -9,10 +9,6 @@ import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-
-
-
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [nutritionActive, setNutritionActive] = useState(false);
@@ -26,37 +22,39 @@ function App() {
       setIsAuthenticated(true);
     }
   }, [])
+
   return (
 
     <Router>
+      
       <div className="App bg-base-100">
-        
+
         <Navbar />
 
         <Routes>
           {
             isAuthenticated ?
-            <Route
-            path='/'
-            element={
-              <>
-                <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
-                {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
-                {workoutActive &&  <WorkoutPlanner />}
-                {activityActive && <CalorieCalculator />}
-              </>
-            }
-          />:
-          <Route
-            path='/'
-            element={
-              <>
-                <Hero/>
-              </>
-            }
-          />
+              <Route
+                path='/'
+                element={
+                  <>
+                    <Dashboard setNutritionActive={setNutritionActive} setActivityActive={setActivityActive} setWorkoutActive={setWorkoutActive} />
+                    {nutritionActive && <NutritionalTracker setNutritionActive={setNutritionActive} />}
+                    {workoutActive && <WorkoutPlanner />}
+                    {activityActive && <CalorieCalculator />}
+                  </>
+                }
+              /> :
+              <Route
+                path='/'
+                element={
+                  <>
+                    <Hero />
+                  </>
+                }
+              />
           }
-          
+
           <Route
             path='/login'
             element={
@@ -65,22 +63,22 @@ function App() {
               </>
             }
           />
+
           <Route
             path='/signup'
             element={
               <>
-                <SignUp/>
+                <SignUp />
               </>
             }
           />
 
         </Routes>
-        
+
       </div>
+
     </Router>
-
-
   );
-}
+};
 
 export default App;

@@ -4,18 +4,18 @@ const User = require('../models/User');
 const Workout = require('../models/Workout');
 
 //Factory function
-function createModel(modelType,data) {
+function createModel(modelType, data) {
     console.log("create model running");
     switch (modelType) {
-        case 'user' :
+        case 'user':
             return new User(data);
         case 'nutrition':
             return new Nutrition(data);
         case 'activity':
             return new Activity(data);
-        case 'workout' :
+        case 'workout':
             return new Workout(data);
-        default: 
+        default:
             throw new Error("Invalid model type");
     }
 }

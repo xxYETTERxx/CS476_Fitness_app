@@ -6,7 +6,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter a username"],
     },
-    
     email: {
         type: String,
         required: [true, 'Please enter an email'],
@@ -23,23 +22,21 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['basic', 'pro'],
         default: 'basic'
-        },
+    },
     avatar: {
         type: String,
     }
-    
-    });
+});
 
+const bcrypt = require('bcrypt');
 
-    const bcrypt = require('bcrypt');
-    
-    userSchema.pre('save', async function(next){
-        const salt = await bcrypt.genSalt();
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
+userSchema.pre('save', async function (next) {
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 
-    });
+});
 
-    const User = mongoose.model('User', userSchema);
-    
-    module.exports = User;
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
