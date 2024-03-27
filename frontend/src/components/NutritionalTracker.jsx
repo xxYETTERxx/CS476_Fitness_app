@@ -242,7 +242,7 @@ function NutritionalTracker({setNutritionActive}){
                                             ))}
                                             </ul>
                                 </div>
-                                <button className="btn btn-neutral mr-100 mt-1" type="submit">Submit Calories</button> 
+                                <button className="btn btn-neutral mr-100 mt-1" type="submit">Submit</button> 
                                 
                                 
                         

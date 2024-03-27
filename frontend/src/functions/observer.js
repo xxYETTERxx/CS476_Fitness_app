@@ -62,17 +62,29 @@ class CalorieTracker extends Subject {
             }
         });
 
+        const burnResponse = await axios.get('http://localhost:5000/api/auth/calorieBurn', {
+            params: {
+                user,
+                startDate,
+                endDate
+            }
+        });
+
             const intakeData = await intakeResponse.data;
+            const burnData = await burnResponse.data;
             let totalCalories = 0;
             let totalWater = 0;
-            let totalBurn = 1000;
+            let totalBurn = 0;
         
         for (const entry of intakeData)
         {
             totalCalories += entry.calorieIntake;
-            totalWater += entry.waterIntake;
-            
-        }
+            totalWater += entry.waterIntake; 
+        }    
+          for (const entry of burnData)
+        {
+            totalBurn += entry.caloriesBurned; 
+        } 
         
         this.totalCalories = totalCalories;
         this.totalWater = totalWater;
