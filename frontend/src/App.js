@@ -39,6 +39,7 @@ function App() {
               <>
                 <Dashboard setNutritionActive = {setNutritionActive}/>
                 {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+                <SignIn setIsAuthenticated={setIsAuthenticated}/>
               </>
             }
           />:

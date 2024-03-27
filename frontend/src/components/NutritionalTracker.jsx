@@ -30,7 +30,7 @@ function NutritionalTracker({setNutritionActive}){
         let totalCalories = 0;
         
         foodList.forEach((item) => {
-            totalCalories += getCALValues(item);
+            totalCalories += item.cal;
         });
         return totalCalories;
     }
