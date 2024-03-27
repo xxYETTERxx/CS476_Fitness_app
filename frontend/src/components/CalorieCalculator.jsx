@@ -11,22 +11,29 @@ const CalorieCalculator = () => {
   const [exercise, setExercise] = useState('');
   const [exerciseList, setExerciseList] = useState([]);
   const [totalCaloriesBurned, setTotalCaloriesBurned] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
   
 
   // Function to add an exercise to the list
   const addExercise = () => {
-    if (exercise && duration) {
-      const capitalizedExercise = exercise
-        .replace(/_/g, ' ')                              // Replace underscores with spaces (added to stop exercise list problems)
-        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word (added to stop exercise list problems)
-  
+    if (
+      exercise &&
+      duration &&
+      !isNaN(duration) &&
+      parseFloat(duration) > 0 &&     // Duration must be greater than 0
+      !isNaN(weight) &&
+      parseFloat(weight) > 0          // Weight must be greater than 0
+    ) {
       const exerciseItem = {
-        exercise: capitalizedExercise,
-        duration: parseFloat(duration)
+        exercise: exercise.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()), // Replace underscores with spaces (added to stop exercise list problems)
+        duration: parseFloat(duration)                                                        // Capitalize first letter of each word (added to stop exercise list problems)
       };
       setExerciseList([...exerciseList, exerciseItem]);
       setExercise('');
       setDuration('');
+      setShowWarning(false);          // Reset warning state
+    } else {
+      setShowWarning(true);           // Show warning if input is invalid
     }
   };
 
@@ -126,13 +133,13 @@ const CalorieCalculator = () => {
       rope_jumping_moderate: 8,
       rope_jumping_vigorous: 10,
     };
-    return metValues[exercise.toLowerCase()] || 1; // Default to 1 if MET value is not found
+    return metValues[exercise.toLowerCase()] || 1;    // Default to 1 if MET value is not found
   };
 
   // Function to convert weight to kilograms
   const convertWeightToKg = (weight, unit) => {
     if (unit === 'lbs') {
-      return parseFloat(weight) * 0.453592; // Convert pounds to kilograms
+      return parseFloat(weight) * 0.453592;       // Convert pounds to kilograms
     }
     return parseFloat(weight);
   };
@@ -143,9 +150,9 @@ const CalorieCalculator = () => {
     setWeightUnit(selectedUnit);
     // Convert weight to the selected unit
     if (selectedUnit === 'lbs' && weightUnit === 'kg') {
-      setWeight(parseFloat(weight) * 2.20462); // Convert kilograms to pounds
+      setWeight(parseFloat(weight) * 2.20462);                  // Convert kilograms to pounds
     } else if (selectedUnit === 'kg' && weightUnit === 'lbs') {
-      setWeight(parseFloat(weight) * 0.453592); // Convert pounds to kilograms
+      setWeight(parseFloat(weight) * 0.453592);                 // Convert pounds to kilograms
     }
   };
   
@@ -155,8 +162,15 @@ const CalorieCalculator = () => {
           <form className="calorie-calculator-form" onSubmit={(e) => { e.preventDefault(); addExercise(); }}>
             <div className="input-group">
               <label>
-                Current Weight:
-                <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
+              Current Weight:
+              <input
+              type="number"
+              value={weight}
+              step="1"                                                  // prevent decimal places being entered
+              onChange={(e) => {
+                const inputValue = parseInt(e.target.value);
+                setWeight(Math.min(Math.max(1, inputValue), 500));      // Set min/max values that can be entered
+              }}/>
               </label>
               <label>
                 Measurement Type:
@@ -201,8 +215,13 @@ const CalorieCalculator = () => {
               </select>
             </label>
             <label>
-              Duration (minutes):
-              <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
+            Duration (minutes):
+            <input 
+              type="number" 
+              value={duration} 
+              step="1"                                                                              // Prevent decimals
+              onChange={(e) => setDuration(Math.min(Math.max(1, parseInt(e.target.value)), 360))}   // set min/max values that can be entered
+            />
             </label>
             <button type="submit">Add Exercise</button>
           </form>
