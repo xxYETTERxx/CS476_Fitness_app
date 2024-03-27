@@ -10,10 +10,8 @@ import WorkoutPlanner from './components/WorkoutPlanner';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
-
-
-
 function App() {
+  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [nutritionActive, setNutritionActive] = useState(false);
   const [workoutActive, setWorkoutActive] = useState(false);
@@ -21,7 +19,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log('Token from storage: ', token);
     if (token) {
       setIsAuthenticated(true);
     }

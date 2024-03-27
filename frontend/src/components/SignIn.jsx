@@ -12,7 +12,7 @@ function SignIn({ setIsAuthenticated }) {
         try {
 
             //Send backend request
-            const response = await axios.post('https://gymgenius-api-api.onrender.com/api/auth/login', {
+            const response = await axios.post('https://gymgenius-api.onrender.com/api/auth/login', {
                 email: email,
                 password: password
             });
@@ -92,9 +92,6 @@ function SignIn({ setIsAuthenticated }) {
 
                 </div>
             </form>
-
-
-
         </div>
 
 
