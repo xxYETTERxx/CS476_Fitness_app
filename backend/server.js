@@ -13,7 +13,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'API is running...' });
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 10000;
+
 
 mongoose.connect(process.env.MONGODB_URI)
 .then (() => console.log ('Connected to MongoDB'))
@@ -21,7 +22,7 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use('/api/auth', authRoutes);
 
-app.listen(port,() => {
+app.listen(port,'0.0.0.0', () => {
     console.log('Server is running on port:' + port );
 })
 
