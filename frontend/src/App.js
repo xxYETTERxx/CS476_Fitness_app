@@ -42,12 +42,8 @@ function App() {
               <>
                 <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
                 {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
-<<<<<<< HEAD
-                <SignIn setIsAuthenticated={setIsAuthenticated}/>
-=======
                 {workoutActive &&  <WorkoutPlanner />}
                 {activityActive && <CalorieCalculator />}
->>>>>>> main
               </>
             }
           />:
