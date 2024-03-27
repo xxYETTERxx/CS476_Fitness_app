@@ -93,7 +93,6 @@ function NutritionalTracker({setNutritionActive}){
 
         try {
 
-            console.log("submitting");
             const token = localStorage.getItem('token');
                 if (!token){
                     console.log("No token found");
@@ -103,8 +102,7 @@ function NutritionalTracker({setNutritionActive}){
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                console.log(response.data.user);
+                const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
                 const user = response.data.user;
                
                 const waterIntakeValue = waterIntake ? parseInt(waterIntake, 10) : 0;
@@ -120,8 +118,7 @@ function NutritionalTracker({setNutritionActive}){
                 waterIntake: waterIntakeValue,
                 date
             };
-            console.log("sending request");
-            const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
+            const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/nutrition',userData);
 
             if(response1.status===200 || response1.status ===201) {
 
