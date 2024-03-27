@@ -19,7 +19,7 @@ function WorkoutPlanner() {
         e.preventDefault();
 
         try {
-            console.log("submitting");
+            
             const token = localStorage.getItem('token');
                 if (!token){
                     console.log("No token found");
@@ -30,7 +30,7 @@ function WorkoutPlanner() {
                 };
                 
                 const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
-                console.log(response);
+               
                 const user = response.data.user;
                 const day = daySelected;
                 
@@ -42,10 +42,10 @@ function WorkoutPlanner() {
                 description
             };
 
-            console.log(userData);
-            console.log("sending request");
+          
+        
             const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/workout',userData);
-            console.log("Response recieved: ", response1.status);
+          
 
             if(response1.status===200 || response1.status ===201) {
                 fetchWorkouts(daySelected);
@@ -90,7 +90,7 @@ function WorkoutPlanner() {
                 const userResponse = await axios.get(`https://gymgenius-api.onrender.com/api/auth/userRetrieval`, config);
                 const user = userResponse.data.user;
                 const day = selectedDay;
-                console.log(selectedDay);
+             
                 const workoutResponse = await axios.get('https://gymgenius-api.onrender.com/api/auth/getWorkout', {
             params: {
                 user,

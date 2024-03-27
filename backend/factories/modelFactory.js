@@ -5,7 +5,7 @@ const Workout = require('../models/Workout');
 
 //Factory function
 function createModel(modelType,data) {
-    console.log("create model running");
+  
     switch (modelType) {
         case 'user' :
             return new User(data);
