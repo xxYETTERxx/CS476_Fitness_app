@@ -7,7 +7,6 @@ import calorieTracker from '../functions/observer.js'
 
 const Dashboard = ({setNutritionActive}) => {
     
-    calorieTracker.fetchAndUpdateCalories();
     const user = null;
     const [workoutActive, setWorkoutActive] = useState(false);
     const [activityActive, setActivityActive] = useState(false);
@@ -15,7 +14,12 @@ const Dashboard = ({setNutritionActive}) => {
     const [username, setUsername] = useState('Bob Build');
     const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
+
+    const[dayFilter, setDayFilter] = useState('day');
     
+    useEffect(() => {
+            calorieTracker.fetchAndUpdateCalories(dayFilter);
+    },[dayFilter]);
 
     const CalorieIntakeComponent = () => {
         const [calorieIntake, setCalorieIntake] = useState(0);
@@ -136,16 +140,7 @@ const Dashboard = ({setNutritionActive}) => {
                             <img src={avatar} className='w-5/6 rounded-lg border border-neutral' />:
                             <img src={blankUser} className='w-5/6 rounded-lg border border-neutral' />
                         }
-                        <div className='flex items-center'>
-                            <text className='text-xl font-bold text-success mr-2'><span>-</span>2<span className='text-lg text-base-content'>lbs</span>
-                            </text>
-                            <button className="btn btn-square scaleButton">
-                                <div className="indicator">
-                                    <span className="indicator-item indicator-bottom badge badge-success scaleBadge">+</span>
-                                    {/*<img src={scale} alt="scale" />*/}
-                                </div>
-                            </button>
-                        </div>
+                       
                     </div>
                     <div className='flex flex-col w-4/6 p-3 justify-center'>
 
@@ -196,9 +191,9 @@ const Dashboard = ({setNutritionActive}) => {
 
             </div>
             <div className='flex justify-center mt-3 w-3/6'>
-                <input type="radio" value='day' name='dateToggle' aria-label="Day" className="btn input-bordered bg-base-100  w-24" checked/>
-                <input type="radio" value='month' name='dateToggle' aria-label="Month" className="btn input-bordered bg-base-100  w-24 ml-5 mr-5" />
-                <input type="radio" value='year' name='dateToggle' aria-label="Year" className="btn input-bordered bg-base-100  w-24" />
+                <input type="radio" value='day' name='dateToggle' aria-label="Day" className="btn input-bordered bg-base-100  w-24" checked={dayFilter === 'day'} onChange={(e) => setDayFilter(e.target.value)}/>
+                <input type="radio" value='week' name='dateToggle' aria-label="Week" className="btn input-bordered bg-base-100  w-24 ml-5 mr-5" checked={dayFilter === 'week'} onChange={(e) => setDayFilter(e.target.value)}/>
+                <input type="radio" value='month' name='dateToggle' aria-label="Month" className="btn input-bordered bg-base-100  w-24" checked={dayFilter === 'month'} onChange={(e) => setDayFilter(e.target.value)}/>
             </div>
         </div>
 

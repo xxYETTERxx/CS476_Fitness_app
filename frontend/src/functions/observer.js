@@ -23,15 +23,14 @@ class CalorieTracker extends Subject {
         this.totalCalories = 0;
         this.totalBurn = 0;
         this.totalNet = 0;
-        
+             
     }
 
-    async fetchAndUpdateCalories(/*timePeriod*/){
+    async fetchAndUpdateCalories(timePeriod){
 
-        /* const startDate;
-        switch(timePeriod)
-            case 'day' */
-        
+        //default value of startDate is day
+        const startDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
+     
         try {
             const token = localStorage.getItem('token');
                 if (!token){
@@ -45,9 +44,22 @@ class CalorieTracker extends Subject {
             const userResponse = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
             const user = userResponse.data.user;
             
+            switch(timePeriod) {
+            
+            case 'week' :
+                startDate = moment().subtract(1, 'weeks').format('YYYY-MM-DD');
+                break;
+            case 'month' :
+                startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+                break;
+            default:
+                moment().subtract(1, 'days').format('YYYY-MM-DD'); //day filter
+        
+            }
+
 
             const endDate = moment().format('YYYY-MM-DD');
-            const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+            
 
             console.log('startDate',startDate);
             console.log('endDate',endDate);
