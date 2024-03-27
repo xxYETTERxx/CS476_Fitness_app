@@ -29,7 +29,7 @@ function WorkoutPlanner() {
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+                const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
                 console.log(response);
                 const user = response.data.user;
                 const day = daySelected;
@@ -44,7 +44,7 @@ function WorkoutPlanner() {
 
             console.log(userData);
             console.log("sending request");
-            const response1 = await axios.post('http://localhost:5000/api/auth/workout',userData);
+            const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/workout',userData);
             console.log("Response recieved: ", response1.status);
 
             if(response1.status===200 || response1.status ===201) {
@@ -87,11 +87,11 @@ function WorkoutPlanner() {
                     headers: { Authorization: `Bearer ${token}` }
                 }
 
-                const userResponse = await axios.get(`http://localhost:5000/api/auth/userRetrieval`, config);
+                const userResponse = await axios.get(`https://gymgenius-api.onrender.com/api/auth/userRetrieval`, config);
                 const user = userResponse.data.user;
                 const day = selectedDay;
                 console.log(selectedDay);
-                const workoutResponse = await axios.get('http://localhost:5000/api/auth/getWorkout', {
+                const workoutResponse = await axios.get('https://gymgenius-api.onrender.com/api/auth/getWorkout', {
             params: {
                 user,
                 day
@@ -116,7 +116,7 @@ function WorkoutPlanner() {
                     headers: { Authorization: `Bearer ${token}` }
                   };
                   
-                  await axios.delete(`http://localhost:5000/api/auth/workoutRemove/${workoutId}`, config);
+                  await axios.delete(`https://gymgenius-api.onrender.com/api/auth/workoutRemove/${workoutId}`, config);
               
                   // Filter out the workout from the local state to update the UI
                   setWorkoutList(prevWorkouts => prevWorkouts.filter(workout => workout._id !== workoutId));

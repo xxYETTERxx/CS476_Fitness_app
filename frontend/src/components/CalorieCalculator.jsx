@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CalorieCalculator.css'; 
+import '../styles/CalorieCalculator.css'; 
 import axios from 'axios';
 import calorieTracker from '../functions/observer';
 
@@ -62,7 +62,7 @@ const CalorieCalculator = () => {
               headers: { Authorization: `Bearer ${token}`}
           };
           
-          const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+          const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
           console.log(response);
           const user = response.data.user;
           const caloriesBurned = Math.floor(calories);
@@ -72,7 +72,7 @@ const CalorieCalculator = () => {
             caloriesBurned
         };
         console.log("sending request");
-        const response1 = await axios.post('http://localhost:5000/api/auth/activity',userData);
+        const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/activity',userData);
         console.log("Response recieved: ", response1.status);
 
         if(response1.status===200 || response1.status ===201) {

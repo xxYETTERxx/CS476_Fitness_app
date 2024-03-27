@@ -97,7 +97,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-                const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+                const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
                             
                 setUsername(response.data.userName);
                 setAvatar(response.data.avatar);

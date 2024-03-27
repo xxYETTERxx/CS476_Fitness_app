@@ -43,11 +43,11 @@ class CalorieTracker extends Subject {
                     headers: { Authorization: `Bearer ${token}`}
                 };
                 
-            const userResponse = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+            const userResponse = await axios.get('https://gymgenius.onrender.com/api/auth/userRetrieval', config);
             const user = userResponse.data.user;
             
 
-            const endDate = moment().format('YYYY-MM-DD');
+            const endDate = moment().add(1, 'days').format('YYYY-MM-DD');
             const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
 
             console.log('startDate',startDate);
@@ -55,7 +55,7 @@ class CalorieTracker extends Subject {
             console.log('user:', user);
             
 
-            const intakeResponse = await axios.get('http://localhost:5000/api/auth/nutritionIntake', {
+            const intakeResponse = await axios.get('https://gymgenius.onrender.com/api/auth/nutritionIntake', {
             params: {
                 user,
                 startDate,
@@ -63,7 +63,7 @@ class CalorieTracker extends Subject {
             }
         });
 
-        const burnResponse = await axios.get('http://localhost:5000/api/auth/calorieBurn', {
+        const burnResponse = await axios.get('https://gymgenius.onrender.com/api/auth/calorieBurn', {
             params: {
                 user,
                 startDate,

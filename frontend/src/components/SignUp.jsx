@@ -54,7 +54,7 @@ const file = event.target.files[0];
 
             try {
             //Send backend request
-            const response = await axios.post('http://localhost:5000/api/auth/register', userData)
+            const response = await axios.post('https://gymgenius-api.onrender.com/api/auth/register', userData)
 
             if (response.status === 200 || response.status === 201) {
                 alert('User registered successfully!');
