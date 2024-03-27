@@ -152,7 +152,7 @@ function WorkoutPlanner() {
 
                                 <div>
 
-                                <label for="dayOfTheWeek">Day of Week:</label>
+                                <label htmlFor="dayOfTheWeek">Day of Week:</label>
                                             <select className="select select-primary w-full max-w-xs" value={daySelected} onChange={(e) => handleOptionSelect(e.target.value)}>
                                                 <option value="">Select...</option>
                                                 <option value="Sunday">Sunday</option>

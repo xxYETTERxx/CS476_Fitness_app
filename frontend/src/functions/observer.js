@@ -31,7 +31,8 @@ class CalorieTracker extends Subject {
         /* const startDate;
         switch(timePeriod)
             case 'day' */
-        
+        console.log("fetchStat running")
+
         try {
             const token = localStorage.getItem('token');
                 if (!token){
@@ -72,6 +73,7 @@ class CalorieTracker extends Subject {
 
             const intakeData = await intakeResponse.data;
             const burnData = await burnResponse.data;
+            console.log(intakeData);
             let totalCalories = 0;
             let totalWater = 0;
             let totalBurn = 0;
@@ -81,6 +83,7 @@ class CalorieTracker extends Subject {
             totalCalories += entry.calorieIntake;
             totalWater += entry.waterIntake; 
         }    
+        console.log("totalCal/Wat",totalCalories,totalWater)
           for (const entry of burnData)
         {
             totalBurn += entry.caloriesBurned; 
@@ -98,8 +101,9 @@ class CalorieTracker extends Subject {
             console.error('Failed to fetch data', error);
         }
     }
-
+       
     notifyObservers() {
+        console.log("all stats:",this.totalCalories,this.totalWater,this.totalBurn,this.totalNet);
         for (const observer of this.observers) {
             observer.update(this.totalCalories,this.totalWater,this.totalBurn,this.totalNet);
         }
