@@ -145,12 +145,6 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         <div className='flex h-1/6 items-center'>
                             <text className='text-xl font-bold text-success pr-2'><span>-</span>2<span className='text-lg text-base-content'>lbs</span>
                             </text>
-                            <button className="btn btn-square scaleButton">
-                                <div className="indicator">
-                                    <span className="indicator-item indicator-bottom badge badge-success scaleBadge">+</span>
-                                    {/*<img src={scale} alt="scale" />*/}
-                                </div>
-                            </button>
                         </div>
                     </div>
                     <div className='flex flex-col w-4/6 pl-3 pr-3'>

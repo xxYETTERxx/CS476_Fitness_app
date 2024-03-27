@@ -58,6 +58,7 @@ const file = event.target.files[0];
 
             if (response.status === 200 || response.status === 201) {
                 alert('User registered successfully!');
+                window.localStorage.href = '/';
 
                 setUserName('');
                 setEmail('');
