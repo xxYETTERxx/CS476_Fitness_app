@@ -142,10 +142,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                             <img src={avatar} className='w-5/6 rounded-lg border border-neutral mb-3' />:
                             <img src={blankUser} className='w-5/6 rounded-lg border border-neutral mb-3' />
                         }
-                        <div className='flex h-1/6 items-center'>
-                            <text className='text-xl font-bold text-success pr-2'><span>-</span>2<span className='text-lg text-base-content'>lbs</span>
-                            </text>
-                        </div>
+            
                     </div>
                     <div className='flex flex-col w-4/6 pl-3 pr-3'>
                       
