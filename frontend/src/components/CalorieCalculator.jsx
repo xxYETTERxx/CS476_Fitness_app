@@ -223,6 +223,7 @@ const CalorieCalculator = () => {
               onChange={(e) => setDuration(Math.min(Math.max(1, parseInt(e.target.value)), 360))}   // set min/max values that can be entered
             />
             </label>
+            {showWarning && <p className="warning-message">Please enter valid values for weight and duration.</p>}
             <button type="submit">Add Exercise</button>
           </form>
           <div className="exercise-list">
