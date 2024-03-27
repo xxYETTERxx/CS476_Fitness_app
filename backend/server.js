@@ -9,6 +9,10 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json()); //parse JSON bodies
 
+app.get('/', (req, res) => {
+  res.json({ message: 'API is running...' });
+});
+
 const port = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGODB_URI)
