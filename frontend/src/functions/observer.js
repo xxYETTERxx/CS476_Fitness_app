@@ -46,7 +46,7 @@ class CalorieTracker extends Subject {
             const user = userResponse.data.user;
             
 
-            const endDate = moment().format('YYYY-MM-DD');
+            const endDate = moment().add(1, 'days').format('YYYY-MM-DD');
             const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
 
             console.log('startDate',startDate);

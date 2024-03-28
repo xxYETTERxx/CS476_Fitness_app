@@ -4,16 +4,21 @@ import calorieTracker from '../functions/observer';
 import '../styles/NutritionTracker.css'
 
 function NutritionalTracker({setNutritionActive}){
-    const [selectedOption, setSelectedOption] = useState(null);
     const [calorieIntake, setCalories] = useState('');
     const [waterIntake, setWaterIntake] = useState('');
     const [foodItem, setFoodItem] = useState('');    
     const [foodList, setFoodList] = useState([]);
+    const [grams, setGrams] = useState('100');
 
     const addFoodtoList = () => {
         if(foodItem) {
-            setFoodList([...foodList, foodItem]);
-            calculateCalories();
+            const newFoodItem = {
+                food: foodItem,
+                cal: getCALValues(foodItem),
+            };
+            
+            setFoodList([...foodList, newFoodItem]);
+            //calculateCalories();
         }
         else
         {
@@ -25,7 +30,7 @@ function NutritionalTracker({setNutritionActive}){
         let totalCalories = 0;
         
         foodList.forEach((item) => {
-            totalCalories += getCALValues(item);
+            totalCalories += item.cal;
         });
         return totalCalories;
     }
@@ -40,6 +45,11 @@ function NutritionalTracker({setNutritionActive}){
             Beef: 250,
             Pork: 211,
             Tuna: 203,
+            Salmon: 208,
+            Cod: 82,
+            Lamb: 294,
+            Turkey: 189,
+            Duck: 337,
             Broccoli: 34,
             Cabbage: 25,
             Carrots: 41,
@@ -51,9 +61,24 @@ function NutritionalTracker({setNutritionActive}){
             Banana: 45,
             Pineapple: 50,
             Kiwi: 61,
-            Grapefruit: 97 
+            Grapefruit: 97, 
+            Grapes: 67,
+            Pear: 100,
+            Watermelon: 30,
+            Mango: 60,
+            Blueberries: 57,
+            Strawberry: 33,
+            Tomato: 22,
+            Potato: 77,
+            Celery: 15,
+            Rice: 130,
+            Oats: 389,
+            Corn: 96,
+            Quinoa: 222,
+            Chia: 486
         };
-        return calorieValues[foodItem] || 0; // Default to 1 if MET value is not found
+        
+        return Math.floor(calorieValues[foodItem] / 100 * grams) || 0; // Default to 1 if MET value is not found
   };
 
   // Function to remove an exercise from the list
@@ -86,7 +111,35 @@ function NutritionalTracker({setNutritionActive}){
                 const calorieIntakeValue = calorieIntake ? parseInt(calorieIntake, 10) : 0;
 
                 const totalCalories = foodList.length > 0 ? calculateCalories() : 0;
-                const date = Date.now();    
+                const date = Date.now();
+                
+                //basic error handling
+                if (calorieIntake < 0)
+                {
+                    setCalories('');
+                    alert("Invalid Calorie Entry");
+                    return;
+                }
+                if (calorieIntake >= 10000)
+                {
+                    setCalories('');
+                    alert("Invalid Calorie Entry");
+                    return;
+                }
+                if (waterIntake >= 10000)
+                {
+                    setWaterIntake('');
+                    alert("Invalid Water Entry");
+                    return;
+                }
+                if (waterIntake < 0)
+                {
+                    setWaterIntake('');
+                    alert("Invalid Water Entry");
+                    return;
+                }
+
+
 
             const userData = {
                 
@@ -106,6 +159,7 @@ function NutritionalTracker({setNutritionActive}){
                 setCalories('');
                 setWaterIntake('');
                 setFoodItem('');
+                setGrams('100');
                 removeAll();
             }
 
@@ -154,6 +208,11 @@ function NutritionalTracker({setNutritionActive}){
                                                     <option value="Beef">Beef</option>
                                                     <option value="Pork">Pork</option>
                                                     <option value="Tuna">Tuna</option>
+                                                    <option value="Salmon">Salmon</option>
+                                                    <option value="Cod">Salmon</option>
+                                                    <option value="Lamb">Lamb</option>
+                                                    <option value="Turkey">Turkey</option>
+                                                    <option value="Duck">Duck</option>
                                                 </optgroup>
                                                 <optgroup label = "Vegtables">
                                                     <option value="Broccoli">Broccoli</option>
@@ -162,6 +221,9 @@ function NutritionalTracker({setNutritionActive}){
                                                     <option value="GreenBeans">Green Beans</option>
                                                     <option value="Onions">Onions</option>
                                                     <option value="Spinach">Spinach</option>
+                                                    <option value="Tomato">Tomato</option>
+                                                    <option value="Celery">Celery</option>
+                                                    <option value="Potato">Potato</option>
                                                 </optgroup>
                                                 <optgroup label = "Fruit">
                                                     <option value="Apple">Apple</option>
@@ -170,24 +232,39 @@ function NutritionalTracker({setNutritionActive}){
                                                     <option value="Pineapple">Pineapple</option>
                                                     <option value="Kiwi">Kiwi</option>
                                                     <option value="Grapefruit">Grapefruit</option>
+                                                    <option value="Grapes">Grapes</option>
+                                                    <option value="Pear">Pear</option>
+                                                    <option value="Mango">Mango</option>
+                                                    <option value="Watermelon">Watermelon</option>
+                                                    <option value="Blueberries">Blueberries</option>
+                                                    <option value="Strawberry">Strawberry</option>
+                                                </optgroup>
+                                                <optgroup label = "Grains">
+                                                    <option value="Rice">Rice</option>
+                                                    <option value="Oats">Oats</option>
+                                                    <option value="Corn">Corn</option>
+                                                    <option value="Quinoa">Quinoa</option>
+                                                    <option value="Chia">Chia</option>
                                                 </optgroup>
                                      
                                                                                          
                                             </select>
-                                
-                                            {/* {selectedOption && (
-                                                <p>You selected: {selectedOption}</p>
-                                            )} */}
-
-                                            
+                                                                  
                                         </div>
                                 
-                                <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button> 
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px', width: '100%' }}>
+                                    <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button>
+                                    <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                                    <span style={{ marginRight: '10px', fontSize: '0.8rem' }}>Grams:</span>
+                                    <input type="number" id="calories" name="calories" value={grams} onChange={(e)=>setGrams(e.target.value)} style={{ width: '100px' }} />
+                                </div>
+                                </div>
+                                                
                                 <div className="food-list">
                                             <ul>
                                             {foodList.map((item, index) => (
                                                 <li key={index} className="flex-containter food-item">
-                                                <span className = "food-name-and-calories">{item} - {getCALValues(item)}</span>
+                                                <span className = "food-name-and-calories">{item.food} - {item.cal}</span>
                                                 <button onClick={() => removeFood(index)} className ="btn btn-neutral ml-20 mt-1 " type='button'>Remove</button>
                                                 </li>
                                             ))}
