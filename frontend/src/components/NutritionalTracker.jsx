@@ -27,11 +27,13 @@ function NutritionalTracker({setNutritionActive}){
     }    
     
     const calculateCalories = () => {
+        console.time("calculateCalories");
         let totalCalories = 0;
         
         foodList.forEach((item) => {
             totalCalories += item.cal;
         });
+        console.timeEnd("calculateCalories");
         return totalCalories;
     }
 

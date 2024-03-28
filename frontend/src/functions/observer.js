@@ -26,6 +26,7 @@ class CalorieTracker extends Subject {
         
     }
 
+
     async fetchAndUpdateCalories(/*timePeriod*/){
 
         /* const startDate;
@@ -48,10 +49,6 @@ class CalorieTracker extends Subject {
 
             const endDate = moment().add(1, 'days').format('YYYY-MM-DD');
             const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
-
-            console.log('startDate',startDate);
-            console.log('endDate',endDate);
-            console.log('user:', user);
             
 
             const intakeResponse = await axios.get('http://localhost:5000/api/auth/nutritionIntake', {
