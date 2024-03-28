@@ -23,6 +23,8 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
             const observer = {
                 update: (totalCalories, water, burn, net) => {
                     setCalorieIntake(totalCalories);
+                    if (calorieIntake < 0) setCalorieIntake(0); 
+                    if (calorieIntake >= 100000) setCalorieIntake("Value not valid");
                 },
             };
             
@@ -34,12 +36,14 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         };
 
         const CalorieBurnComponent = () => {
-            const [totalBurn, setTotalBurn] = useState(0);
+            const [calorieBurn, setCalorieBurn] = useState(0);
     
             useEffect(() => {
                 const observer = {
                     update: (intake, water, totalBurn, net) => {
-                        setTotalBurn(totalBurn);
+                        setCalorieBurn(totalBurn);
+                        if (calorieBurn < 0) setCalorieBurn(0);
+                        if (calorieBurn >= 100000) setCalorieBurn("Value not valid");
                     },
                 };
     
@@ -47,7 +51,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                 return () => calorieTracker.unsubscribe(observer);
                 },[]);
                 
-                return <div> {totalBurn} </div>;
+                return <div> {calorieBurn} </div>;
             };
 
         const WaterIntakeComponent = () => {
@@ -57,6 +61,8 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                 const observer = {
                     update: (intake, totalWater, burn, net) => {
                         setWaterIntake(totalWater);
+                        if (waterIntake < 0) setWaterIntake(0)
+                        if (waterIntake >= 100000) setWaterIntake("Value not valid");
                     },
                 };
     
@@ -69,11 +75,14 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         
         const NetCalorieComponent = () => {
             const [netCalorie, setNetCalorie] = useState(0);
+            
     
             useEffect(() => {
                 const observer = {
                     update: (intake, totalWater, burn, totalNet) => {
                         setNetCalorie(totalNet);
+                        if (netCalorie <= -100000) setNetCalorie("Value not valid");
+                        if (netCalorie >= 100000) setNetCalorie("Value not valid");
                     },
                 };
     
@@ -142,16 +151,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                             <img src={avatar} className='w-5/6 rounded-lg border border-neutral mb-3' />:
                             <img src={blankUser} className='w-5/6 rounded-lg border border-neutral mb-3' />
                         }
-                        <div className='flex h-1/6 items-center'>
-                            <text className='text-xl font-bold text-success pr-2'><span>-</span>2<span className='text-lg text-base-content'>lbs</span>
-                            </text>
-                            <button className="btn btn-square scaleButton">
-                                <div className="indicator">
-                                    <span className="indicator-item indicator-bottom badge badge-success scaleBadge">+</span>
-                                    {/*<img src={scale} alt="scale" />*/}
-                                </div>
-                            </button>
-                        </div>
+                        
                     </div>
                     <div className='flex flex-col w-4/6 pl-3 pr-3'>
                       
