@@ -107,33 +107,37 @@ const CalorieCalculator = () => {
 
   // Function to retrieve MET value for a given exercise
   const getMETValue = (exercise) => {
+
     const metValues = {
-      walking: 3.5,
-      running: 7,
-      swimming: 8,
-      cycling: 6,
-      weightlifting: 3,
-      sleeping: 0.9,
-      sitting_idle: 1,
-      desk_work: 1.8,
-      slow_walking: 2.3,
-      calisthenics_light: 3.5,
-      calisthenics_moderate: 3.8,
-      calisthenics_vigorous: 4,
-      pilates: 3.8,
-      stationary_biking_light: 5.3,
-      stationary_biking_moderate: 5.5,
-      stationary_biking_vigorous: 6,
-      power_walking: 3.6,
-      bicycling_leisurely: 4,
-      bicycling_vigorous: 6,
-      jogging: 7,
-      sprinting: 9,
-      rope_jumping_light: 6.5,
-      rope_jumping_moderate: 8,
-      rope_jumping_vigorous: 10,
+      'walking': 3.5,
+      'running': 7,
+      'swimming': 8,
+      'cycling': 6,
+      'weight lifting': 3,
+      'sleeping': 0.9,
+      'sitting idle': 1,
+      'desk work': 1.8,
+      'slow walking': 2.3,
+      'light calisthenics': 3.5,
+      'moderate calisthenics': 3.8,
+      'heavy calisthenics': 4,
+      'pilates': 3.8,
+      'resistance training': 3,
+      'light stationary biking': 5.3,
+      'moderate stationary biking': 5.5,
+      'heavy stationary biking': 6,
+      'power walking': 3.6,
+      'bicycling leisurely': 4,
+      'heavy bicycling': 6,
+      'jogging': 7,
+      'sprinting': 9,
+      'light rope jumping': 6.5,
+      'moderate rope jumping': 8,
+      'heavy rope jumping': 10,
     };
-    return metValues[exercise.toLowerCase()] || 1;    // Default to 1 if MET value is not found
+  
+    const metValue = metValues[exercise.toLowerCase()] || 1; // Default to 1 if MET value is not found
+    return metValue;
   };
 
   // Function to convert weight to kilograms
@@ -186,31 +190,32 @@ const CalorieCalculator = () => {
                 <option value="">Select an exercise</option>
                 <optgroup label="Light">
                   <option value="sleeping">Sleeping</option>
-                  <option value="sitting_idle">Sitting Idle</option>
-                  <option value="desk_work">Desk Work</option>
-                  <option value="slow_walking">Slow Walking</option>
-                  <option value="bicycling_leisurely">Bicycling Leisurely</option>
-                  <option value="calisthenics_light">Calisthenics</option>
-                  <option value="stationary_biking_light">Stationary Biking</option>
-                  <option value="rope_jumping_light">Rope Jumping</option>
+                  <option value="sitting idle">Sitting Idle</option>
+                  <option value="desk work">Desk Work</option>
+                  <option value="slow walking">Slow Walking</option>
+                  <option value="light bicycling">Leisurely Bicycling</option>
+                  <option value="light calisthenics">Calisthenics</option>
+                  <option value="light stationary biking">Stationary Biking</option>
+                  <option value="light rope jumping">Rope Jumping</option>
                 </optgroup>
                 <optgroup label="Moderate">
                   <option value="walking">Walking</option>
-                  <option value="resistance_training">Resistance Training</option>
-                  <option value="calisthenics_moderate">Calisthenics</option>
+                  <option value="resistance training">Resistance Training</option>
+                  <option value="moderate calisthenics">Calisthenics</option>
                   <option value="pilates">Pilates</option>
-                  <option value="stationary_biking_moderate">Stationary Biking</option>
-                  <option value="rope_jumping_moderate">Rope Jumping</option>
+                  <option value="moderate stationary biking">Stationary Biking</option>
+                  <option value="moderate rope jumping">Rope Jumping</option>
                 </optgroup>
                 <optgroup label="Vigorous">
-                  <option value="power_walking">Power Walking</option>
-                  <option value="bicycling_vigorous">Bicycling</option>
+                  <option value="power walking">Power Walking</option>
+                  <option value="bicycling leisurely">Leisurely Bicycling</option>
+                  <option value="heavy bicycling">Bicycling</option>
+                  <option value="jogging">Jogging</option>
+                  <option value="sprinting">Sprinting</option>
                   <option value="swimming">Swimming</option>
                   <option value="running">Running</option>
-                  <option value="sprinting">Sprinting</option>
-                  <option value="jogging">Jogging</option>
-                  <option value="stationary_biking_vigorous">Stationary Biking</option>
-                  <option value="rope_jumping_vigorous">Rope Jumping</option>
+                  <option value="heavy stationary biking">Stationary Biking</option>
+                  <option value="heavy rope jumping">Rope Jumping</option>
                 </optgroup>
               </select>
             </label>
