@@ -11,29 +11,22 @@ const CalorieCalculator = () => {
   const [exercise, setExercise] = useState('');
   const [exerciseList, setExerciseList] = useState([]);
   const [totalCaloriesBurned, setTotalCaloriesBurned] = useState(0);
-  const [showWarning, setShowWarning] = useState(false);
   
 
   // Function to add an exercise to the list
   const addExercise = () => {
-    if (
-      exercise &&
-      duration &&
-      !isNaN(duration) &&
-      parseFloat(duration) > 0 &&     // Duration must be greater than 0
-      !isNaN(weight) &&
-      parseFloat(weight) > 0          // Weight must be greater than 0
-    ) {
+    if (exercise && duration) {
+      const capitalizedExercise = exercise
+        .replace(/_/g, ' ')                              // Replace underscores with spaces (added to stop exercise list problems)
+        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word (added to stop exercise list problems)
+  
       const exerciseItem = {
-        exercise: exercise.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase()), // Replace underscores with spaces (added to stop exercise list problems)
-        duration: parseFloat(duration)                                                        // Capitalize first letter of each word (added to stop exercise list problems)
+        exercise: capitalizedExercise,
+        duration: parseFloat(duration)
       };
       setExerciseList([...exerciseList, exerciseItem]);
       setExercise('');
       setDuration('');
-      setShowWarning(false);          // Reset warning state
-    } else {
-      setShowWarning(true);           // Show warning if input is invalid
     }
   };
 
@@ -59,7 +52,6 @@ const CalorieCalculator = () => {
   const handleSubmit = async (calories) => {
     try {
 
-      console.log("submitting");
       const token = localStorage.getItem('token');
           if (!token){
               console.log("No token found");
@@ -69,8 +61,7 @@ const CalorieCalculator = () => {
               headers: { Authorization: `Bearer ${token}`}
           };
           
-          const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-          console.log(response);
+          const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
           const user = response.data.user;
           const caloriesBurned = Math.floor(calories);
       
@@ -78,10 +69,8 @@ const CalorieCalculator = () => {
             user,
             caloriesBurned
         };
-        console.log("sending request");
-        const response1 = await axios.post('http://localhost:5000/api/auth/activity',userData);
-        console.log("Response recieved: ", response1.status);
-
+        const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/activity',userData);
+    
         if(response1.status===200 || response1.status ===201) {
 
             alert('Submission Succesful!');
@@ -107,43 +96,39 @@ const CalorieCalculator = () => {
 
   // Function to retrieve MET value for a given exercise
   const getMETValue = (exercise) => {
-
     const metValues = {
-      'walking': 3.5,
-      'running': 7,
-      'swimming': 8,
-      'cycling': 6,
-      'weight lifting': 3,
-      'sleeping': 0.9,
-      'sitting idle': 1,
-      'desk work': 1.8,
-      'slow walking': 2.3,
-      'light calisthenics': 3.5,
-      'moderate calisthenics': 3.8,
-      'heavy calisthenics': 4,
-      'pilates': 3.8,
-      'resistance training': 3,
-      'light stationary biking': 5.3,
-      'moderate stationary biking': 5.5,
-      'heavy stationary biking': 6,
-      'power walking': 3.6,
-      'bicycling leisurely': 4,
-      'heavy bicycling': 6,
-      'jogging': 7,
-      'sprinting': 9,
-      'light rope jumping': 6.5,
-      'moderate rope jumping': 8,
-      'heavy rope jumping': 10,
+      walking: 3.5,
+      running: 7,
+      swimming: 8,
+      cycling: 6,
+      weightlifting: 3,
+      sleeping: 0.9,
+      sitting_idle: 1,
+      desk_work: 1.8,
+      slow_walking: 2.3,
+      calisthenics_light: 3.5,
+      calisthenics_moderate: 3.8,
+      calisthenics_vigorous: 4,
+      pilates: 3.8,
+      stationary_biking_light: 5.3,
+      stationary_biking_moderate: 5.5,
+      stationary_biking_vigorous: 6,
+      power_walking: 3.6,
+      bicycling_leisurely: 4,
+      bicycling_vigorous: 6,
+      jogging: 7,
+      sprinting: 9,
+      rope_jumping_light: 6.5,
+      rope_jumping_moderate: 8,
+      rope_jumping_vigorous: 10,
     };
-  
-    const metValue = metValues[exercise.toLowerCase()] || 1; // Default to 1 if MET value is not found
-    return metValue;
+    return metValues[exercise.toLowerCase()] || 1; // Default to 1 if MET value is not found
   };
 
   // Function to convert weight to kilograms
   const convertWeightToKg = (weight, unit) => {
     if (unit === 'lbs') {
-      return parseFloat(weight) * 0.453592;       // Convert pounds to kilograms
+      return parseFloat(weight) * 0.453592; // Convert pounds to kilograms
     }
     return parseFloat(weight);
   };
@@ -154,9 +139,9 @@ const CalorieCalculator = () => {
     setWeightUnit(selectedUnit);
     // Convert weight to the selected unit
     if (selectedUnit === 'lbs' && weightUnit === 'kg') {
-      setWeight(parseFloat(weight) * 2.20462);                  // Convert kilograms to pounds
+      setWeight(parseFloat(weight) * 2.20462); // Convert kilograms to pounds
     } else if (selectedUnit === 'kg' && weightUnit === 'lbs') {
-      setWeight(parseFloat(weight) * 0.453592);                 // Convert pounds to kilograms
+      setWeight(parseFloat(weight) * 0.453592); // Convert pounds to kilograms
     }
   };
   
@@ -166,15 +151,8 @@ const CalorieCalculator = () => {
           <form className="calorie-calculator-form" onSubmit={(e) => { e.preventDefault(); addExercise(); }}>
             <div className="input-group">
               <label>
-              Current Weight:
-              <input
-              type="number"
-              value={weight}
-              step="1"                                                  // prevent decimal places being entered
-              onChange={(e) => {
-                const inputValue = parseInt(e.target.value);
-                setWeight(Math.min(Math.max(1, inputValue), 500));      // Set min/max values that can be entered
-              }}/>
+                Current Weight:
+                <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
               </label>
               <label>
                 Measurement Type:
@@ -190,45 +168,38 @@ const CalorieCalculator = () => {
                 <option value="">Select an exercise</option>
                 <optgroup label="Light">
                   <option value="sleeping">Sleeping</option>
-                  <option value="sitting idle">Sitting Idle</option>
-                  <option value="desk work">Desk Work</option>
-                  <option value="slow walking">Slow Walking</option>
-                  <option value="light bicycling">Leisurely Bicycling</option>
-                  <option value="light calisthenics">Calisthenics</option>
-                  <option value="light stationary biking">Stationary Biking</option>
-                  <option value="light rope jumping">Rope Jumping</option>
+                  <option value="sitting_idle">Sitting Idle</option>
+                  <option value="desk_work">Desk Work</option>
+                  <option value="slow_walking">Slow Walking</option>
+                  <option value="bicycling_leisurely">Bicycling Leisurely</option>
+                  <option value="calisthenics_light">Calisthenics</option>
+                  <option value="stationary_biking_light">Stationary Biking</option>
+                  <option value="rope_jumping_light">Rope Jumping</option>
                 </optgroup>
                 <optgroup label="Moderate">
                   <option value="walking">Walking</option>
-                  <option value="resistance training">Resistance Training</option>
-                  <option value="moderate calisthenics">Calisthenics</option>
+                  <option value="resistance_training">Resistance Training</option>
+                  <option value="calisthenics_moderate">Calisthenics</option>
                   <option value="pilates">Pilates</option>
-                  <option value="moderate stationary biking">Stationary Biking</option>
-                  <option value="moderate rope jumping">Rope Jumping</option>
+                  <option value="stationary_biking_moderate">Stationary Biking</option>
+                  <option value="rope_jumping_moderate">Rope Jumping</option>
                 </optgroup>
                 <optgroup label="Vigorous">
-                  <option value="power walking">Power Walking</option>
-                  <option value="bicycling leisurely">Leisurely Bicycling</option>
-                  <option value="heavy bicycling">Bicycling</option>
-                  <option value="jogging">Jogging</option>
-                  <option value="sprinting">Sprinting</option>
+                  <option value="power_walking">Power Walking</option>
+                  <option value="bicycling_vigorous">Bicycling</option>
                   <option value="swimming">Swimming</option>
                   <option value="running">Running</option>
-                  <option value="heavy stationary biking">Stationary Biking</option>
-                  <option value="heavy rope jumping">Rope Jumping</option>
+                  <option value="sprinting">Sprinting</option>
+                  <option value="jogging">Jogging</option>
+                  <option value="stationary_biking_vigorous">Stationary Biking</option>
+                  <option value="rope_jumping_vigorous">Rope Jumping</option>
                 </optgroup>
               </select>
             </label>
             <label>
-            Duration (minutes):
-            <input 
-              type="number" 
-              value={duration} 
-              step="1"                                                                              // Prevent decimals
-              onChange={(e) => setDuration(Math.min(Math.max(1, parseInt(e.target.value)), 360))}   // set min/max values that can be entered
-            />
+              Duration (minutes):
+              <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
             </label>
-            {showWarning && <p className="warning-message">Please enter valid values for weight and duration.</p>}
             <button type="submit">Add Exercise</button>
           </form>
           <div className="exercise-list">

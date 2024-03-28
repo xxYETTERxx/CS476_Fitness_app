@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
 
     try {
       const { email, password } = req.body;
-      console.log("running");
+    
 
       const user = await User.findOne({ email: email});
       if (!user) {
@@ -128,7 +128,7 @@ router.post('/nutrition', async (req, res) => {
 
 //Activity EndPoint
 router.post('/activity', async (req, res) => {
-  console.log("activity submission");
+
     
   try {
       
@@ -148,9 +148,7 @@ router.get('/nutritionIntake', async (req, res) =>{
   try{
     const {user, startDate, endDate} = req.query;
 
-    console.log("user", user);
-    console.log("StartDate:",startDate);
-    console.log("enddate:",endDate);
+  
 
     const entries = await Nutrition.find({
       user: user,
@@ -192,7 +190,7 @@ router.get('/getWorkout', async (req, res) => {
    try{
     const {user, day} = req.query;
 
-    console.log("user", user);
+ 
 
     const entries = await Workout.find({
       user: user,

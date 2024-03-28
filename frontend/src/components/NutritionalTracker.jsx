@@ -92,8 +92,6 @@ function NutritionalTracker({setNutritionActive}){
         e.preventDefault();
 
         try {
-
-            console.log("submitting");
             const token = localStorage.getItem('token');
                 if (!token){
                     console.log("No token found");
@@ -104,7 +102,6 @@ function NutritionalTracker({setNutritionActive}){
                 };
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                console.log(response.data.user);
                 const user = response.data.user;
                
                 const waterIntakeValue = waterIntake ? parseInt(waterIntake, 10) : 0;
@@ -148,7 +145,7 @@ function NutritionalTracker({setNutritionActive}){
                 waterIntake: waterIntakeValue,
                 date
             };
-            console.log("sending request");
+
             const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
 
             if(response1.status===200 || response1.status ===201) {
