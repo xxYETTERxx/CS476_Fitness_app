@@ -8,7 +8,7 @@ import CalorieCalculator from './components/CalorieCalculator';
 import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import './styles/Dashboard.css'
+
 
 
 
@@ -42,7 +42,7 @@ function App() {
             path='/'
             element={
               <>
-                <div className="dashboard-container">
+                <div>
                   <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
                   {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
                   {workoutActive &&  <WorkoutPlanner />}
