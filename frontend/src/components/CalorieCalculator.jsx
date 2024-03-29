@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/CalorieCalculator.css'; 
 import axios from 'axios';
 import calorieTracker from '../functions/observer';
+import moment from 'moment'
 
 const CalorieCalculator = () => {
   // State variables
@@ -63,21 +64,31 @@ const CalorieCalculator = () => {
           
           const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
           const user = response.data.user;
-          const caloriesBurned = Math.floor(calories);
-      
+          let caloriesBurned = Math.floor(calories);
+        
+        //Auto Insert Months worth of data
+        /*for(let i=0; i < 30; i++)
+        {
+          console.log('hello>');
+          caloriesBurned = Math.floor(Math.random()*2500);
+          let date = moment().subtract(Math.random()*30 , 'days').format('YYYY-MM-DD');    
+        */  
         const userData = {
             user,
             caloriesBurned
+            //date   
         };
+        
         const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/activity',userData);
     
         if(response1.status===200 || response1.status ===201) {
 
-            alert('Submission Succesful!');
+            //alert('Submission Succesful!');
             calorieTracker.fetchAndUpdateCalories();
             setExerciseList([]);
 
         }
+      
 
     } catch (error) {
         if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {

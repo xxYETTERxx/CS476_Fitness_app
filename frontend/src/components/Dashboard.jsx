@@ -25,6 +25,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         useEffect(() => {
             const observer = {
                 update: (totalCalories, water, burn, net) => {
+                    
                     let newCalories = totalCalories;
                     if (newCalories < 0) newCalories = 0; 
                     if (newCalories >= 100000) newCalories = "Value not valid";
@@ -183,14 +184,14 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         <div className='flex flex-col w-full '>
                             <div className='flex'>
                                 <text className='w-2/3 text-xl font-semibold'><CalorieIntakeComponent /></text>
-                                <text className='text-xl font-semibold'>-</text>
+                                <text className='text-xl font-semibold ml-3 mr-3'>-</text>
                             </div>
                             <caption className='text-sm flex'>CAL IN</caption>
                         </div>
                         <div className='flex flex-col w-full '>
                             <div className='flex'>
                                 <text className='w-2/3 text-xl font-semibold'><CalorieBurnComponent /></text>
-                                <text className='text-xl font-semibold'>=</text>
+                                <text className='text-xl font-semibold ml-3 mr-3'>=</text>
                             </div>
                             <caption className='text-sm flex'>CAL BURN</caption>
                         </div>

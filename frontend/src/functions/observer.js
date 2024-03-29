@@ -28,7 +28,6 @@ class CalorieTracker extends Subject {
 
 
     async fetchAndUpdateCalories(timePeriod){
-       console.log(timePeriod);
          
         let startDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); //day filter
 

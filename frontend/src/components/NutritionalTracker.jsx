@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import calorieTracker from '../functions/observer';
 import '../styles/NutritionTracker.css'
+import moment from 'moment';
 
 function NutritionalTracker({setNutritionActive}){
     const [calorieIntake, setCalories] = useState('');
@@ -10,6 +11,8 @@ function NutritionalTracker({setNutritionActive}){
     const [foodList, setFoodList] = useState([]);
     const [grams, setGrams] = useState('100');
 
+    
+    
     const addFoodtoList = () => {
         if(foodItem) {
             const newFoodItem = {
@@ -18,7 +21,6 @@ function NutritionalTracker({setNutritionActive}){
             };
             
             setFoodList([...foodList, newFoodItem]);
-            //calculateCalories();
         }
         else
         {
@@ -27,13 +29,11 @@ function NutritionalTracker({setNutritionActive}){
     }    
     
     const calculateCalories = () => {
-console.time("calculateCalories");
         let totalCalories = 0;
         
         foodList.forEach((item) => {
             totalCalories += item.cal;
         });
-console.timeEnd("calculateCalories");
         return totalCalories;
     }
 
@@ -107,20 +107,27 @@ console.timeEnd("calculateCalories");
                 const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
                 const user = response.data.user;
                
-                const waterIntakeValue = waterIntake ? parseInt(waterIntake, 10) : 0;
-                const calorieIntakeValue = calorieIntake ? parseInt(calorieIntake, 10) : 0;
+                let waterIntakeValue = waterIntake ? Math.floor(parseInt(waterIntake, 10)) : 0;
+                if (waterIntakeValue < 0) waterIntakeValue = 0;
+                let calorieIntakeValue = calorieIntake ? Math.floor(parseInt(calorieIntake, 10)) : 0;
+                if (calorieIntakeValue < 0) calorieIntakeValue = 0;
 
                 const totalCalories = foodList.length > 0 ? calculateCalories() : 0;
-                const date = Date.now();    
-
+                //Add months worth of data when active
+                /*for(let i = 0; i< 30; i++){
+                    let date = moment().subtract(Math.random()*30, 'days').format('YYYY-MM-DD');  
+                    calorieIntakeValue = Math.floor(Math.random()*2800);
+                    waterIntakeValue = Math.floor(Math.random()*3200); */
+                    
             const userData = {
                 
                 user,
                 calorieIntake: totalCalories || calorieIntakeValue,
                 waterIntake: waterIntakeValue,
-                date
+                
             };
-            const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/nutrition',userData);
+            let response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/nutrition',userData);
+        
 
             if(response1.status===200 || response1.status ===201) {
 
@@ -132,6 +139,7 @@ console.timeEnd("calculateCalories");
                 setGrams('100');
                 removeAll();
             }
+        
 
         } catch (error) {
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
