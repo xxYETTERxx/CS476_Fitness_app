@@ -26,12 +26,11 @@ class CalorieTracker extends Subject {
         
     }
 
-    async fetchAndUpdateCalories(/*timePeriod*/){
 
-        /* const startDate;
-        switch(timePeriod)
-            case 'day' */
-      
+    async fetchAndUpdateCalories(timePeriod){
+       console.log(timePeriod);
+         
+        let startDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); //day filter
 
         try {
             const token = localStorage.getItem('token');
@@ -46,11 +45,20 @@ class CalorieTracker extends Subject {
             const userResponse = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
             const user = userResponse.data.user;
             
+            switch(timePeriod) {
+                        
+                        case 'week' :
+                            startDate = moment().subtract(1, 'weeks').format('YYYY-MM-DD');
+                            break;
+                        case 'month' :
+                            startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+                            break;
+                        default:
+                        }
+
 
             const endDate = moment().add(1, 'days').format('YYYY-MM-DD');
-            const startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
-
-         
+            
             
 
             const intakeResponse = await axios.get('https://gymgenius-api.onrender.com/api/auth/nutritionIntake', {

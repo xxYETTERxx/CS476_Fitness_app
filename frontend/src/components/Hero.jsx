@@ -1,10 +1,13 @@
 import React from 'react'
 import heroText from '../images/heroTextLight.png'
+import logo from '../images/gg9.png'
+
 
 const Hero = () => {
     return (
         <div className="hero min-h-screen mainHero">
             <div className="hero-overlay bg-opacity-60"></div>
+            <img src={logo} className="absolute top-0 left-0 m-4 w-24 h-24" alt="Logo" />
             <div className="hero-content text-center text-neutral-content">
                 <div className="max-w-md">
                     <h1 className="mb-5 text-5xl font-bold">Welcome to</h1>

@@ -27,11 +27,13 @@ function NutritionalTracker({setNutritionActive}){
     }    
     
     const calculateCalories = () => {
+console.time("calculateCalories");
         let totalCalories = 0;
         
         foodList.forEach((item) => {
             totalCalories += item.cal;
         });
+console.timeEnd("calculateCalories");
         return totalCalories;
     }
 
@@ -41,7 +43,7 @@ function NutritionalTracker({setNutritionActive}){
 
     const getCALValues = (foodItem) => {
         const calorieValues = {
-            Chicken: 239,
+            Chicken: 239, 
             Beef: 250,
             Pork: 211,
             Tuna: 203,
@@ -78,7 +80,7 @@ function NutritionalTracker({setNutritionActive}){
             Chia: 486
         };
         
-        return Math.floor(calorieValues[foodItem] / 100 * grams) || 0; // Default to 1 if MET value is not found
+        return Math.floor(calorieValues[foodItem] / 100 * grams) || 0; // Default to 1 if CAL value is not found
   };
 
   // Function to remove an exercise from the list
@@ -123,7 +125,6 @@ function NutritionalTracker({setNutritionActive}){
             if(response1.status===200 || response1.status ===201) {
 
                 calorieTracker.fetchAndUpdateCalories();
-                alert('Submission Succesful!');
 
                 setCalories('');
                 setWaterIntake('');
@@ -149,12 +150,11 @@ function NutritionalTracker({setNutritionActive}){
     }
 
     return (
-        <div className='flex justify-center pt-20 pb-5'>
+        <div className='flex justify-center'>
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
                 <div className="flex flex-col w-full lg:flex-row">
                     <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
-                    <div className='flex-container justify-between text-2xl font-medium b h-1/6
-                        items-center'>
+                    <div className='flex-container justify-between text-2xl font-medium b h-1/6 items-center'>
                         <h2 className = "mb-10">Food and Water Consumption</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>

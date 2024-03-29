@@ -19,7 +19,7 @@ function WorkoutPlanner() {
         e.preventDefault();
 
         try {
-            
+           
             const token = localStorage.getItem('token');
                 if (!token){
                     console.log("No token found");
@@ -133,13 +133,13 @@ function WorkoutPlanner() {
     
 
     return (
-        <div className='flex justify-center pt-20 pb-5'>
+        <div className='flex justify-center pt-1 pb-5'>
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
                 <div className="flex flex-col w-full lg:flex-row">
                     <div className="grid flex-grow h-35 card bg-base-300 rounded-box place-items-center">
                     <div className='flex justify-between text-5xl font-medium b h-1/6
                         items-center'>
-                        <h2>Workout Planner</h2> 
+                        <h2 className='mb-2'>Workout Planner</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
                                 <label className="input input-bordered flex items-center gap-2" value="Workout Title">Workout Title:
@@ -153,7 +153,7 @@ function WorkoutPlanner() {
                                 <div>
 
                                 <label htmlFor="dayOfTheWeek">Day of Week:</label>
-                                            <select className="select select-primary w-full max-w-xs" value={daySelected} onChange={(e) => handleOptionSelect(e.target.value)}>
+                                            <select className="select select-primary w-full max-w-xs mb-2" value={daySelected} onChange={(e) => handleOptionSelect(e.target.value)}>
                                                 <option value="">Select...</option>
                                                 <option value="Sunday">Sunday</option>
                                                 <option value="Monday">Monday</option>

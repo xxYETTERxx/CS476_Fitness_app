@@ -52,7 +52,6 @@ const CalorieCalculator = () => {
   const handleSubmit = async (calories) => {
     try {
 
-      console.log("submitting");
       const token = localStorage.getItem('token');
           if (!token){
               console.log("No token found");
@@ -63,7 +62,6 @@ const CalorieCalculator = () => {
           };
           
           const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
-          console.log(response);
           const user = response.data.user;
           const caloriesBurned = Math.floor(calories);
       
@@ -71,10 +69,8 @@ const CalorieCalculator = () => {
             user,
             caloriesBurned
         };
-        console.log("sending request");
         const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/activity',userData);
-        console.log("Response recieved: ", response1.status);
-
+    
         if(response1.status===200 || response1.status ===201) {
 
             alert('Submission Succesful!');

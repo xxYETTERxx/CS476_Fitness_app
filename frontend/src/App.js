@@ -9,7 +9,6 @@ import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-
 function App() {
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -27,8 +26,10 @@ function App() {
 
     <Router>
       <div className="App bg-base-100">
+       
+          
         
-        <Navbar />
+ 
 
         <Routes>
           {
@@ -37,14 +38,17 @@ function App() {
             path='/'
             element={
               <>
-                <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
-                {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
-                {workoutActive &&  <WorkoutPlanner />}
-                {activityActive && <CalorieCalculator />}
+                <div>
+                  <Navbar />
+                  <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
+                  {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+                  {workoutActive &&  <WorkoutPlanner />}
+                  {activityActive && <CalorieCalculator />}
+                </div>
               </>
             }
           />:
-          <Route
+        <Route
             path='/'
             element={
               <>
