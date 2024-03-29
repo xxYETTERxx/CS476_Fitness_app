@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import '../styles/CalorieCalculator.css';
+=======
+import '../styles/CalorieCalculator.css'; 
+>>>>>>> main
 import axios from 'axios';
 import calorieTracker from '../functions/observer';
 
@@ -52,7 +56,6 @@ const CalorieCalculator = () => {
   const handleSubmit = async (calories) => {
     try {
 
-      console.log("submitting");
       const token = localStorage.getItem('token');
           if (!token){
               console.log("No token found");
@@ -62,8 +65,7 @@ const CalorieCalculator = () => {
               headers: { Authorization: `Bearer ${token}`}
           };
           
-          const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-          console.log(response);
+          const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
           const user = response.data.user;
           const caloriesBurned = Math.floor(calories);
       
@@ -71,10 +73,8 @@ const CalorieCalculator = () => {
             user,
             caloriesBurned
         };
-        console.log("sending request");
-        const response1 = await axios.post('http://localhost:5000/api/auth/activity',userData);
-        console.log("Response recieved: ", response1.status);
-
+        const response1 = await axios.post('https://gymgenius-api.onrender.com/api/auth/activity',userData);
+    
         if(response1.status===200 || response1.status ===201) {
 
             alert('Submission Succesful!');

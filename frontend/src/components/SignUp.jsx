@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import logo from '../images/gg11.png'
-import resizeImage from '../functions/resizeImage';
 
 
 function SignUp() {
@@ -13,21 +12,6 @@ function SignUp() {
     const [avatarURL, setAvatarURL] = useState(null);
 
     const handleAvatarChange = (event) => {
-        /* const file = event.target.files[0];
-    if (file) {
-        const maxWidth = 256; 
-        const maxHeight = 256; 
-        const quality = 0.7; // Between 0-1
-
-        resizeImage(file, maxWidth, maxHeight, quality, (resizedBlob) => {
-            const resizedURL = URL.createObjectURL(resizedBlob);
-
-            // Use the resized image for the avatar
-            setAvatar(resizedURL);
-            setAvatarURL(resizedURL);
-        });
-    }
-}; */
 
 const file = event.target.files[0];
         if (file){
@@ -39,6 +23,13 @@ const file = event.target.files[0];
         reader.readAsDataURL(file);
         }
     }
+
+    const imageLarge = (avatarString) => {
+    const maxSizeInBytes = 100 * 1024; // 100KB in bytes
+    const sizeInBytes = new Blob([avatarString]).size; // Calculate the size of the string in bytes
+  
+    return sizeInBytes > maxSizeInBytes;
+}
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -50,7 +41,21 @@ const file = event.target.files[0];
                 password,
                 userType,
                 avatar
-            }; 
+            };
+
+
+            if (password < 8)
+            {
+                alert("Password must be at least 8 characters long");
+                setPassword('');
+                return;
+            }
+            if (imageLarge(avatar))
+            {
+                alert("User picture is too large");
+                setAvatar('null');
+                return;
+            }
 
             try {
             //Send backend request

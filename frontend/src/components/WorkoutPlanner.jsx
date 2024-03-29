@@ -30,7 +30,7 @@ function WorkoutPlanner() {
                 };
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                console.log(response);
+                
                 const user = response.data.user;
                 const day = daySelected;
                 
@@ -42,10 +42,10 @@ function WorkoutPlanner() {
                 description
             };
 
-            console.log(userData);
-            console.log("sending request");
+       
+         
             const response1 = await axios.post('http://localhost:5000/api/auth/workout',userData);
-            console.log("Response recieved: ", response1.status);
+      
 
             if(response1.status===200 || response1.status ===201) {
                 fetchWorkouts(daySelected);
@@ -90,7 +90,7 @@ function WorkoutPlanner() {
                 const userResponse = await axios.get(`http://localhost:5000/api/auth/userRetrieval`, config);
                 const user = userResponse.data.user;
                 const day = selectedDay;
-                console.log(selectedDay);
+           
                 const workoutResponse = await axios.get('http://localhost:5000/api/auth/getWorkout', {
             params: {
                 user,

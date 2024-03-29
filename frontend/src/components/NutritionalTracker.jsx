@@ -27,11 +27,13 @@ function NutritionalTracker({setNutritionActive}){
     }    
     
     const calculateCalories = () => {
+        console.time("calculateCalories");
         let totalCalories = 0;
         
         foodList.forEach((item) => {
             totalCalories += item.cal;
         });
+        console.timeEnd("calculateCalories");
         return totalCalories;
     }
 
@@ -92,8 +94,6 @@ function NutritionalTracker({setNutritionActive}){
         e.preventDefault();
 
         try {
-
-            console.log("submitting");
             const token = localStorage.getItem('token');
                 if (!token){
                     console.log("No token found");
@@ -104,14 +104,41 @@ function NutritionalTracker({setNutritionActive}){
                 };
                 
                 const response = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
-                console.log(response.data.user);
                 const user = response.data.user;
                
                 const waterIntakeValue = waterIntake ? parseInt(waterIntake, 10) : 0;
                 const calorieIntakeValue = calorieIntake ? parseInt(calorieIntake, 10) : 0;
 
                 const totalCalories = foodList.length > 0 ? calculateCalories() : 0;
-                const date = Date.now();    
+                const date = Date.now();
+                
+                //basic error handling
+                if (calorieIntake < 0)
+                {
+                    setCalories('');
+                    alert("Invalid Calorie Entry");
+                    return;
+                }
+                if (calorieIntake >= 10000)
+                {
+                    setCalories('');
+                    alert("Invalid Calorie Entry");
+                    return;
+                }
+                if (waterIntake >= 10000)
+                {
+                    setWaterIntake('');
+                    alert("Invalid Water Entry");
+                    return;
+                }
+                if (waterIntake < 0)
+                {
+                    setWaterIntake('');
+                    alert("Invalid Water Entry");
+                    return;
+                }
+
+
 
             const userData = {
                 
@@ -120,7 +147,7 @@ function NutritionalTracker({setNutritionActive}){
                 waterIntake: waterIntakeValue,
                 date
             };
-            console.log("sending request");
+
             const response1 = await axios.post('http://localhost:5000/api/auth/nutrition',userData);
 
             if(response1.status===200 || response1.status ===201) {
