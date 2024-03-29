@@ -12,10 +12,6 @@ const Navbar = () => {
 
     useEffect(() => {
     const token = localStorage.getItem('token');
-<<<<<<< HEAD
-
-=======
->>>>>>> main
     if (token) {
       setIsAuthenticated(true);
     }

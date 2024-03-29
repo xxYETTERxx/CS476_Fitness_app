@@ -4,11 +4,11 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
-import './styles/Dashboard.css'
 import CalorieCalculator from './components/CalorieCalculator';
 import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import './styles/Dashboard.css'
 
 
 
@@ -30,9 +30,10 @@ function App() {
 
     <Router>
       <div className="App bg-base-100">
-      <div className="mb-5"> 
-        <Navbar />
-      </div> 
+        <div style={{position: 'static'}}>
+          <Navbar />
+        </div>
+ 
 
         <Routes>
           {

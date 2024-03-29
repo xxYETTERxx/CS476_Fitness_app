@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import '../styles/CalorieCalculator.css';
-=======
 import '../styles/CalorieCalculator.css'; 
->>>>>>> main
 import axios from 'axios';
 import calorieTracker from '../functions/observer';
 

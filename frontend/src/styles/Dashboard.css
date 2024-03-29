@@ -1,10 +1,8 @@
-.dashboard-container {
-    padding-top: 3rem; /* Adjust as necessary for desktop */
-  }
-  
-  /* Media query for mobile screens */
-  @media (max-width: 480px) {
-    .dashboard-container {
-      padding-top: 4rem; /* Increased space for mobile */
-    }
-  }
+
+ 
+
+  /* Add this to your CSS file */
+.navbar {
+  position: static;
+  width: 100%;
+}
