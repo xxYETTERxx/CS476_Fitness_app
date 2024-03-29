@@ -23,14 +23,15 @@ class CalorieTracker extends Subject {
         this.totalCalories = 0;
         this.totalBurn = 0;
         this.totalNet = 0;
-             
+        
     }
 
-    async fetchAndUpdateCalories(timePeriod){
 
-        //default value of startDate is day
-        const startDate = moment().subtract(1, 'days').format('YYYY-MM-DD');
-     
+    async fetchAndUpdateCalories(timePeriod){
+       console.log(timePeriod);
+         
+        let startDate = moment().subtract(1, 'days').format('YYYY-MM-DD'); //day filter
+
         try {
             const token = localStorage.getItem('token');
                 if (!token){
@@ -42,23 +43,22 @@ class CalorieTracker extends Subject {
                 };
                 
             const userResponse = await axios.get('http://localhost:5000/api/auth/userRetrieval', config);
+            
             const user = userResponse.data.user;
             
             switch(timePeriod) {
-            
-            case 'week' :
-                startDate = moment().subtract(1, 'weeks').format('YYYY-MM-DD');
-                break;
-            case 'month' :
-                startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
-                break;
-            default:
-                moment().subtract(1, 'days').format('YYYY-MM-DD'); //day filter
-        
-            }
+                        
+                        case 'week' :
+                            startDate = moment().subtract(1, 'weeks').format('YYYY-MM-DD');
+                            break;
+                        case 'month' :
+                            startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
+                            break;
+                        default:
+                        }
 
 
-            const endDate = moment().format('YYYY-MM-DD');
+            const endDate = moment().add(1, 'days').format('YYYY-MM-DD');
             
 
             console.log('startDate',startDate);
@@ -74,17 +74,29 @@ class CalorieTracker extends Subject {
             }
         });
 
+        const burnResponse = await axios.get('http://localhost:5000/api/auth/calorieBurn', {
+            params: {
+                user,
+                startDate,
+                endDate
+            }
+        });
+
             const intakeData = await intakeResponse.data;
+            const burnData = await burnResponse.data;
             let totalCalories = 0;
             let totalWater = 0;
-            let totalBurn = 1000;
+            let totalBurn = 0;
         
         for (const entry of intakeData)
         {
             totalCalories += entry.calorieIntake;
-            totalWater += entry.waterIntake;
-            
-        }
+            totalWater += entry.waterIntake; 
+        }    
+          for (const entry of burnData)
+        {
+            totalBurn += entry.caloriesBurned; 
+        } 
         
         this.totalCalories = totalCalories;
         this.totalWater = totalWater;

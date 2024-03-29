@@ -19,7 +19,7 @@ const Dashboard = ({setNutritionActive}) => {
     
     useEffect(() => {
             calorieTracker.fetchAndUpdateCalories(dayFilter);
-    },[dayFilter]);
+    },[dayFilter,nActive]);
 
     const CalorieIntakeComponent = () => {
         const [calorieIntake, setCalorieIntake] = useState(0);
