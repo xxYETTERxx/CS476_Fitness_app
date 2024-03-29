@@ -34,14 +34,11 @@ The Fitness Tracker App is a web-based application designed to help individuals 
    
    To start frontend navigate to /frontend and run: npm start
 
-Usage:
-** To be added **
-
-License
-** To be added **
 
 Contact
 
 Project Owner: Nathan Ottenson
 Email: ottenson@uregina.ca
 Project Link: https://github.com/xxYETTERxx/CS476_Fitness_app
+Live Website: https://gymgenius-tn8v.onrender.com/
+Note: backend servers can be slow with inactivity
