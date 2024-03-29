@@ -20,7 +20,7 @@ app.listen(port,() => {
 
 app.use('/api/auth', authRoutes);
 
-mongoose.connect('mongodb+srv://ottenson:Th3Littl3Whit3D3vil@gymgenius.lnng63x.mongodb.net/')
+mongoose.connect('mongodb://127.0.0.1:27017/fitnessAppDB')
 
 .then (() => console.log ('Connected to MongoDB'))
 .catch(err => console.error('Could not connect to MongoDB', err));
