@@ -35,11 +35,7 @@ router.post('/login', async (req, res) => {
 
     try {
       const { email, password } = req.body;
-<<<<<<< HEAD
      
-=======
-    
->>>>>>> main
 
       const user = await User.findOne({ email: email});
       if (!user) {
@@ -152,10 +148,6 @@ router.get('/nutritionIntake', async (req, res) =>{
   try{
     const {user, startDate, endDate} = req.query;
 
-<<<<<<< HEAD
-=======
-  
->>>>>>> main
 
     const entries = await Nutrition.find({
       user: user,
@@ -197,10 +189,6 @@ router.get('/getWorkout', async (req, res) => {
    try{
     const {user, day} = req.query;
 
-<<<<<<< HEAD
-=======
- 
->>>>>>> main
 
     const entries = await Workout.find({
       user: user,
