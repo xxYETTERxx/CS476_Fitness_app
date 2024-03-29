@@ -4,6 +4,7 @@ import SignIn from './components/SignIn';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
+import './styles/Dashboard.css'
 import CalorieCalculator from './components/CalorieCalculator';
 import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
@@ -21,7 +22,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    console.log('Token from storage: ', token);
     if (token) {
       setIsAuthenticated(true);
     }
@@ -30,8 +30,9 @@ function App() {
 
     <Router>
       <div className="App bg-base-100">
-        
+      <div className="mb-5"> 
         <Navbar />
+      </div> 
 
         <Routes>
           {
@@ -40,14 +41,16 @@ function App() {
             path='/'
             element={
               <>
-                <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
-                {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
-                {workoutActive &&  <WorkoutPlanner />}
-                {activityActive && <CalorieCalculator />}
+                <div className="dashboard-container">
+                  <Dashboard setNutritionActive = {setNutritionActive} setActivityActive = {setActivityActive} setWorkoutActive = {setWorkoutActive} />
+                  {nutritionActive && <NutritionalTracker setNutritionActive = {setNutritionActive}/>}
+                  {workoutActive &&  <WorkoutPlanner />}
+                  {activityActive && <CalorieCalculator />}
+                </div>
               </>
             }
           />:
-          <Route
+        <Route
             path='/'
             element={
               <>

@@ -45,20 +45,20 @@ function SignIn({ setIsAuthenticated }) {
                 {/* <div className='w-full flex justify-center'> */}
 
 
-                <div class="w-4/6 max-w-2xl ">
+                <div className="w-4/6 max-w-2xl ">
                     <div>
-                        <h2 class="text-base font-semibold leading-7 text-base-content">Login</h2>
+                        <h2 className="text-base font-semibold leading-7 text-base-content">Login</h2>
                     </div>
                     <div className='flex flex-col md:flex-row items-center justify-between'>
-                        <div class="m-3">
+                        <div className="m-3">
                            
                         </div>
 
                       
                     </div>
-                    <div class="m-3">
-                        <label class="block text-sm font-medium leading-6 text-base-content">Email:</label>
-                        <div class="mt-2 ">
+                    <div className="m-3">
+                        <label className="block text-sm font-medium leading-6 text-base-content">Email:</label>
+                        <div className="mt-2 ">
                             <input
                                 type="email"
                                 placeholder="Type here"
@@ -69,9 +69,9 @@ function SignIn({ setIsAuthenticated }) {
                             />
                         </div>
                     </div>
-                    <div class="m-3">
-                        <label class="block text-sm font-medium leading-6 text-base-content">Password:</label>
-                        <div class="mt-2 ">
+                    <div className="m-3">
+                        <label className="block text-sm font-medium leading-6 text-base-content">Password:</label>
+                        <div className="mt-2 ">
                             <input
                                 type="password"
                                 placeholder="Type here"
@@ -84,9 +84,9 @@ function SignIn({ setIsAuthenticated }) {
                     </div>
 
                     <div className='divider mt-10 mb-3 pr-3 pl-3'></div>
-                    <div class="mt- mr-3 flex items-center justify-end gap-x-6">
-                        <a href='/' type="button" class="text-sm font-semibold leading-6 text-base-content">Cancel</a>
-                        <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
+                    <div className="mt- mr-3 flex items-center justify-end gap-x-6">
+                        <a href='/' type="button" className="text-sm font-semibold leading-6 text-base-content">Cancel</a>
+                        <button type="submit" className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
                     </div>
 
 

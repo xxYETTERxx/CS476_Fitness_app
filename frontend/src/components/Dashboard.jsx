@@ -22,9 +22,10 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         useEffect(() => {
             const observer = {
                 update: (totalCalories, water, burn, net) => {
-                    setCalorieIntake(totalCalories);
-                    if (calorieIntake < 0) setCalorieIntake(0); 
-                    if (calorieIntake >= 100000) setCalorieIntake("Value not valid");
+                    let newCalories = totalCalories;
+                    if (newCalories < 0) newCalories = 0; 
+                    if (newCalories >= 100000) newCalories = "Value not valid";
+                    setCalorieIntake(newCalories);
                 },
             };
             
@@ -41,9 +42,10 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
             useEffect(() => {
                 const observer = {
                     update: (intake, water, totalBurn, net) => {
-                        setCalorieBurn(totalBurn);
-                        if (calorieBurn < 0) setCalorieBurn(0);
-                        if (calorieBurn >= 100000) setCalorieBurn("Value not valid");
+                        let newBurn = totalBurn;
+                        if (newBurn < 0) newBurn = 0; 
+                        if (newBurn >= 100000) newBurn = "Value not valid";
+                        setCalorieBurn(newBurn);
                     },
                 };
     
@@ -60,9 +62,10 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
             useEffect(() => {
                 const observer = {
                     update: (intake, totalWater, burn, net) => {
-                        setWaterIntake(totalWater);
-                        if (waterIntake < 0) setWaterIntake(0)
-                        if (waterIntake >= 100000) setWaterIntake("Value not valid");
+                        let newWater = totalWater;
+                        if (newWater < 0) newWater = 0; 
+                        if (newWater >= 100000) newWater = "Value not valid";
+                        setWaterIntake(newWater);
                     },
                 };
     
@@ -80,9 +83,10 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
             useEffect(() => {
                 const observer = {
                     update: (intake, totalWater, burn, totalNet) => {
-                        setNetCalorie(totalNet);
-                        if (netCalorie <= -100000) setNetCalorie("Value not valid");
-                        if (netCalorie >= 100000) setNetCalorie("Value not valid");
+                        let newNet = totalNet;
+                        if (newNet < 0) newNet = 0; 
+                        if (newNet >= 100000) newNet = "Value not valid";
+                        setNetCalorie(newNet);
                     },
                 };
     

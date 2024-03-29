@@ -152,12 +152,11 @@ function NutritionalTracker({setNutritionActive}){
     }
 
     return (
-        <div className='flex justify-center pt-20 pb-5'>
+        <div className='flex justify-center'>
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
                 <div className="flex flex-col w-full lg:flex-row">
                     <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
-                    <div className='flex-container justify-between text-2xl font-medium b h-1/6
-                        items-center'>
+                    <div className='flex-container justify-between text-2xl font-medium b h-1/6 items-center'>
                         <h2 className = "mb-10">Food and Water Consumption</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
