@@ -143,7 +143,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
     }
 
     return (
-        <div className='flex flex-col items-center justify-center pt-20 pb-10'>
+        <div className='flex flex-col items-center justify-center pt-5 pb-5'>
             <div className="card card-side shadow-xl flex flex-col bg-base-300 p-4 pt-0 max-w-xl " >
                 <div className='flex justify-between text-2xl font-medium h-1/6 items-center'>
                     <h2 className='mt-1'>{username}</h2>

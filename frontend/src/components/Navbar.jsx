@@ -18,7 +18,7 @@ const Navbar = () => {
   }, [])
     return (
 
-        <div className="navbar fixed flex justify-between">
+        <div className="navbar static flex justify-between">
             <a href='/' className="btn glass text-xl"><img className='h-8' src={logo} alt="logo" /></a>              
               <div className="navbar-end">
                 {isAuthenticated && <button onClick= {onLogout} className="btn">Logout</button>}
