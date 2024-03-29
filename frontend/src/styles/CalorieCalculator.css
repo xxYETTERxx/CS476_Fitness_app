@@ -1,0 +1,108 @@
+.calorie-calculator-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px; 
+  }
+  
+  .calorie-calculator-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .calorie-calculator-form {
+    margin-bottom: 20px;
+  }
+  
+  .calorie-calculator-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+   
+  .Calculator_Label {
+    width: 140;
+  }
+
+  .calorie-calculator-form input[type="number"],
+  .calorie-calculator-form select {
+    width: calc(50% - 5px); 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .calorie-calculator-form select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: auto;
+    margin-left: 5px;
+    display: inline-block;
+  }
+
+  .calorie-calculator-form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .calorie-calculator-form button:hover {
+    background-color: #0056b3;
+  }
+
+  .calorie-calculator-form .calculate-button {
+  
+  margin-top: 10px; 
+}
+
+  .exercise-list {
+    margin-bottom: 20px;
+  }
+  
+  .exercise-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative; 
+  }
+  
+  .exercise-item button {
+    position: absolute; 
+    top: 50%; 
+    right: 10px; 
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .exercise-item button:hover {
+    background-color: #c82333;
+  }
+  
+  .exercise-item:nth-child(even) {
+    background-color: #e5e5e5; 
+  }
+  
+  .exercise-item:nth-child(odd) {
+    background-color: #cccccc; 
+  }
+  
+  .total-calories {
+    text-align: center; 
+  }
+
+  .activity-tracker {
+    text-align: center; 
+  }
