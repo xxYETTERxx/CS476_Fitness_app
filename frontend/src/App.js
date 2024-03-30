@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import CalorieCalculator from './components/CalorieCalculator';
 import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
+import axios from 'axios'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -16,21 +17,36 @@ function App() {
   const [workoutActive, setWorkoutActive] = useState(false);
   const [activityActive, setActivityActive] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, [])
+useEffect(() =>{
+        //retrieve user data
+        const checkUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token){
+                    console.log("No token found");
+                    return;
+                }
+                const config = {
+                    headers: { Authorization: `Bearer ${token}`}
+                };
+                
+                const response = await axios.get('https://gymgenius-api.onrender.com/api/auth/userRetrieval', config);
+                setIsAuthenticated(true);                
+            
+            }catch (error){
+                console.error('Error fetching data:', error);
+            }
+        };
+        checkUserData();
+         
+    },[])
+  
+  
   return (
 
     <Router>
       <div className="App bg-base-100">
        
-          
-        
- 
-
         <Routes>
           {
             isAuthenticated ?

@@ -147,14 +147,14 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         <div className='flex flex-col items-center justify-center pt-5 pb-5'>
             <div className="card card-side shadow-xl flex flex-col bg-base-300 p-4 pt-0 max-w-xl " >
                 <div className='flex justify-between text-2xl font-medium h-1/6 items-center'>
-                    <h2 className='mt-1'>{username}</h2>
+                    <h2 className='mt-5 ml-3'>{username}</h2>
                
                 </div>
                 <div className='flex h-4/6 w-full'>
                     <div className='flex flex-col w-2/6 items-center justify-around'>
                         {
                             avatar ?
-                            <img src={avatar} className='w-5/6 rounded-lg border border-neutral' />:
+                            <img src={avatar} className='w-64 h-46 rounded-lg border border-neutral' />:
                             <img src={blankUser} className='w-5/6 rounded-lg border border-neutral' />
                         }
                         
