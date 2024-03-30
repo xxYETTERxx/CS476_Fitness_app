@@ -25,7 +25,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         useEffect(() => {
             const observer = {
                 update: (totalCalories, water, burn, net) => {
-                    
+                    console.log(calorieIntake);
                     let newCalories = totalCalories;
                     if (newCalories < 0) newCalories = 0; 
                     if (newCalories >= 100000) newCalories = "Value not valid";

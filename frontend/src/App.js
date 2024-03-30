@@ -9,6 +9,7 @@ import NutritionalTracker from './components/NutritionalTracker';
 import WorkoutPlanner from './components/WorkoutPlanner';
 import axios from 'axios'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
   
@@ -68,7 +69,7 @@ useEffect(() =>{
             path='/'
             element={
               <>
-                <Hero/>
+                < Hero/>
               </>
             }
           />
