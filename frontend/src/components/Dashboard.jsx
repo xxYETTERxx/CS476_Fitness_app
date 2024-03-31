@@ -25,7 +25,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
         useEffect(() => {
             const observer = {
                 update: (totalCalories, water, burn, net) => {
-                    console.log(calorieIntake);
+              
                     let newCalories = totalCalories;
                     if (newCalories < 0) newCalories = 0; 
                     if (newCalories >= 100000) newCalories = "Value not valid";
@@ -88,7 +88,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                 const observer = {
                     update: (intake, totalWater, burn, totalNet) => {
                         let newNet = totalNet;
-                        if (newNet < 0) newNet = 0; 
+                        if (newNet < -100000) newNet = 0; 
                         if (newNet >= 100000) newNet = "Value not valid";
                         setNetCalorie(newNet);
                     },
@@ -144,7 +144,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
     }
 
     return (
-        <div className='flex flex-col items-center justify-center pt-5 pb-5'>
+        <div className='flex flex-col items-center justify-center'>
             <div className="card card-side shadow-xl flex flex-col bg-base-300 p-4 pt-0 max-w-xl " >
                 <div className='flex justify-between text-2xl font-medium h-1/6 items-center'>
                     <h2 className='mt-5 ml-3'>{username}</h2>

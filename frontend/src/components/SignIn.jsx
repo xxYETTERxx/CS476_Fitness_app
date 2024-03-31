@@ -8,6 +8,15 @@ function SignIn({ setIsAuthenticated }) {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+            break;
+            }
+        }
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         setIsLoading(true);
@@ -24,6 +33,8 @@ function SignIn({ setIsAuthenticated }) {
             
             setIsAuthenticated(true);
             window.location.href = '/';
+
+            sleep(2000);
 
         } catch (error) {
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {

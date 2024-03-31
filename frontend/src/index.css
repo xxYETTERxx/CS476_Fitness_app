@@ -29,6 +29,10 @@ code {
 }
 
 .card{
+  display: inline-flex;
   height: 20rem;
+  width: 35rem;
+
+  
 }
 

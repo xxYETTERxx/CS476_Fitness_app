@@ -13,15 +13,26 @@ function SignUp() {
     const [avatarURL, setAvatarURL] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+            break;
+            }
+        }
+    }
+
     const handleAvatarChange = (event) => {
 
-const file = event.target.files[0];
-        if (file){
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                setAvatar(e.target.result);
-                setAvatarURL(e.target.result);
-            };
+    
+
+        const file = event.target.files[0];
+                if (file){
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        setAvatar(e.target.result);
+                        setAvatarURL(e.target.result);
+                    };
         reader.readAsDataURL(file);
         }
     }
@@ -35,8 +46,7 @@ const file = event.target.files[0];
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-            // construct user data
+        setIsLoading(true);
             const userData = {
                 userName,
                 email,
@@ -64,7 +74,6 @@ const file = event.target.files[0];
             const response = await axios.post('https://gymgenius-api.onrender.com/api/auth/register', userData)
 
             if (response.status === 200 || response.status === 201) {
-                alert('User registered successfully!');
                 window.location.href = '/';
                 
                 setUserName('');
@@ -73,6 +82,8 @@ const file = event.target.files[0];
                 setUserType('basic');
                 setAvatar(null);
             }
+
+            sleep(2000);
 
         } catch (error) {
             if (error.message.includes('ERR_CONNECTION_REFUSED') || error.message.includes('Network Error')) {
