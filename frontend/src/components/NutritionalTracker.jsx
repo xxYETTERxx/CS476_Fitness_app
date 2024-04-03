@@ -162,16 +162,16 @@ function NutritionalTracker({setNutritionActive}){
             <div className="card card-side shadow-xl flex flex-colbg-base-300 pl-4 pr-4 justify-between max-w-xl">
                 <div className="flex flex-col w-full lg:flex-row">
                     <div className="grid flex-grow card bg-base-300 rounded-box place-items-center">
-                    <div className='flex-container justify-between text-2xl font-medium b h-1/6 items-center'>
-                        <h2 className = "mb-10">Food and Water Consumption</h2> 
+                    <div className='flex-container justify-between text-2xl font-medium b items-center'>
+                        <h2 className = "mb-5">Food and Water Consumption</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
-                                <label className="input input-bordered flex items-center gap-2 mb-4" for="waterIntake (in ml)">Water Intake (ml):
+                                <label className="input input-bordered flex items-center gap-2" htmlFor="waterIntake (in ml)">Water Intake (ml):
 
                                 <input type="number" id="waterIntake" name="waterIntake" value={waterIntake} onChange={(e)=>setWaterIntake(e.target.value)} />
                                 </label>
                                 <br></br>
-                                <label className="input input-bordered flex items-center gap-2 mb-4" for="caloriesConsumed">Calories Consumed:
+                                <label className="input input-bordered flex items-center gap-2 mb-" htmlFor="caloriesConsumed">Calories Consumed:
                                 <input type="number" id="calories" name="calories" value={calorieIntake} onChange={(e)=>setCalories(e.target.value)} />
 
                                 </label>
@@ -232,9 +232,9 @@ function NutritionalTracker({setNutritionActive}){
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px', width: '100%' }}>
                                     <button onClick={addFoodtoList} className="btn btn-neutral mt-1" type="button">Add Food</button>
                                     <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                                    <span style={{ marginRight: '10px', fontSize: '0.8rem' }}>Grams:</span>
-                                    <input type="number" id="calories" name="calories" value={grams} onChange={(e)=>setGrams(e.target.value)} style={{ width: '100px' }} />
-                                </div>
+                                        <span style={{ marginRight: '10px', fontSize: '0.8rem' }}>Grams:</span>
+                                        <input type="number" id="calories" name="calories" value={grams} onChange={(e)=>setGrams(e.target.value)} style={{ width: '100px' }} />
+                                    </div>
                                 </div>
                                                 
                                 <div className="food-list">
@@ -247,7 +247,7 @@ function NutritionalTracker({setNutritionActive}){
                                             ))}
                                             </ul>
                                 </div>
-                                <button className="btn btn-neutral mr-100 mt-1" type="submit">Submit</button> 
+                                <button className="btn btn-neutral mr-10 mt-1" type="submit">Submit</button> 
                                 
                                 
                         
@@ -258,7 +258,7 @@ function NutritionalTracker({setNutritionActive}){
                    
                 </div>
 
-                </div>
+            </div>
            
         </div>
 

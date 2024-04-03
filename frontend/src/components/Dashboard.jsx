@@ -12,8 +12,9 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
     const [username, setUsername] = useState('Bob Build');
     const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
-
     const[dayFilter, setDayFilter] = useState('day');
+
+    let currentCalIntake = 0; 
     
     useEffect(() => {
             calorieTracker.fetchAndUpdateCalories(dayFilter);
@@ -29,6 +30,8 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                     let newCalories = totalCalories;
                     if (newCalories < 0) newCalories = 0; 
                     if (newCalories >= 100000) newCalories = "Value not valid";
+                    if (newCalories >= 1000) newCalories = (newCalories / 1000) + ' K'
+                    
                     setCalorieIntake(newCalories);
                 },
             };
@@ -49,6 +52,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         let newBurn = totalBurn;
                         if (newBurn < 0) newBurn = 0; 
                         if (newBurn >= 100000) newBurn = "Value not valid";
+                        if (newBurn >= 1000) newBurn = (newBurn / 1000) + ' K'
                         setCalorieBurn(newBurn);
                     },
                 };
@@ -69,6 +73,8 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         let newWater = totalWater;
                         if (newWater < 0) newWater = 0; 
                         if (newWater >= 100000) newWater = "Value not valid";
+                        if (newWater < 1000) newWater = newWater + ' mL '
+                        if (newWater >= 1000) newWater = (newWater / 1000) + ' L'
                         setWaterIntake(newWater);
                     },
                 };
@@ -90,6 +96,8 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         let newNet = totalNet;
                         if (newNet < -100000) newNet = 0; 
                         if (newNet >= 100000) newNet = "Value not valid";
+                        if (newNet >= 1000) newNet = (newNet / 1000) + ' K'
+                        if (newNet <= -1000) newNet = (newNet / 1000) + ' K'
                         setNetCalorie(newNet);
                     },
                 };
@@ -183,15 +191,15 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         <div className='divider'>|</div>
                         <div className='flex flex-col w-full '>
                             <div className='flex'>
-                                <text className='w-2/3 text-xl font-semibold'><CalorieIntakeComponent /></text>
+                                <text className='text-xl font-semibold'><CalorieIntakeComponent /></text>
                                 <text className='text-xl font-semibold ml-3 mr-3'>-</text>
                             </div>
                             <caption className='text-sm flex'>CAL IN</caption>
                         </div>
                         <div className='flex flex-col w-full '>
                             <div className='flex'>
-                                <text className='w-2/3 text-xl font-semibold'><CalorieBurnComponent /></text>
-                                <text className='text-xl font-semibold ml-3 mr-3'>=</text>
+                                <text className='text-xl font-semibold'><CalorieBurnComponent /></text>
+                                <text className='text-xl font-semibold ml-3 mr-3'>  =  </text>
                             </div>
                             <caption className='text-sm flex'>CAL BURN</caption>
                         </div>
@@ -209,7 +217,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
             <div className='flex justify-center mt-3 w-3/6'>
                 <input type="radio" value='day' name='dateToggle' aria-label="Day" className="btn input-bordered bg-base-100  w-24" checked={dayFilter === 'day'} onChange={(e) => setDayFilter(e.target.value)}/>
                 <input type="radio" value='week' name='dateToggle' aria-label="Week" className="btn input-bordered bg-base-100  w-24 ml-5 mr-5" checked={dayFilter === 'week'} onChange={(e) => setDayFilter(e.target.value)}/>
-                <input type="radio" value='month' name='dateToggle' aria-label="Month" className="btn input-bordered bg-base-100  w-24" checked={dayFilter === 'month'} onChange={(e) => setDayFilter(e.target.value)}/>
+                <input type="radio" value='month' name='dateToggle' aria-label="Month" className="btn input-bordered bg-base-100  w-24 mb-5" checked={dayFilter === 'month'} onChange={(e) => setDayFilter(e.target.value)}/>
             </div>
         </div>
 
