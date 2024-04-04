@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/WorkoutPlanner.css'
 
 function WorkoutPlanner() {
     const [title, setTitle] = useState('');
@@ -139,7 +140,7 @@ function WorkoutPlanner() {
                     <div className="grid flex-grow h-35 card bg-base-300 rounded-box place-items-center">
                     <div className='flex justify-between text-5xl font-medium b h-1/6
                         items-center'>
-                        <h2 className='mb-2'>Workout Planner</h2> 
+                        <h2 className='title mb-2'>Workout Planner</h2> 
                         </div>
                             <form id="trackerForm" onSubmit= {handleSubmit}>
                                 <label className="input input-bordered flex items-center gap-2" value="Workout Title">Workout Title:
@@ -171,8 +172,8 @@ function WorkoutPlanner() {
 
                             </form>
                             <div className='mt-8'>
-                            <div className='bg-gray-200 p-4 rounded-md shadow-lg'> {/* Box styling */}
-                                <h3 className='font-bold text-lg mb-4 text-center'>{daySelected} Workouts</h3>
+                            <div className='bg-gray-200 p-4 rounded-md shadow-lg'>
+                                <h3 className='workouts font-bold text-lg mb-4 text-center'>{daySelected} Workouts</h3>
                                 <ul>
                                 {workoutList.map((workout, index) => (
                                     <li key={index} className='bg-white p-2 rounded-md mb-2 shadow border flex justify-between items-center'>

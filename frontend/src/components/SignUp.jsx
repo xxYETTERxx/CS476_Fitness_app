@@ -74,7 +74,7 @@ function SignUp() {
             const response = await axios.post('https://gymgenius-api.onrender.com/api/auth/register', userData)
 
             if (response.status === 200 || response.status === 201) {
-                window.location.href = '/';
+                window.location.href = '/login';
                 
                 setUserName('');
                 setEmail('');

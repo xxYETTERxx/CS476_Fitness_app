@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import blankUser from '../images/blankUser.png'
+import '../styles/Dashboard.css'
 import calorieTracker from '../functions/observer.js'
 
 
@@ -9,7 +10,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
     const user = null;
     
 
-    const [username, setUsername] = useState('Bob Build');
+    const [username, setUsername] = useState('');
     const [avatar, setAvatar] = useState(blankUser);
     const [userType, setUserType] = useState('basic');
     const[dayFilter, setDayFilter] = useState('day');
@@ -30,7 +31,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                     let newCalories = totalCalories;
                     if (newCalories < 0) newCalories = 0; 
                     if (newCalories >= 100000) newCalories = "Value not valid";
-                    if (newCalories >= 1000) newCalories = (newCalories / 1000) + ' K'
+                    if (newCalories >= 1000) newCalories = (newCalories / 1000).toFixed(2) + ' K'
                     
                     setCalorieIntake(newCalories);
                 },
@@ -52,7 +53,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         let newBurn = totalBurn;
                         if (newBurn < 0) newBurn = 0; 
                         if (newBurn >= 100000) newBurn = "Value not valid";
-                        if (newBurn >= 1000) newBurn = (newBurn / 1000) + ' K'
+                        if (newBurn >= 1000) newBurn = (newBurn / 1000).toFixed(2) + ' K'
                         setCalorieBurn(newBurn);
                     },
                 };
@@ -74,7 +75,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         if (newWater < 0) newWater = 0; 
                         if (newWater >= 100000) newWater = "Value not valid";
                         if (newWater < 1000) newWater = newWater + ' mL '
-                        if (newWater >= 1000) newWater = (newWater / 1000) + ' L'
+                        if (newWater >= 1000) newWater = (newWater / 1000).toFixed(2) + ' L'
                         setWaterIntake(newWater);
                     },
                 };
@@ -96,8 +97,8 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
                         let newNet = totalNet;
                         if (newNet < -100000) newNet = 0; 
                         if (newNet >= 100000) newNet = "Value not valid";
-                        if (newNet >= 1000) newNet = (newNet / 1000) + ' K'
-                        if (newNet <= -1000) newNet = (newNet / 1000) + ' K'
+                        if (newNet >= 1000) newNet = (newNet / 1000).toFixed(2) + ' K'
+                        if (newNet <= -1000) newNet = (newNet / 1000).toFixed(2) + ' K'
                         setNetCalorie(newNet);
                     },
                 };
@@ -152,10 +153,10 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
     }
 
     return (
-        <div className='flex flex-col items-center justify-center'>
-            <div className="card card-side shadow-xl flex flex-col bg-base-300 p-4 pt-0 max-w-xl " >
+        <div className='dashboard-container w-full max-w-x1 flex flex-col items-center justify-center'>
+            <div className="card card-side shadow-xl flex flex-col bg-base-300 p-4 pt-0 w-full sm:max-w-xl " >
                 <div className='flex justify-between text-2xl font-medium h-1/6 items-center'>
-                    <h2 className='mt-5 ml-3'>{username}</h2>
+                    <h2 className='username'>{username}</h2>
                
                 </div>
                 <div className='flex h-4/6 w-full'>
@@ -180,7 +181,7 @@ const Dashboard = ({setNutritionActive, setActivityActive, setWorkoutActive}) =>
 
 
                 </div>
-                <div className='flex flex-col h-1/6 items-center w-full ml-5'>
+                <div className='flex flex-col h-1/6 items-center w-full'>
                     <div className='flex mb-3 w-full' >
                         <div className='flex flex-col w-full '>
                             <div>
